@@ -2,10 +2,16 @@ var conlog = (function() {
   var DEFAULT_LEVEL = 'INFO'
   var LEVELS = {
     ERR:  1
+    , ERROR: 1
+
     , WARN: 2
     , INFO: 3
+
     , VERB: 4
+    , VERBOSE: 4
+
     , SILL: 5
+    , SILLY: 5
   }
   var LEVELS_ALIAS = {
     ERROR: 'ERR'
@@ -19,6 +25,8 @@ var conlog = (function() {
   return {
     LEVELS: LEVELS
     , level: level
+
+    , log: log
 
     , error: error
     , warn: warn

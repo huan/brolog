@@ -1,7 +1,7 @@
 {
   "name": "brolog",
-  "version": "0.0.1",
-  "description": "Npmlog for `console.log` in Browser",
+  "version": "0.0.3",
+  "description": "Npmlog for Browser",
   "main": "index.js",
   "scripts": {
     "test": "tap -R tap test/**/*.spec.js"
@@ -27,4 +27,12 @@
   "devDependencies": {
     "tap": "^6.1.1"
   }
+  , "files": [
+    "package.json"
+    , "README.md"
+    , "CHANGELOG.md"
+    , "LICENSE"
+    , "index.js"
+    , "src/conlog.js"
+  ]
 }
