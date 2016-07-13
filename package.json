@@ -1,0 +1,30 @@
+{
+  "name": "conlog",
+  "version": "0.0.1",
+  "description": "Npmlog for `console.log` in Browser",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap -R tap test/**/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zixia/conlog.git"
+  },
+  "keywords": [
+    "npmlog",
+    "log",
+    "logger",
+    "console.log",
+    "console",
+    "browser"
+  ],
+  "author": "Zhuohuan LI <zixia@zixia.net>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zixia/conlog/issues"
+  },
+  "homepage": "https://github.com/zixia/conlog#readme",
+  "devDependencies": {
+    "tap": "^6.1.1"
+  }
+}
