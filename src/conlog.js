@@ -1,7 +1,9 @@
 var conlog = (function() {
   var DEFAULT_LEVEL = 'INFO'
   var LEVELS = {
-    ERR:  1
+    SILENT: 0
+
+    , ERR:  1
     , ERROR: 1
 
     , WARN: 2
