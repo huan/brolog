@@ -4,7 +4,7 @@ const conlog = require('..')
 
 test('conlog smoking test', t => {
 
-  let l = conlog.level()
+  var l = conlog.level()
   t.equal(l, conlog.LEVELS.INFO, 'should has default level INFO')
 
   conlog.error('Test', 'error log %s', 'ok')
