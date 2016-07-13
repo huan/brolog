@@ -66,10 +66,10 @@ var conlog = (function() {
 
     switch (level) {
       case 'ERR':
-        console.warn.apply(console, args)
+        console.error.apply(console, args)
         break
       case 'WARN':
-        console.error.apply(console, args)
+        console.warn.apply(console, args)
         break
       case 'INFO':
         console.info.apply(console, args)

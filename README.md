@@ -47,3 +47,7 @@ For example,
 
 Like `log.log(level, prefix, message, ...)`.  In this way, each level is
 given a shorthand, so you can do `log.info(prefix, message)`.
+
+# Line Number
+
+https://gist.github.com/paulirish/c307a5a585ddbcc17242
