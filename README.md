@@ -1,8 +1,10 @@
-# brolog
+# brolog  [![Build Status](https://travis-ci.org/zixia/brolog.svg?branch=master)](https://travis-ci.org/zixia/brolog)
 
 Npmlog for Browser
 
 This logger simulate the basic npmlog behaviour in browser.
+
+[![npm version](https://badge.fury.io/js/brolog.svg)](https://badge.fury.io/js/brolog)
 
 # Basic Usage
 
