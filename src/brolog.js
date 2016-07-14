@@ -1,4 +1,4 @@
-var conlog = (function() {
+var brolog = (function() {
   var DEFAULT_LEVEL = 'INFO'
   var LEVELS = {
     SILENT: 0
@@ -134,4 +134,4 @@ var conlog = (function() {
 
 }())
 
-module.exports = conlog.default = conlog.conlog = conlog
+module.exports = brolog.default = brolog.brolog = brolog

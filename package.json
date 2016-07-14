@@ -1,6 +1,6 @@
 {
   "name": "brolog",
-  "version": "0.0.5",
+  "version": "0.0.8",
   "description": "Npmlog for Browser",
   "main": "index.js",
   "scripts": {
@@ -33,6 +33,6 @@
     , "CHANGELOG.md"
     , "LICENSE"
     , "index.js"
-    , "src/conlog.js"
+    , "src/brolog.js"
   ]
 }
