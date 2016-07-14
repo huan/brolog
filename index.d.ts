@@ -1,9 +1,11 @@
-export namespace Brolog {
-  function level(levelName?: string): number
+export declare class Brolog {
+  constructor(level?: string)
 
-  function error(prefix: string, ...args: any[]): any
-  function warn(prefix: string, ...args: any[]): any
-  function info(prefix: string, ...args: any[]): any
-  function verbose(prefix: string, ...args: any[]): any
-  function silly(prefix: string, ...args: any[]): any
+  level(levelName?: string): number
+
+  error(prefix: string, ...args: any[]): any
+  warn(prefix: string, ...args: any[]): any
+  info(prefix: string, ...args: any[]): any
+  verbose(prefix: string, ...args: any[]): any
+  silly(prefix: string, ...args: any[]): any
 }
