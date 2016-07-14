@@ -1,1 +1,1 @@
-module.exports = require('./src/conlog')
+module.exports = require('./src/brolog')
