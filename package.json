@@ -1,7 +1,7 @@
 {
   "name": "brolog",
   "version": "0.0.12",
-  "description": "Npmlog for Browser",
+  "description": "Npmlog like logger for Browser",
   "main": "index.js",
   "scripts": {
     "test": "tap -R tap test/**/*.spec.js"
@@ -11,6 +11,7 @@
     "url": "git+https://github.com/zixia/brolog.git"
   },
   "keywords": [
+    "brolog",
     "npmlog",
     "log",
     "logger",

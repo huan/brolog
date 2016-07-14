@@ -1,6 +1,6 @@
 # brolog  [![Build Status](https://travis-ci.org/zixia/brolog.svg?branch=master)](https://travis-ci.org/zixia/brolog)
 
-Npmlog for Browser
+Npmlog like Logger for Browser
 
 This logger simulate the basic npmlog behaviour in browser.
 
@@ -8,11 +8,13 @@ This logger simulate the basic npmlog behaviour in browser.
 
 # Feature
 
-1. TypeScript support.(by typing file index.d.ts)
-2. SystemJS support.
-2. Angular 2 support.
+1. Support TypeScript support(typing file [index.d.ts](https://github.com/zixia/brolog/blob/master/index.d.ts)).
+1. Support Angular2 & SystemJS(demo project [git repository](https://github.com/zixia/brolog-angular-demo))
+1. Support show **real** line number in browser console.
+    > What I really get frustrated by is that I cannot wrap console.* and preserve line numbers
 
-Demo starter can be found here:
+    [We enabled this in Chrome DevTools via blackboxing a bit ago.](https://gist.github.com/paulirish/c307a5a585ddbcc17242)
+1. Also can be used with nodejs(example [here](https://github.com/zixia/brolog/blob/master/example/npm-like-logger.js))
 
 # Basic Usage
 
