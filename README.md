@@ -52,3 +52,9 @@ given a shorthand, so you can do `log.info(prefix, message)`.
 
 https://gist.github.com/paulirish/c307a5a585ddbcc17242
 http://stackoverflow.com/questions/11308239/console-log-wrapper-that-keeps-line-numbers-and-supports-most-methods
+
+
+# Reference
+
+1. [JavaScript Modules & Build Tools - YouTube](https://www.youtube.com/watch?v=U4ja6HeBm6s)
+2. [Writing Declaration Files](https://www.typescriptlang.org/docs/handbook/writing-declaration-files.html)

@@ -62,7 +62,7 @@ var brolog = (function() {
 
   function log(level, prefix, message) {
     var args = Array.prototype.slice.call(arguments, 3) || []
-    args.unshift(level + ' ' + prefix + ' ' + message)
+    args.unshift(level + ' ' + prefix + ' ' + (message || ''))
 
     switch (level) {
       case 'ERR':
