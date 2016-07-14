@@ -1,4 +1,6 @@
-const log = require('..')
+const Brolog = require('..')
+
+const log = new Brolog()
 
 function demo() {
 

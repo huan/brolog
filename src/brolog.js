@@ -1,4 +1,4 @@
-var brolog = (function() {
+var Brolog = (function() {
   var DEFAULT_LEVEL = 'INFO'
   var LEVELS = {
     SILENT: 0
@@ -24,24 +24,36 @@ var brolog = (function() {
   var currentLevel = LEVELS[DEFAULT_LEVEL]
   var currentLevelName = DEFAULT_LEVEL
 
-  return {
-    LEVELS: LEVELS
-    , level: level
+  var _Brolog = function(initLevel) {
+    level(initLevel)
 
-    , log: log
-
-    , error: error
-    , warn: warn
-    , info: info
-
-    , verbose: verbose
-    , verb:    verbose
-
-    , silly: silly
-    , sill: silly
+    assign(this)
   }
 
+  assign(_Brolog)
+
+  return _Brolog
+
   //////////////////////////////////////////////////////////////////////////////
+
+  function assign(obj) {
+    obj.LEVELS  = LEVELS
+    obj.level   = level
+
+    obj.log     = log
+
+    obj.error   = error
+    obj.warn    = warn
+    obj.info    = info
+
+    obj.verbose = verbose
+    obj.verb    =    verbose
+
+    obj.silly   = silly
+    obj.sill    = silly
+
+    return obj
+  }
 
   function level(l) {
     if (typeof l !== 'undefined') {
@@ -134,4 +146,4 @@ var brolog = (function() {
 
 }())
 
-module.exports = brolog.default = brolog.brolog = brolog
+module.exports = Brolog.default = Brolog.Brolog = Brolog
