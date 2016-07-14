@@ -49,7 +49,7 @@ var brolog = (function() {
       if (LEVELS_ALIAS[l]) {
         l = LEVELS_ALIAS[l]
       }
-      if (LEVELS[l]) {
+      if (typeof LEVELS[l] !== 'undefined') {
         currentLevel = LEVELS[l]
         currentLevelName = l
       } else {

@@ -6,6 +6,14 @@ This logger simulate the basic npmlog behaviour in browser.
 
 [![npm version](https://badge.fury.io/js/brolog.svg)](https://badge.fury.io/js/brolog)
 
+# Feature
+
+1. TypeScript support.(by typing file index.d.ts)
+2. SystemJS support.
+2. Angular 2 support.
+
+Demo starter can be found here:
+
 # Basic Usage
 
 ```
