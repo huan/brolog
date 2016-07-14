@@ -1,1 +1,1 @@
-module.exports = require('./src/brolog')
+module.exports = require('./src/brolog.js')
