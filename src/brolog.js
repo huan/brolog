@@ -1,3 +1,5 @@
+'use strict'
+
 var Brolog = (function() {
   var DEFAULT_LEVEL = 'INFO'
   var LEVELS = {
@@ -27,7 +29,11 @@ var Brolog = (function() {
   var _Brolog = function(initLevel) {
     level(initLevel)
 
-    assign(this)
+    if (this) {
+      assign(this)
+    } else {
+      return _Brolog
+    }
   }
 
   assign(_Brolog)

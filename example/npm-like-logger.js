@@ -1,6 +1,7 @@
 const Brolog = require('..')
 
-const log = new Brolog()
+const logClass = Brolog('SILLY')
+const log = new logClass()
 
 function demo() {
 
