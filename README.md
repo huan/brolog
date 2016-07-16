@@ -24,6 +24,7 @@ This logger simulate the basic npmlog behaviour.
   ```
   $ npm install brolog --save
   ```
+  
 1. setup SystemJS  
   ```
   System.config({
@@ -32,34 +33,38 @@ This logger simulate the basic npmlog behaviour.
     }
   })
   ```
+  
 1. import  
-    ```
-    import { Brolog } from 'brolog'
-    ```
+  ```
+  import { Brolog } from 'brolog'
+  ```
+    
 1. inject to bootstrap  
-    ```
-    bootstrap(LogApp, [
-      Brolog.factory('VERBOSE')
-    ])
-    ```
+  ```
+  bootstrap(LogApp, [
+    Brolog.factory('VERBOSE')
+  ])
+  ```
+  
 1. inject to constructor  
-    ```
-    class LogApp {
-      constructor(
-        @Inject(Brolog) private log
-      ) {
-      }
+  ```
+  class LogApp {
+    constructor(
+      @Inject(Brolog) private log
+    ) {
     }
-    ```
+  }
+  ```
+  
 1. log  
-    ```
-    class LogApp {
-      testLog() {
-        this.log.verbose('Brolog', 'test log %d', 123)
-        // this will log to browser console
-      }
+  ```
+  class LogApp {
+    testLog() {
+      this.log.verbose('Brolog', 'test log %d', 123)
+      // this will log to browser console
     }
-    ```
+  }
+  ```
 
 More details, please see the `brolog-angular-demo` git repository [here](https://github.com/zixia/brolog-angular-demo).
 
@@ -84,15 +89,13 @@ The level to display logs at.  Any logs at or above this level will be
 displayed.  The special level `silent` will prevent anything from being
 displayed ever.
 
-## log.log(level, prefix, message, ...)
+## log\[level](prefix, message, ...)
 
 * `level` {String} The level to emit the message at
 * `prefix` {String} A string prefix.  Set to "" to skip.
 * `message...` Arguments to `util.format`
 
 Emit a log message at the specified level.
-
-## log\[level](prefix, message, ...)
 
 For example,
 
@@ -101,15 +104,6 @@ For example,
 * log.info(prefix, message, ...)
 * log.warn(prefix, message, ...)
 * log.error(prefix, message, ...)
-
-Like `log.log(level, prefix, message, ...)`.  In this way, each level is
-given a shorthand, so you can do `log.info(prefix, message)`.
-
-# Line Number
-
-https://gist.github.com/paulirish/c307a5a585ddbcc17242
-http://stackoverflow.com/questions/11308239/console-log-wrapper-that-keeps-line-numbers-and-supports-most-methods
-
 
 # Reference
 
