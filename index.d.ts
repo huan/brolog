@@ -1,19 +1,20 @@
-export declare class Brolog {
-  constructor(level?: string)
+// https://www.typescriptlang.org/docs/handbook/writing-declaration-files.html
+// https://github.com/Microsoft/TypeScript/issues/2076#issuecomment-75052599
 
-  level(levelName?: string): number
+interface Brolog {
+  (level?: string): Brolog
+  new (level?: string): Brolog
+  Brolog: Brolog
+  factory(name?: string): Brolog
 
-  error(prefix: string, ...args: any[]): any
-  warn(prefix: string, ...args: any[]): any
-  info(prefix: string, ...args: any[]): any
-  verbose(prefix: string, ...args: any[]): any
-  silly(prefix: string, ...args: any[]): any
+  level(name?: string): string
+  defaultLevel(name?: string): string
 
-  static level(levelName?: string): number
-
-  static error(prefix: string, ...args: any[]): any
-  static warn(prefix: string, ...args: any[]): any
-  static info(prefix: string, ...args: any[]): any
-  static verbose(prefix: string, ...args: any[]): any
-  static silly(prefix: string, ...args: any[]): any
+  error(prefix: string, ...args: any[]): void
+  warn(prefix: string, ...args: any[]): void
+  info(prefix: string, ...args: any[]): void
+  verbose(prefix: string, ...args: any[]): void
+  silly(prefix: string, ...args: any[]): void
 }
+
+export declare var Brolog: Brolog

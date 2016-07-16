@@ -1,7 +1,6 @@
 'use strict'
 
 var Brolog = (function() {
-  var DEFAULT_LEVEL = 'INFO'
   var LEVELS = {
     SILENT: 0
 
@@ -23,37 +22,54 @@ var Brolog = (function() {
     , SILLY: 'SILL'
   }
 
-  var currentLevel = LEVELS[DEFAULT_LEVEL]
-  var currentLevelName = DEFAULT_LEVEL
+  // set by defaultLevel:
+  var DEFAULT_LEVEL = 'INFO'
+  var currentLevel
+  var currentLevelName
 
-  var _Brolog = function(initLevel) {
-    level(initLevel)
+  defaultLevel('INFO')
+  level(DEFAULT_LEVEL)
 
-    if (this) {
-      assign(this)
+  function Brolog() {
+    /**
+     *
+     * Brolog might be called by 3 ways:
+     *
+     * 1. const log = Brolog()        // in Javascript
+     * 2. const log = Brolog.Brolog() // in Typescript: import { Brolog } from 'brolog'; const log = Brolog()
+     * 3. const log = new Brolog()
+     *
+     */
+    if (!this) {                              // 1. Brolog()
+      return Brolog
+    } else if (typeof this === 'function') {  // 2. Brolog.Brolog()
+      return this
+    } else if (typeof this === 'object') {    // 3. new Brolog()
+      return Brolog
     } else {
-      return _Brolog
+      throw new Error('unknown call stack')
     }
   }
 
-  assign(_Brolog)
+  assign(Brolog)
 
-  return _Brolog
+  return Brolog
 
   //////////////////////////////////////////////////////////////////////////////
 
   function assign(obj) {
-    obj.LEVELS  = LEVELS
-    obj.level   = level
+    obj.factory = factory
 
-    obj.log     = log
+    obj.level        = level
+    obj.defaultLevel = defaultLevel
+    obj.LEVELS       = LEVELS
 
     obj.error   = error
     obj.warn    = warn
     obj.info    = info
 
     obj.verbose = verbose
-    obj.verb    =    verbose
+    obj.verb    = verbose
 
     obj.silly   = silly
     obj.sill    = silly
@@ -61,21 +77,31 @@ var Brolog = (function() {
     return obj
   }
 
-  function level(l) {
-    if (typeof l !== 'undefined') {
-      l = String(l).toUpperCase()
-      if (LEVELS_ALIAS[l]) {
-        l = LEVELS_ALIAS[l]
+  function level(levelName) {
+    if (typeof levelName !== 'undefined') {
+      levelName = String(levelName).toUpperCase()
+      if (LEVELS_ALIAS[levelName]) {
+        levelName = LEVELS_ALIAS[levelName]
       }
-      if (typeof LEVELS[l] !== 'undefined') {
-        currentLevel = LEVELS[l]
-        currentLevelName = l
-      } else {
-        currentLevel = LEVELS[DEFAULT_LEVEL]
-        currentLevelName = DEFAULT_LEVEL
+      if (typeof LEVELS[levelName] === 'undefined') {
+        throw new Error('unknown level: ' + levelName)
       }
+      currentLevel = LEVELS[levelName]
+      currentLevelName = levelName
     }
-    return currentLevel
+    return currentLevelName
+  }
+
+  function defaultLevel(levelName) {
+    if (typeof levelName !== 'undefined') {
+      DEFAULT_LEVEL = level(levelName)
+    }
+    return DEFAULT_LEVEL
+  }
+
+  function factory(levelName) {
+    defaultLevel(levelName)
+    return Brolog
   }
 
   function log(level, prefix, message) {

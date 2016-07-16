@@ -1,7 +1,14 @@
 const Brolog = require('..')
 
+console.log(typeof Brolog)
+
 const logClass = Brolog('SILLY')
+
+console.log(typeof logClass)
+
 const log = new logClass()
+
+console.log(typeof log)
 
 function demo() {
 
