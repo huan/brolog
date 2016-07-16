@@ -25,13 +25,13 @@ This logger simulate the basic npmlog behaviour.
   $ npm install brolog --save
   ```
 1. setup SystemJS  
-    ```
-    System.config({
-      map: {
-        brolog: 'node_modules/brolog/index.js'
-      }
-    })
-    ```
+  ```
+  System.config({
+    map: {
+      brolog: 'node_modules/brolog/index.js'
+    }
+  })
+  ```
 1. import  
     ```
     import { Brolog } from 'brolog'
