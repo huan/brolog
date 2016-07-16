@@ -21,11 +21,11 @@ This logger simulate the basic npmlog behaviour.
 `Brolog` is writen mainly for act as a logger with Angular. Here's how to Inject Brolog in Angular.
 
 1. install brolog  
-  ```shell
+  ```
   $ npm install brolog --save
   ```
 1. setup SystemJS  
-    ```javascript
+    ```
     System.config({
       map: {
         brolog: 'node_modules/brolog/index.js'
@@ -33,17 +33,17 @@ This logger simulate the basic npmlog behaviour.
     })
     ```
 1. import  
-    ```javascript
+    ```
     import { Brolog } from 'brolog'
     ```
 1. inject to bootstrap  
-    ```javascript
+    ```
     bootstrap(LogApp, [
       Brolog.factory('VERBOSE')
     ])
     ```
 1. inject to constructor  
-    ```javascript
+    ```
     class LogApp {
       constructor(
         @Inject(Brolog) private log
@@ -52,7 +52,7 @@ This logger simulate the basic npmlog behaviour.
     }
     ```
 1. log  
-    ```javascript
+    ```
     class LogApp {
       testLog() {
         this.log.verbose('Brolog', 'test log %d', 123)
