@@ -1,12 +1,12 @@
 {
   "name": "brolog",
-  "version": "0.3.0",
-  "description": "Npmlog like logger for Browser, with Angular/Typescript support",
+  "version": "0.3.1",
+  "description": "Npmlog like logger for Browser",
   "main": "index.js",
   "scripts": {
-    "test": "npm run unit",
+    "test": "npm run unit && npm run e2e",
     "unit": "tap -R tap test/unit/**/*.spec.js",
-    "e2e": "protractor"
+    "e2e": "test/protractor.sh"
   },
   "repository": {
     "type": "git",
