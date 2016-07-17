@@ -42,9 +42,7 @@ You can simple use a `<script src="">` tag to enable Brolog in your page.
 </html>
 ```
 
-Live demo on Plunker:
-
-<iframe src="http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/"></iframe>
+[Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
 
 ## 2. Work with Angular
 
