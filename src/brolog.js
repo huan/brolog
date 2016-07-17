@@ -1,4 +1,32 @@
-'use strict'
+/*!
+ * Brolog JavaScript Library v3.1.0
+ * https://github.com/zixia/brolog
+ *
+ * Copyright Zhuohuan LI <zixia@zixia.net>
+ * Released under the ISC license
+ * https://github.com/zixia/brolog/blob/master/LICENSE
+ *
+ * Date: 2017-07
+ */
+
+console.log('this in require: ' + this)
+console.log(this)
+console.log('###')
+
+;(function(global, factory) {
+
+  'use strict'
+
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory(global, true)
+  } else {
+    factory(global)
+  }
+
+// Pass this if window is not defined yet
+})(typeof window !== 'undefined' ? window : this, function(window, noGlobal) {
+
+  'use strict'
 
 var Brolog = (function() {
   var LEVELS = {
@@ -178,4 +206,15 @@ var Brolog = (function() {
 
 }())
 
-module.exports = Brolog.default = Brolog.Brolog = Brolog
+  // Expose Brolog, even in AMD and CommonJS for browser emulators
+  if (!noGlobal) {
+    window.Brolog = Brolog
+  }
+
+  // module.exports = Brolog.default = Brolog.Brolog = Brolog
+  Brolog.default = Brolog.Brolog = Brolog
+
+  return Brolog
+
+})
+
