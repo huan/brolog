@@ -54,7 +54,10 @@ var Brolog = (function() {
   defaultLevel('INFO')
   level(DEFAULT_LEVEL)
 
-  function Brolog() {
+  function Brolog(level) {
+    if (typeof level !== 'undefined') {
+      defaultLevel(level)
+    }
     /**
      *
      * Brolog might be called by 3 ways:

@@ -1,7 +1,7 @@
 {
   "name": "brolog",
-  "version": "0.2.1",
-  "description": "Npmlog like logger for Browser, with Angular support",
+  "version": "0.3.0",
+  "description": "Npmlog like logger for Browser, with Angular/Typescript support",
   "main": "index.js",
   "scripts": {
     "test": "tap -R tap test/**/*.spec.js"
