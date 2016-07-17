@@ -14,7 +14,6 @@ npm link brolog
 npm start
 cd -
 
-kill 4312432
 # http://stackoverflow.com/a/3474556/1123955
 protractor test/protractor.conf.js
 

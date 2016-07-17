@@ -140,6 +140,28 @@ For example,
 * log.warn(prefix, message, ...)
 * log.error(prefix, message, ...)
 
+# Test
+
+Brolog comes with well test suit to ensure the behaviour is expected.
+
+## Unit Test
+
+```
+$ npm run unit
+```
+
+Unite Test Suite: [link](https://github.com/zixia/brolog/tree/master/test/unit)
+
+## End to End Test
+
+```
+$ npm run e2e
+```
+
+End to End Test Suite: [link](https://github.com/zixia/brolog/tree/master/test/e2e)
+
+P.S. E2E test is on top of brolog demo project: [git repository](https://github.com/zixia/brolog-angular-demo)
+
 # Reference
 
 1. [JavaScript Modules & Build Tools - YouTube](https://www.youtube.com/watch?v=U4ja6HeBm6s)
