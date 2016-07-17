@@ -14,7 +14,39 @@ Brolog is Logger for Angular in Browser like Npmlog.
     [We enabled this in Chrome DevTools via blackboxing a bit ago.](https://gist.github.com/paulirish/c307a5a585ddbcc17242)
 1. Certainly it can run under nodejs. (Just for test & fun. example [here](https://github.com/zixia/brolog/blob/master/example/npm-like-logger.js))
 
-# Work with Angular
+# Example
+
+Here's two example: 
+
+1. the first one is demo for easy to use in browser, and how it looks like npmlog.
+1. the second one is demo for intergrate with angular DI & systemjs.
+
+## 1. Work with Plain Javascript
+
+You can simple use a `<script src="">` tag to enable Brolog in your page.
+
+```
+<html>
+  <head>
+    <script src="//zixia.github.io/brolog/src/brolog.js"></script>
+  </head>
+  <body>
+    <h1>Brolog in Browser Demo</h1>
+    <script>
+      var log = Brolog('VERBOSE')
+      log.info('Test', '123 info message')
+      log.verbose('Test', '123 verbose message')
+      log.silly('Test', '123 silly message')
+    </script>
+  </body>
+</html>
+```
+
+Live demo on Plunker:
+
+<iframe src="http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/"></iframe>
+
+## 2. Work with Angular
 
 `Brolog` is writen mainly for act as a logger with Angular. Here's how to Inject Brolog in Angular.
 
