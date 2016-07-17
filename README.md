@@ -162,6 +162,25 @@ End to End Test Suite: [link](https://github.com/zixia/brolog/tree/master/test/e
 
 P.S. E2E test is on top of brolog demo project: [git repository](https://github.com/zixia/brolog-angular-demo)
 
+# Changelog
+
+## v0.3.2 Jul 18 2016
+
+1. added End to End test with Angular
+1. supported include by <script> tag
+
+## v0.2.0 Jul 16 2016
+
+1. added Unit Test
+1. supported Angular Dependience Injection
+
+## v0.1.0 Jul 14 2016
+
+1. supported show real line number by set blackbox
+1. added TypeScript definition file
+1. supported work with SystemJS & Angular
+
+
 # Reference
 
 1. [JavaScript Modules & Build Tools - YouTube](https://www.youtube.com/watch?v=U4ja6HeBm6s)
