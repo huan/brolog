@@ -81,9 +81,13 @@ test('Brolog log level test', t => {
   t.end()
 })
 
+/**
+ *
+ * This test must be the last one,
+ * because monkey patch is not recover when it finish
+ *
+ */
 test('Brolog filter test', t => {
-  const log = Brolog
-
   const funcs = [
     'error'
     , 'warn'
@@ -92,6 +96,20 @@ test('Brolog filter test', t => {
   ]
   let counter = {}
   monkeyPatch()
+
+  let log
+
+  initCounter()
+  log = Brolog('SILENT')
+  doLog(log)
+  t.equal(counter.error, 0, 'should call error 0 time with level SILENT')
+
+  initCounter()
+  log = Brolog('SILLY')
+  doLog(log)
+  t.equal(counter.log, 2, 'should call log(verbose + silly) 2 time with level SILLY')
+
+  log = Brolog
 
   initCounter()
   log.level('SILENT')
