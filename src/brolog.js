@@ -9,10 +9,6 @@
  * Date: 2017-07
  */
 
-console.log('this in require: ' + this)
-console.log(this)
-console.log('###')
-
 ;(function(global, factory) {
 
   'use strict'
