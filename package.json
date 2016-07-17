@@ -1,6 +1,6 @@
 {
   "name": "brolog",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Npmlog like logger for Browser",
   "main": "index.js",
   "scripts": {
