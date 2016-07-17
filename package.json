@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "tap -R tap test/**/*.spec.js"
+    , "e2e": "protractor"
   },
   "repository": {
     "type": "git",

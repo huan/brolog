@@ -23,7 +23,11 @@ Here's two example:
 
 ## 1. Dead easy for use in Browser
 
-You can enable Brolog in your page by simple add a `<script src="">` tag.
+You can enable Brolog in your page by simple add the following `script` tag.
+
+```
+<script src="//zixia.github.io/brolog/src/brolog.js"></script>
+```
 
 ```
 <html>

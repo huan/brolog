@@ -4,13 +4,26 @@ const test = require('tap').test
 
 const Brolog = require('..')
 
-test('Brolog factory/service/function init level test', t => {
+test('Brolog factory/service/function init test', t => {
 
   const EXPECTED_LEVEL = 'SILL'
 
+  /**
+   *
+   * Raw
+   *
+   */
   var l = Brolog.level()
   t.equal(l, 'INFO', 'should has default level INFO')
 
+  l = Brolog.level(EXPECTED_LEVEL)
+  t.equal(l, EXPECTED_LEVEL, 'should be EXPECTED_LEVEL after setlevel to it')
+
+  /**
+   *
+   * Factory
+   *
+   */
   var LogClass = Brolog.factory(EXPECTED_LEVEL)
   t.equal(typeof LogClass, 'function', 'should return a function class when we call Brolog as factory')
 
@@ -25,6 +38,11 @@ test('Brolog factory/service/function init level test', t => {
   Brolog.defaultLevel('SILENT')
   Brolog.level('SILENT')
 
+  /**
+   *
+   * Constructor
+   *
+   */
   log = Brolog(EXPECTED_LEVEL)
   dl = log.defaultLevel()
   ll = log.level()
