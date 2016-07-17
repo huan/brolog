@@ -160,14 +160,14 @@ $ npm run e2e
 
 End to End Test Suite: [link](https://github.com/zixia/brolog/tree/master/test/e2e)
 
-P.S. E2E test is on top of brolog demo project: [git repository](https://github.com/zixia/brolog-angular-demo)
+P.S. runing E2E test is based on *brolog demo project*: [git repository](https://github.com/zixia/brolog-angular-demo)
 
 # Changelog
 
 ## v0.3.2 Jul 18 2016
 
 1. added End to End test with Angular
-1. supported include by <script> tag
+1. supported include by `script` tag
 
 ## v0.2.0 Jul 16 2016
 
