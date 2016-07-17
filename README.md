@@ -21,7 +21,7 @@ Here's two example:
 1. the first one is demo for easy to use in browser, and how it looks like npmlog.
 1. the second one is demo for intergrate with angular DI & systemjs.
 
-## 1. Dead easy for use in Browser
+## 1. Super Easy to use in Browser
 
 You can enable Brolog in your page by simple add the following `script` tag.
 
@@ -51,7 +51,7 @@ You can enable Brolog in your page by simple add the following `script` tag.
 
 Link: [Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
 
-## 2. Setup for use in Angular
+## 2. Quick Setup to use in Angular
 
 `Brolog` is writen mainly for act as a logger with Angular. Here's how to Inject Brolog in Angular.
 

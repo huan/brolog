@@ -4,8 +4,9 @@
   "description": "Npmlog like logger for Browser, with Angular/Typescript support",
   "main": "index.js",
   "scripts": {
-    "test": "tap -R tap test/**/*.spec.js"
-    , "e2e": "protractor"
+    "test": "npm run unit",
+    "unit": "tap -R tap test/unit/**/*.spec.js",
+    "e2e": "protractor"
   },
   "repository": {
     "type": "git",
@@ -27,18 +28,20 @@
   },
   "homepage": "https://github.com/zixia/brolog#readme",
   "devDependencies": {
+    "jasmine-spec-reporter": "^2.5.0",
+    "protractor": "^4.0.0",
     "tap": "^6.1.1"
-  }
-  , "files": [
-    "package.json"
-    , "README.md"
-    , "CHANGELOG.md"
-    , "LICENSE"
-    , "index.js"
-    , "index.d.ts"
-    , "src/brolog.js"
-  ]
-  , "typings": [
+  },
+  "files": [
+    "package.json",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "index.js",
+    "index.d.ts",
+    "src/brolog.js"
+  ],
+  "typings": [
     "index.d.ts"
   ]
 }

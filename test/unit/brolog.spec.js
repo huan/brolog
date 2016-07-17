@@ -2,7 +2,7 @@
 
 const test = require('tap').test
 
-const Brolog = require('..')
+const Brolog = require('../..')
 
 test('Brolog factory/service/function init test', t => {
 
