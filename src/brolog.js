@@ -98,7 +98,7 @@ var Brolog = (function() {
   //////////////////////////////////////////////////////////////////////////////
 
   function assign(obj) {
-    obj.factory = factory
+    // obj.factory = factory
 
     obj.level        = level
     obj.defaultLevel = defaultLevel
@@ -139,10 +139,11 @@ var Brolog = (function() {
     return DEFAULT_LEVEL
   }
 
-  function factory(levelName) {
+/*  function factory(levelName) {
     defaultLevel(levelName)
     return Brolog
   }
+*/
 
   function log(level, prefix, message) {
     var args = Array.prototype.slice.call(arguments, 3) || []
