@@ -54,7 +54,16 @@ var Brolog = (function() {
   defaultLevel('INFO')
   level(DEFAULT_LEVEL)
 
-  function Brolog(/* XXX: how to put param here and pass DI? */) {
+  /**
+   *
+   * Don't put param in Brolog constructor,
+   * in order to make Brolog work as a Angular Service.
+   * If the constructor has any params,
+   * Angular DI system will throw error,
+   * because there's no provider for the params.
+   *
+   */
+  function Brolog() {
     /**
      * to make angular dependency injection happy
      * we get params from arguments

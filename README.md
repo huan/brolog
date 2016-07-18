@@ -6,20 +6,20 @@ Brolog is Logger for Angular in Browser like Npmlog.
 
 # Feature
 
-1. Support import with TypeScript. (typing file [index.d.ts](https://github.com/zixia/brolog/blob/master/index.d.ts))
-1. Support Angular2 & SystemJS. (demo project [git repository](https://github.com/zixia/brolog-angular-demo))
+1. Support import with TypeScript. (declaration file [index.d.ts](https://github.com/zixia/brolog/blob/master/index.d.ts))
+1. Support Angular2 & SystemJS. (brolog-angular-demo project [git repository](https://github.com/zixia/brolog-angular-demo))
 1. Support show **real** line number in browser console.
     > What I really get frustrated by is that I cannot wrap console.* and preserve line numbers
 
     [We enabled this in Chrome DevTools via blackboxing a bit ago.](https://gist.github.com/paulirish/c307a5a585ddbcc17242)
-1. Certainly it can run under nodejs. (Just for test & fun. example [here](https://github.com/zixia/brolog/blob/master/example/npm-like-logger.js))
+1. Can be used by nodejs if you like. (nodejs example [here](https://github.com/zixia/brolog/blob/master/example/npm-like-logger.js))
 
 # Example
 
 Here's two example: 
 
-1. the first one is demo for easy to use in browser, and how it looks like npmlog.
-1. the second one is demo for intergrate with angular DI & systemjs.
+1. the first one demo for easy to use in browser, and how it looks like npmlog.
+1. the second one demo for intergrate with angular DI & SystemJS.
 
 ## 1. Super Easy to use in Browser
 
