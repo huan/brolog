@@ -3,6 +3,7 @@
   "version": "0.3.3",
   "description": "Npmlog like logger for Browser",
   "main": "index.js",
+  "typings": "index.d.ts",
   "scripts": {
     "test": "npm run unit && npm run e2e",
     "unit": "tap -R tap test/unit/**/*.spec.js",
@@ -40,8 +41,5 @@
     "index.js",
     "index.d.ts",
     "src/brolog.js"
-  ],
-  "typings": [
-    "index.d.ts"
   ]
 }
