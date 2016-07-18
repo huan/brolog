@@ -26,13 +26,13 @@ Here's two example:
 You can enable Brolog in your page by simple add the following `script` tag.
 
 ```
-<script src="//zixia.github.io/brolog/src/brolog.js"></script>
+<script src="//www.zixia.net/brolog/src/brolog.js"></script>
 ```
 
 ```
 <html>
   <head>
-    <script src="//zixia.github.io/brolog/src/brolog.js"></script>
+    <script src="//www.zixia.net/brolog/src/brolog.js"></script>
   </head>
   <body>
     <h1>Brolog in Browser Demo</h1>
@@ -49,7 +49,7 @@ You can enable Brolog in your page by simple add the following `script` tag.
 </html>
 ```
 
-Link: [Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
+Link: [Brolog Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
 
 ## 2. Quick Setup to use in Angular
 
@@ -102,6 +102,8 @@ Link: [Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
   ```
 
 More details, please see the `brolog-angular-demo` git repository [here](https://github.com/zixia/brolog-angular-demo).
+
+Link: [Brolog ♥ Angular Live demo on Plunker](https://embed.plnkr.co/H8AqilBEAvHX6XvKarI7/)
 
 # Basic Usage
 
