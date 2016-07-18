@@ -166,17 +166,17 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 # Changelog
 
-## v0.3.x Jul 18 2016
+## v0.3.3 Jul 18 2016
 
 1. added End to End test with Angular
 1. supported include by `script` tag
 
-## v0.2.x Jul 16 2016
+## v0.2.0 Jul 16 2016
 
 1. added Unit Test
 1. supported Angular Dependience Injection
 
-## v0.1.x Jul 14 2016
+## v0.1.0 Jul 14 2016
 
 1. supported show real line number by set blackbox
 1. added TypeScript definition file
