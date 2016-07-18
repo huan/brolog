@@ -77,7 +77,7 @@ Link: [Brolog Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
 1. inject to bootstrap  
   ```
   bootstrap(LogApp, [
-    Brolog.factory('VERBOSE')
+    Brolog('VERBOSE')
   ])
   ```
   
