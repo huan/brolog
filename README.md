@@ -16,10 +16,10 @@ Brolog is Logger for Angular in Browser like Npmlog.
 
 # Example
 
-Here's two example: 
+Here's two example:
 
-1. the first one demo for easy to use in browser, and how it looks like npmlog.
-1. the second one demo for intergrate with angular DI & SystemJS.
+1. First example to demo easy to use in browser, and how it looks like npmlog.
+1. Second example to demo intergrate with angular DI & SystemJS.
 
 ## 1. Super Easy to use in Browser
 
@@ -55,12 +55,12 @@ Link: [Brolog Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
 
 `Brolog` is writen mainly for act as a logger with Angular. Here's how to Inject Brolog in Angular.
 
-1. install brolog  
+1. install brolog
   ```
   $ npm install brolog --save
   ```
-  
-1. setup SystemJS  
+
+1. setup SystemJS
   ```
   System.config({
     map: {
@@ -68,20 +68,20 @@ Link: [Brolog Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
     }
   })
   ```
-  
-1. import  
+
+1. import
   ```
   import { Brolog } from 'brolog'
   ```
-    
-1. inject to bootstrap  
+
+1. inject to bootstrap
   ```
   bootstrap(LogApp, [
     Brolog('VERBOSE')
   ])
   ```
-  
-1. inject to constructor  
+
+1. inject to constructor
   ```
   class LogApp {
     constructor(
@@ -90,8 +90,8 @@ Link: [Brolog Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
     }
   }
   ```
-  
-1. log  
+
+1. log
   ```
   class LogApp {
     testLog() {
@@ -166,17 +166,17 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 # Changelog
 
-## v0.3.3 Jul 18 2016
+## v0.3.3 (Jul 18 2016)
 
 1. added End to End test with Angular
 1. supported include by `script` tag
 
-## v0.2.0 Jul 16 2016
+## v0.2.0 (Jul 16 2016)
 
 1. added Unit Test
 1. supported Angular Dependience Injection
 
-## v0.1.0 Jul 14 2016
+## v0.1.0 (Jul 14 2016)
 
 1. supported show real line number by set blackbox
 1. added TypeScript definition file
