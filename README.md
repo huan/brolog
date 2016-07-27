@@ -3,6 +3,7 @@
 Brolog is Logger for Angular in Browser like Npmlog.
 
 [![npm version](https://badge.fury.io/js/brolog.svg)](https://badge.fury.io/js/brolog)
+[![TypeScript definitions on DefinitelyTyped](http://definitelytyped.org/badges/standard-flat.svg)](http://definitelytyped.org)
 
 # Feature
 
