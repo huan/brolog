@@ -27,13 +27,13 @@ Here's two example:
 You can enable Brolog in your page by simple add the following `script` tag.
 
 ```
-<script src="//www.zixia.net/brolog/src/brolog.js"></script>
+<script src="//npmcdn.com/brolog"></script>
 ```
 
 ```
 <html>
   <head>
-    <script src="//www.zixia.net/brolog/src/brolog.js"></script>
+    <script src="//npmcdn.com/brolog"></script>
   </head>
   <body>
     <h1>Brolog in Browser Demo</h1>
