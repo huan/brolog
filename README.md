@@ -167,10 +167,11 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 # Changelog
 
-## v0.3.3 (Jul 18 2016)
+## v0.3.7 (master)
 
 1. added End to End test with Angular
 1. supported include by `script` tag
+1. full support npmcdn.com
 
 ## v0.2.0 (Jul 16 2016)
 
