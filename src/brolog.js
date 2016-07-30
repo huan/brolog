@@ -1,12 +1,12 @@
 /*!
- * Brolog JavaScript Library v3.1.0
+ * Brolog JavaScript Library v0.1.0
  * https://github.com/zixia/brolog
  *
  * Copyright Zhuohuan LI <zixia@zixia.net>
  * Released under the ISC license
  * https://github.com/zixia/brolog/blob/master/LICENSE
  *
- * Date: 2017-07
+ * Date: 2016-07
  */
 
 ;(function(global, factory) {
