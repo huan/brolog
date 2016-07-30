@@ -24,7 +24,7 @@ test('Brolog factory/service/function init test', t => {
    * Factory
    *
    */
-  var LogClass = Brolog.factory(EXPECTED_LEVEL)
+  var LogClass = Brolog(EXPECTED_LEVEL)
   t.equal(typeof LogClass, 'function', 'should return a function class when we call Brolog as factory')
 
   var log = new LogClass()

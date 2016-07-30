@@ -5,7 +5,7 @@ interface Brolog {
   (level?: string): Brolog
   new (level?: string): Brolog
   Brolog: Brolog
-  factory(name?: string): Brolog
+  // factory(name?: string): Brolog
 
   level(name?: string): string
   defaultLevel(name?: string): string

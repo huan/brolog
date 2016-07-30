@@ -1,8 +1,8 @@
 {
   "name": "brolog",
-  "version": "0.3.3",
+  "version": "0.3.7",
   "description": "Npmlog like logger for Browser",
-  "main": "index.js",
+  "main": "src/brolog.js",
   "typings": "index.d.ts",
   "scripts": {
     "test": "npm run unit && npm run e2e",

@@ -3,36 +3,37 @@
 Brolog is Logger for Angular in Browser like Npmlog.
 
 [![npm version](https://badge.fury.io/js/brolog.svg)](https://badge.fury.io/js/brolog)
+[![TypeScript definitions on DefinitelyTyped](http://definitelytyped.org/badges/standard-flat.svg)](http://definitelytyped.org)
 
 # Feature
 
-1. Support import with TypeScript. (typing file [index.d.ts](https://github.com/zixia/brolog/blob/master/index.d.ts))
-1. Support Angular2 & SystemJS. (demo project [git repository](https://github.com/zixia/brolog-angular-demo))
+1. Support import with TypeScript. (declaration file [index.d.ts](https://github.com/zixia/brolog/blob/master/index.d.ts))
+1. Support Angular2 & SystemJS. (brolog-angular-demo project [git repository](https://github.com/zixia/brolog-angular-demo))
 1. Support show **real** line number in browser console.
     > What I really get frustrated by is that I cannot wrap console.* and preserve line numbers
 
     [We enabled this in Chrome DevTools via blackboxing a bit ago.](https://gist.github.com/paulirish/c307a5a585ddbcc17242)
-1. Certainly it can run under nodejs. (Just for test & fun. example [here](https://github.com/zixia/brolog/blob/master/example/npm-like-logger.js))
+1. Can be used by nodejs if you like. (nodejs example [here](https://github.com/zixia/brolog/blob/master/example/npm-like-logger.js))
 
 # Example
 
-Here's two example: 
+Here's two example:
 
-1. the first one is demo for easy to use in browser, and how it looks like npmlog.
-1. the second one is demo for intergrate with angular DI & systemjs.
+1. First example to demo easy to use in browser, and how it looks like npmlog.
+1. Second example to demo intergrate with angular DI & SystemJS.
 
 ## 1. Super Easy to use in Browser
 
 You can enable Brolog in your page by simple add the following `script` tag.
 
 ```
-<script src="//zixia.github.io/brolog/src/brolog.js"></script>
+<script src="//npmcdn.com/brolog"></script>
 ```
 
 ```
 <html>
   <head>
-    <script src="//zixia.github.io/brolog/src/brolog.js"></script>
+    <script src="//npmcdn.com/brolog"></script>
   </head>
   <body>
     <h1>Brolog in Browser Demo</h1>
@@ -49,18 +50,18 @@ You can enable Brolog in your page by simple add the following `script` tag.
 </html>
 ```
 
-Link: [Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
+Link: [Brolog Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
 
 ## 2. Quick Setup to use in Angular
 
 `Brolog` is writen mainly for act as a logger with Angular. Here's how to Inject Brolog in Angular.
 
-1. install brolog  
+1. install brolog
   ```
   $ npm install brolog --save
   ```
-  
-1. setup SystemJS  
+
+1. setup SystemJS
   ```
   System.config({
     map: {
@@ -68,20 +69,20 @@ Link: [Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
     }
   })
   ```
-  
-1. import  
+
+1. import
   ```
   import { Brolog } from 'brolog'
   ```
-    
-1. inject to bootstrap  
+
+1. inject to bootstrap
   ```
   bootstrap(LogApp, [
-    Brolog.factory('VERBOSE')
+    Brolog('VERBOSE')
   ])
   ```
-  
-1. inject to constructor  
+
+1. inject to constructor
   ```
   class LogApp {
     constructor(
@@ -90,8 +91,8 @@ Link: [Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
     }
   }
   ```
-  
-1. log  
+
+1. log
   ```
   class LogApp {
     testLog() {
@@ -102,6 +103,8 @@ Link: [Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
   ```
 
 More details, please see the `brolog-angular-demo` git repository [here](https://github.com/zixia/brolog-angular-demo).
+
+Link: [Brolog ♥ Angular Live demo on Plunker](https://embed.plnkr.co/H8AqilBEAvHX6XvKarI7/)
 
 # Basic Usage
 
@@ -164,17 +167,18 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 # Changelog
 
-## v0.3 Jul 18 2016
+## v0.3.7 (master)
 
 1. added End to End test with Angular
 1. supported include by `script` tag
+1. full support npmcdn.com
 
-## v0.2 Jul 16 2016
+## v0.2.0 (Jul 16 2016)
 
 1. added Unit Test
 1. supported Angular Dependience Injection
 
-## v0.1 Jul 14 2016
+## v0.1.0 (Jul 14 2016)
 
 1. supported show real line number by set blackbox
 1. added TypeScript definition file
