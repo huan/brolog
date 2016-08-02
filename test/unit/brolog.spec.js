@@ -1,6 +1,7 @@
 'use strict'
 
 const test = require('tap').test
+const sinon = require('sinon')
 
 const Brolog = require('../..')
 
@@ -106,74 +107,69 @@ test('Brolog log level test', t => {
  *
  */
 test('Brolog filter test', t => {
-  const funcs = [
+  const logFuncList = [
     'error'
     , 'warn'
     , 'info'
     , 'log'
   ]
-  let counter = {}
-  monkeyPatch()
 
   let log
 
-  initCounter()
   log = Brolog('SILENT')
-  doLog(log)
-  t.equal(counter.error, 0, 'should call error 0 time with level SILENT')
+  log.test = sinon.test(function() {
+    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    doLog(log)
+    t.ok(console.error.notCalled, 'should not call error with level SILENT ##############')
+  })
+  log.test()
 
-  initCounter()
   log = Brolog('SILLY')
-  doLog(log)
-  t.equal(counter.log, 2, 'should call log(verbose + silly) 2 time with level SILLY')
+  log.test = sinon.test(function() {
+    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    doLog(log)
+    t.equal(console.log.callCount, 2, 'should call log(verbose + silly) 2 time with level SILLY')
+  })
+  log.test()
 
   log = Brolog
-
-  initCounter()
   log.level('SILENT')
-  doLog(log)
-  t.equal(counter.error, 0, 'should call error 0 time with level SILENT')
-  t.equal(counter.warn, 0, 'should call warn 0 time with level SILENT')
-  t.equal(counter.info, 0, 'should call info 0 time with level SILENT')
-  t.equal(counter.log, 0, 'should call log(verbose + silly) 0 time with level SILENT')
+  log.test = sinon.test(function() {
+    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    doLog(log)
+    t.equal(console.error.callCount , 0, 'should call error 0 time with level SILENT')
+    t.equal(console.warn.callCount  , 0, 'should call warn 0 time with level SILENT')
+    t.equal(console.info.callCount  , 0, 'should call info 0 time with level SILENT')
+    t.equal(console.log.callCount   , 0, 'should call log(verbose + silly) 0 time with level SILENT')
+  })
+  log.test()
 
-  initCounter()
   log.level('ERR')
-  doLog(log)
-  t.equal(counter.error, 1, 'should call error 1 time with level ERR')
-  t.equal(counter.warn, 0, 'should call warn 0 time with level ERR')
-  t.equal(counter.info, 0, 'should call info 0 time with level ERR')
-  t.equal(counter.log, 0, 'should call log(verbose + silly) 0 time with level ERR')
+  log.test = sinon.test(function() {
+    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    doLog(log)
+    t.equal(console.error.callCount , 1, 'should call error 1 time with level ERR')
+    t.equal(console.warn.callCount  , 0, 'should call warn 0 time with level ERR')
+    t.equal(console.info.callCount  , 0, 'should call info 0 time with level ERR')
+    t.equal(console.log.callCount   , 0, 'should call log(verbose + silly) 0 time with level ERR')
+  })
+  log.test()
 
-  initCounter()
   log.level('VERBOSE')
-  doLog(log)
-  t.equal(counter.error, 1, 'should call error 1 time with level VERBOSE')
-  t.equal(counter.warn, 1, 'should call warn 1 time with level VERBOSE')
-  t.equal(counter.info, 1, 'should call info 1 time with level VERBOSE')
-  t.equal(counter.log, 1, 'should call log(verbose + silly) 1 time with level VERBOSE')
+
+  log.test = sinon.test(function() {
+    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    doLog(log)
+    t.equal(console.error.callCount , 1, 'should call error 1 time with level VERBOSE')
+    t.equal(console.warn.callCount  , 1, 'should call warn 1 time with level VERBOSE')
+    t.equal(console.info.callCount  , 1, 'should call info 1 time with level VERBOSE')
+    t.equal(console.log.callCount   , 1, 'should call log(verbose + silly) 1 time with level VERBOSE')
+  })
+  log.test()
 
   t.end()
 
   ////////////////////////////////////////////
-
-  function initCounter() {
-    counter = {}
-    funcs.forEach(f => counter[f] = 0) // init counter
-  }
-
-  // XXX should has a monkeyUnPatch to restore.
-  // or this test must be the last one
-  function monkeyPatch() {
-    funcs.forEach(f => {
-      console[f + 'Orig'] = console[f]
-      console[f] = function() {
-        counter[f]++
-        // console[f + 'Orig'].apply(console, arguments)
-      }
-    })
-  }
-
   function doLog(logger) {
     logger.error('Test', 'error message')
     logger.warn('Test', 'warn message')
