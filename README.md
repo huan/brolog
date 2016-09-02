@@ -27,13 +27,13 @@ Here's two example:
 You can enable Brolog in your page by simple add the following `script` tag.
 
 ```
-<script src="//npmcdn.com/brolog"></script>
+<script src="//unpkg.com/brolog"></script>
 ```
 
 ```
 <html>
   <head>
-    <script src="//npmcdn.com/brolog"></script>
+    <script src="//unpkg.com/brolog"></script>
   </head>
   <body>
     <h1>Brolog in Browser Demo</h1>
@@ -171,7 +171,7 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 1. added End to End test with Angular
 1. supported include by `script` tag
-1. full support npmcdn.com
+1. full support unpkg.com
 
 ## v0.2.0 (Jul 16 2016)
 
