@@ -31,7 +31,7 @@
   "devDependencies": {
     "jasmine-spec-reporter": "^2.5.0",
     "protractor": "^4.0.8",
-    "sinon": "^1.17.5",
+    "sinon": "^1.17.6",
     "tap": "^7.1.2"
   },
   "files": [
