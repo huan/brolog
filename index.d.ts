@@ -17,4 +17,6 @@ interface Brolog {
   silly(prefix: string, ...args: any[]): void
 }
 
-export default declare var Brolog: Brolog
+declare var Brolog: Brolog
+export default Brolog
+export { Brolog }
