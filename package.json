@@ -30,7 +30,7 @@
   "homepage": "https://github.com/zixia/brolog#readme",
   "devDependencies": {
     "jasmine-spec-reporter": "^2.5.0",
-    "protractor": "^4.0.8",
+    "protractor": "^4.0.9",
     "sinon": "^1.17.6",
     "tap": "^7.1.2"
   },
