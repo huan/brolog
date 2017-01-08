@@ -32,7 +32,7 @@
     "jasmine-spec-reporter": "^3.0.0",
     "protractor": "^4.0.13",
     "sinon": "^1.17.6",
-    "tap": "^8.0.1"
+    "tap": "^9.0.1"
   },
   "files": [
     "package.json",
