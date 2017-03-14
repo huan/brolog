@@ -5,9 +5,10 @@
   "main": "src/brolog.js",
   "typings": "index.d.ts",
   "scripts": {
+    "e2e": "test/protractor.sh",
+    "lint": "node src/brolog.js",
     "test": "npm run unit && npm run e2e",
-    "unit": "tap -R tap test/unit/**/*.spec.js",
-    "e2e": "test/protractor.sh"
+    "unit": "tap -R tap test/unit/**/*.spec.js"
   },
   "repository": {
     "type": "git",
