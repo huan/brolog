@@ -29,10 +29,10 @@
   },
   "homepage": "https://github.com/zixia/brolog#readme",
   "devDependencies": {
-    "jasmine-spec-reporter": "^3.1.0",
-    "protractor": "^5.0.0",
-    "sinon": "^1.17.6",
-    "tap": "^9.0.2"
+    "jasmine-spec-reporter": "^3.2.0",
+    "protractor": "^5.1.1",
+    "sinon": "^1.17.7",
+    "tap": "^10.3.0"
   },
   "files": [
     "package.json",
