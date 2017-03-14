@@ -147,7 +147,7 @@ var Brolog = (function() {
 
   function log(level, prefix, message) {
     var args = Array.prototype.slice.call(arguments, 3) || []
-    args.unshift(level + ' ' + prefix + ' ' + (message || ''))
+    args.unshift(timestamp() + ' ' + level + ' ' + prefix + ' ' + (message || ''))
 
     switch (level) {
       case 'ERR':
@@ -217,6 +217,18 @@ var Brolog = (function() {
     log.apply(this, args)
   }
 
+  function timestamp() {
+    const date = new Date()
+    let hour = date.getHours()
+    let min = date.getMinutes()
+    let sec = date.getSeconds()
+
+    if (sec < 10) { sec = '0' + sec }
+    if (min < 10) { min = '0' + min }
+    if (hour < 10) { hour = '0' + hour }
+
+    return (hour + ':' + min + ':' + sec)
+  }
 }())
 
   // module.exports = Brolog.default = Brolog.Brolog = Brolog
