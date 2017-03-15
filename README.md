@@ -167,7 +167,13 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 # Changelog
 
-## v0.3.7 (master)
+## v0.4 (master)
+
+1. added timestamp to log output
+1. fix CI back to work
+1. added CD to auto deploy source code to NPM after passed CI
+
+## v0.3.7 (Aug 2016)
 
 1. added End to End test with Angular
 1. supported include by `script` tag
