@@ -1,7 +1,11 @@
 'use strict'
 
 const test = require('tap').test
-const sinon = require('sinon')
+
+const sinon     = require('sinon')
+const sinonTest = require('sinon-test')
+sinon.test      = sinonTest.configureTest(sinon)
+sinon.testCase  = sinonTest.configureTestCase(sinon)
 
 const Brolog = require('../..')
 
