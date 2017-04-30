@@ -7,9 +7,10 @@
   "scripts": {
     "dist": "rm -fr dist/ && tsc",
     "e2e": "test/protractor.sh",
-    "lint": "node src/brolog.js",
+    "lint": "npm run tslint",
+    "tslint": "tslint src/**/*.ts && tsc --noEmit",
     "test": "npm run unit && npm run e2e",
-    "unit": "tap -R tap test/unit/**/*.spec.js"
+    "unit": "tap -R tap test/unit/**/*.spec.ts"
   },
   "repository": {
     "type": "git",
@@ -35,7 +36,9 @@
     "protractor": "^5.1.1",
     "sinon": "^2.1.0",
     "sinon-test": "^1.0.1",
-    "tap": "^10.3.0"
+    "tap": "^10.3.0",
+    "tslint": "^5.1.0",
+    "typescript": "^2.3.2"
   },
   "files": [
     "package.json",
