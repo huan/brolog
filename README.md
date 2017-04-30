@@ -167,6 +167,13 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 # Changelog
 
+## v1.0.0 (May 2017)
+
+Compatible with AOT & WebPack with Angular v4.0
+
+1. Rewrite from JavaScript to TypeScript
+1. Add UMD/AMD/System Module support
+
 ## v0.4 (Mar 2017)
 
 1. added timestamp to log output
