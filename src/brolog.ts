@@ -32,19 +32,19 @@ export enum LogLevel {
 }
 
 export class Brolog {
-  static logLevel = LogLevel.info
+  private static logLevel = LogLevel.info
 
   constructor() {
     // console.log('constructor')
   }
 
-  static instance(levelName?: LevelName): Brolog {
+  public static instance(levelName?: LevelName): Brolog {
     Brolog.level(levelName)
     return singleton
   }
 
-  level(levelName?: LevelName) { return Brolog.level(levelName) }
-  static level(levelName?: LevelName): LevelName {
+  public level(levelName?: LevelName) { return Brolog.level(levelName) }
+  public static level(levelName?: LevelName): LevelName {
     if (levelName) {
       // console.log('levelName: ' + levelName)
       // http://stackoverflow.com/a/21294925/1123955
@@ -60,9 +60,9 @@ export class Brolog {
     return LogLevel[Brolog.logLevel] as LevelName
   }
 
-  log(levelTitle: LevelTitle, prefix: string, message: string) { return Brolog.log(levelTitle, prefix, message) }
-  static log(levelTitle: LevelTitle, prefix: string, message: string) {
-    var args = Array.prototype.slice.call(arguments, 3) || []
+  // private log(levelTitle: LevelTitle, prefix: string, message: string) { return Brolog.log(levelTitle, prefix, message) }
+  private static log(levelTitle: LevelTitle, prefix: string, message: string) {
+    const args = Array.prototype.slice.call(arguments, 3) || []
     args.unshift(Brolog.timestamp() + ' ' + levelTitle + ' ' + prefix + ' ' + (message || ''))
 
     switch (levelTitle) {
@@ -83,8 +83,8 @@ export class Brolog {
     }
   }
 
-  error(prefix: string, ...args: any[]): void { return Brolog.error.apply(null, arguments)}
-  static error(prefix: string, ...args: any[]): void {
+  public error(prefix: string, ...args: any[]): void { return Brolog.error.apply(null, arguments)}
+  public static error(prefix: string, ...args: any[]): void {
     if (Brolog.logLevel < LogLevel.error) {
       return
     }
@@ -94,8 +94,8 @@ export class Brolog {
     Brolog.log.apply(null, argList)
   }
 
-  warn(prefix: string, ...args: any[]): void { return Brolog.warn.apply(null, arguments)}
-  static warn(prefix: string, ...args: any[]): void {
+  public warn(prefix: string, ...args: any[]): void { return Brolog.warn.apply(null, arguments)}
+  public static warn(prefix: string, ...args: any[]): void {
     if (Brolog.logLevel < LogLevel.warn) {
       return
     }
@@ -105,8 +105,8 @@ export class Brolog {
     Brolog.log.apply(null, argList)
   }
 
-  info(prefix: string, ...args: any[]): void { return Brolog.info.apply(null, arguments)}
-  static info(prefix: string, ...args: any[]): void {
+  public info(prefix: string, ...args: any[]): void { return Brolog.info.apply(null, arguments)}
+  public static info(prefix: string, ...args: any[]): void {
     if (Brolog.logLevel < LogLevel.info) {
       return
     }
@@ -116,8 +116,8 @@ export class Brolog {
     Brolog.log.apply(null, argList)
   }
 
-  verbose(prefix: string, ...args: any[]): void { return Brolog.verbose.apply(null, arguments)}
-  static verbose(prefix: string, ...args: any[]): void {
+  public verbose(prefix: string, ...args: any[]): void { return Brolog.verbose.apply(null, arguments)}
+  public static verbose(prefix: string, ...args: any[]): void {
     if (Brolog.logLevel < LogLevel.verbose) {
       return
     }
@@ -127,8 +127,8 @@ export class Brolog {
     Brolog.log.apply(null, argList)
   }
 
-  silly(prefix: string, ...args: any[]): void { return Brolog.silly.apply(null, arguments)}
-  static silly(prefix: string, ...args: any[]): void {
+  public silly(prefix: string, ...args: any[]): void { return Brolog.silly.apply(null, arguments)}
+  public static silly(prefix: string, ...args: any[]): void {
     if (Brolog.logLevel < LogLevel.silly) {
       return
     }
@@ -138,11 +138,11 @@ export class Brolog {
     Brolog.log.apply(null, argList)
   }
 
-  static timestamp() {
+  private static timestamp() {
     const date  = new Date()
-    let hour    = date.getHours()
-    let min     = date.getMinutes()
-    let sec     = date.getSeconds()
+    const hour    = date.getHours()
+    const min     = date.getMinutes()
+    const sec     = date.getSeconds()
 
     let stampStr = ''
 

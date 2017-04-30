@@ -6,9 +6,6 @@
       "arguments",
       "statements"
     ],
-    "jsdoc-require": [
-      false
-    ],
    "ban": false,
     "class-name": true,
     "comment-format": [
