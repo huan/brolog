@@ -1,11 +1,16 @@
 {
   "name": "brolog",
-  "version": "0.4.3",
+  "version": "1.0.0",
   "description": "Npmlog like logger for Browser",
   "main": "dist/brolog.js",
   "typings": "dist/brolog.d.ts",
   "scripts": {
-    "dist": "rm -fr dist/ && tsc",
+    "clean": "rm -fr dist/",
+    "dist": "npm run clean && npm run build:umd && npm run build && npm run build:amd && npm run build:system",
+    "build": "tsc",
+    "build:umd": "tsc --module umd --outDir dist/umd",
+    "build:amd": "tsc --module amd --outDir dist/amd",
+    "build:system": "tsc --module system --outDir dist/system",
     "e2e": "test/protractor.sh",
     "lint": "npm run tslint",
     "tslint": "tslint src/**/*.ts && tsc --noEmit",
@@ -45,8 +50,6 @@
     "README.md",
     "CHANGELOG.md",
     "LICENSE",
-    "index.js",
-    "index.d.ts",
-    "src/brolog.js"
+    "dist/"
   ]
 }
