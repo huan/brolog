@@ -1,6 +1,6 @@
 {
   "name": "brolog",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Npmlog like logger for Browser",
   "main": "dist/brolog.js",
   "typings": "dist/brolog.d.ts",
