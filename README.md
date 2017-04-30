@@ -7,8 +7,8 @@ Brolog is Logger for Angular in Browser like Npmlog.
 
 # Feature
 
-1. Support import with TypeScript. (declaration file [index.d.ts](https://github.com/zixia/brolog/blob/master/index.d.ts))
-1. Support Angular2 & SystemJS. (brolog-angular-demo project [git repository](https://github.com/zixia/brolog-angular-demo))
+1. Support TypeScript.
+1. Support Angular 4 & SystemJS. (brolog-angular-demo project [git repository](https://github.com/zixia/brolog-angular-demo))
 1. Support show **real** line number in browser console.
     > What I really get frustrated by is that I cannot wrap console.* and preserve line numbers
 
@@ -26,6 +26,8 @@ Here's two example:
 
 You can enable Brolog in your page by simple add the following `script` tag.
 
+_FIXME: might broken on v1.0_
+
 ```
 <script src="//unpkg.com/brolog"></script>
 ```
@@ -39,7 +41,7 @@ You can enable Brolog in your page by simple add the following `script` tag.
     <h1>Brolog in Browser Demo</h1>
     <script>
 
-      var log = Brolog('VERBOSE')
+      var log = Brolog.instance('verbose')
 
       log.info('Test', '123 info message')
       log.verbose('Test', '123 verbose message')
@@ -65,7 +67,7 @@ Link: [Brolog Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
   ```
   System.config({
     map: {
-      brolog: 'node_modules/brolog/index.js'
+      brolog: 'node_modules/brolog/dist/brolog.js'
     }
   })
   ```
@@ -75,20 +77,22 @@ Link: [Brolog Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
   import { Brolog } from 'brolog'
   ```
 
-1. inject to bootstrap
+1. inject to @NgModule
   ```
-  bootstrap(LogApp, [
-    Brolog('VERBOSE')
-  ])
+  providers: [
+    {
+      provide: Brolog,
+      useFactory: function brologFactory() { return Brolog.instance('silly') },
+    },
+  ]
   ```
 
 1. inject to constructor
   ```
   class LogApp {
     constructor(
-      @Inject(Brolog) private log
-    ) {
-    }
+      private log: Brolog
+    ) {}
   }
   ```
 
@@ -121,7 +125,7 @@ var log = require('brolog')
 
 ## log.level()
 
-* {String}
+* {String} 'silent' | 'error' | 'warn' | 'info' | 'verbose' | 'silly'
 
 The level to display logs at.  Any logs at or above this level will be
 displayed.  The special level `silent` will prevent anything from being
@@ -167,7 +171,7 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 # Changelog
 
-## v1.0.0 (May 2017)
+## v1.0 (May 2017)
 
 Compatible with AOT & WebPack with Angular v4.0
 
