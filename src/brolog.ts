@@ -49,7 +49,7 @@ export class Brolog {
       // console.log('levelName: ' + levelName)
       // http://stackoverflow.com/a/21294925/1123955
       // XXX: fix the any here?
-      const logLevel = LogLevel[levelName as any] as any
+      const logLevel = LogLevel[levelName.toLowerCase() as any] as any
       if (logLevel === undefined) { // be aware of number 0 here
         // console.log(logLevel)
         // console.log(LogLevel)
