@@ -4,7 +4,7 @@ set -e # http://stackoverflow.com/a/3474556/1123955
 APP_DIR="/tmp/brolog-angular-demo.$$"
 GIT_URL="https://github.com/zixia/brolog-angular-demo.git"
 
-sudo npm link
+npm link
 webdriver-manager update
 
 git clone "$GIT_URL" "$APP_DIR"
