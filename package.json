@@ -14,7 +14,7 @@
     "e2e": "test/protractor.sh",
     "lint": "npm run tslint",
     "tslint": "tslint src/**/*.ts && tsc --noEmit",
-    "test": "npm run unit && npm run e2e",
+    "test": "npm run dist && npm run unit && npm run e2e",
     "unit": "tap -R tap test/unit/**/*.spec.ts"
   },
   "repository": {
