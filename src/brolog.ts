@@ -158,4 +158,5 @@ export class Brolog {
 
 export const preSetInstance = new Brolog()
 
+export { preSetInstance as log }
 export default preSetInstance
