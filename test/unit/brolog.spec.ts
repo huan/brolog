@@ -12,8 +12,8 @@ import * as sinonTest from 'sinon-test'
 sinon.test      = sinonTest.configureTest(sinon)
 sinon.testCase  = sinonTest.configureTestCase(sinon)
 
-import { Brolog } from '../../dist/'
-import log from '../../dist/'
+import { Brolog } from '../../'
+import log from '../../'
 
 test('Brolog factory/service/function init test', (t: any) => {
 

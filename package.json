@@ -2,8 +2,8 @@
   "name": "brolog",
   "version": "0.4.3",
   "description": "Npmlog like logger for Browser",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "dist/brolog.js",
+  "typings": "dist/brolog.d.ts",
   "scripts": {
     "dist": "rm -fr dist/ && tsc",
     "e2e": "test/protractor.sh",
