@@ -40,7 +40,7 @@ export class Brolog {
 
   public static instance(levelName?: LevelName): Brolog {
     Brolog.level(levelName)
-    return singleton
+    return preSetInstance
   }
 
   public level(levelName?: LevelName) { return Brolog.level(levelName) }
@@ -156,6 +156,6 @@ export class Brolog {
   }
 }
 
-export const singleton = new Brolog()
+export const preSetInstance = new Brolog()
 
-export default singleton
+export default preSetInstance
