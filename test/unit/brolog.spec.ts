@@ -24,7 +24,7 @@ test('Brolog factory/service/function init test', (t: any) => {
    * Raw
    *
    */
-  var l = Brolog.level()
+  let l = Brolog.level()
   t.equal(l, 'info', 'should has default level `info`')
 
   l = Brolog.level(EXPECTED_LEVEL)
@@ -35,11 +35,11 @@ test('Brolog factory/service/function init test', (t: any) => {
    * Instance
    *
    */
-  var LogInstance = Brolog.instance(EXPECTED_LEVEL)
-  t.equal(typeof LogInstance, 'object', 'should return a object class when we call Brolog as instance')
-  t.equal(LogInstance, log, 'should return a instance as default exported log')
+  const logInstance = Brolog.instance(EXPECTED_LEVEL)
+  t.equal(typeof logInstance, 'object', 'should return a object class when we call Brolog as instance')
+  t.equal(logInstance, log, 'should return a instance as default exported log')
 
-  var ll = log.level()
+  let ll = log.level()
   t.equal(ll, EXPECTED_LEVEL, 'should has current level as EXPECTED_LEVEL after factory & class init')
 
   /**
@@ -93,12 +93,12 @@ test('Brolog log level test', t => {
  * because monkey patch is not recover when it finish
  *
  */
-test('Brolog filter test', t => {
+test('Brolog level filter test', t => {
   const logFuncList = [
     'error'
     , 'warn'
     , 'info'
-    , 'log'
+    , 'log',
   ]
 
   let log2: Brolog
@@ -158,5 +158,76 @@ test('Brolog filter test', t => {
     logger.info('Test', 'info message')
     logger.verbose('Test', 'verbose message')
     logger.silly('Test', 'silly message')
+  }
+})
+
+test('Brolog prefix filter test', t => {
+  const logFuncList = [
+    'error'
+    , 'warn'
+    , 'info'
+    , 'log',
+  ]
+
+  log.level('info')
+  log.prefix(/Show/)
+
+  sinon.test(function() {
+    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    doLogHide(log)
+    t.equal(console.error['callCount'] , 0, 'should call error 0 time with prefix Hide')
+    t.equal(console.warn['callCount']  , 0, 'should call warn 0 time with prefix Hide')
+    t.equal(console.info['callCount']  , 0, 'should call info 0 time with prefix Hide')
+    t.equal(console.log['callCount']   , 0, 'should call log2(verbose + silly) 0 time with prefix Hide')
+  }).apply(log)
+
+  sinon.test(function() {
+    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    doLogShow(log)
+    t.equal(console.error['callCount'] , 1, 'should call error 1 time with prefix Show')
+    t.equal(console.warn['callCount']  , 1, 'should call warn 1 time with prefix Show')
+    t.equal(console.info['callCount']  , 1, 'should call info 1 time with prefix Show')
+    t.equal(console.log['callCount']   , 0, 'should call log2(verbose + silly) 1 time with prefix Show')
+  }).apply(log)
+
+  log.level('silent')
+
+  sinon.test(function() {
+    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    doLogShow(log)
+    t.equal(console.error['callCount'] , 0, 'should call error 0 time with prefix Show with level silent')
+    t.equal(console.warn['callCount']  , 0, 'should call warn 0 time with prefix Show with level silent')
+    t.equal(console.info['callCount']  , 0, 'should call info 0 time with prefix Show with level silent')
+    t.equal(console.log['callCount']   , 0, 'should call log2(verbose + silly) 0 time with prefix Show with level silent')
+  }).apply(log)
+
+  log.level('silly')
+
+  sinon.test(function() {
+    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    doLogShow(log)
+    t.equal(console.error['callCount'] , 1, 'should call error 1 time with prefix Show with level silly')
+    t.equal(console.warn['callCount']  , 1, 'should call warn 1 time with prefix Show with level silly')
+    t.equal(console.info['callCount']  , 1, 'should call info 1 time with prefix Show with level silly')
+    t.equal(console.log['callCount']   , 2, 'should call log2(verbose + silly) 2 time with prefix Show with level silly')
+  }).apply(log)
+
+  t.end()
+
+  ////////////////////////////////////////////
+  function doLogHide(logger) {
+    logger.error('Hide', 'error message')
+    logger.warn('Hide', 'warn message')
+    logger.info('Hide', 'info message')
+    logger.verbose('Hide', 'verbose message')
+    logger.silly('Hide', 'silly message')
+  }
+
+  function doLogShow(logger) {
+    logger.error('Show', 'error message')
+    logger.warn('Show', 'warn message')
+    logger.info('Show', 'info message')
+    logger.verbose('Show', 'verbose message')
+    logger.silly('Show', 'silly message')
   }
 })

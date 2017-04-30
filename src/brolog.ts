@@ -33,14 +33,33 @@ export enum LogLevel {
 
 export class Brolog {
   private static logLevel = LogLevel.info
+  private static prefixFilter: RegExp = /.*/ // Match all by default
 
   constructor() {
     // console.log('constructor')
   }
 
-  public static instance(levelName?: LevelName): Brolog {
+  public static instance(
+    levelName?: LevelName,
+    prefix?:    string | RegExp,
+  ): Brolog {
     Brolog.level(levelName)
+    Brolog.prefix(prefix)
     return preSetInstance
+  }
+
+  public prefix(filter?: string | RegExp): RegExp { return Brolog.prefix(filter) }
+  public static prefix(filter?: string | RegExp): RegExp {
+    if (filter) {
+      if (typeof filter === 'string') {
+        Brolog.prefixFilter = new RegExp(filter, 'i')
+      } else if (filter instanceof RegExp) {
+        Brolog.prefixFilter = filter
+      } else {
+        throw new Error('unsupported prefix filter')
+      }
+    }
+    return Brolog.prefixFilter
   }
 
   public level(levelName?: LevelName) { return Brolog.level(levelName) }
@@ -62,6 +81,10 @@ export class Brolog {
 
   // private log(levelTitle: LevelTitle, prefix: string, message: string) { return Brolog.log(levelTitle, prefix, message) }
   private static log(levelTitle: LevelTitle, prefix: string, message: string) {
+    if (!Brolog.prefixFilter.test(prefix)) {
+      return  // skip message not match prefix filter
+    }
+
     const args = Array.prototype.slice.call(arguments, 3) || []
     args.unshift(Brolog.timestamp() + ' ' + levelTitle + ' ' + prefix + ' ' + (message || ''))
 
