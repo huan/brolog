@@ -169,11 +169,11 @@ export class Brolog {
 
     let stampStr = ''
 
-    stampStr += (sec < 10)  ? ('0' + sec)   : sec
+    stampStr += (hour < 10) ? ('0' + hour)  : hour
     stampStr += ':'
     stampStr += (min < 10)  ? ('0' + min)   : min
     stampStr += ':'
-    stampStr += (hour < 10) ? ('0' + hour)  : hour
+    stampStr += (sec < 10)  ? ('0' + sec)   : sec
 
     return stampStr
   }
