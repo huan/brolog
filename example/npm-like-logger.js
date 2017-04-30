@@ -1,31 +1,23 @@
-const Brolog = require('..')
+const { Brolog } = require('../')
 
-console.log(typeof Brolog)
-
-const logClass = Brolog('SILLY')
-
-console.log(typeof logClass)
-
-const log = new logClass()
-
-console.log(typeof log)
+const log = new Brolog()
 
 function demo() {
 
   console.log('#### Set Level to SILLY ####')
-  log.level('SILLY')
+  log.level('silly')
   doLog()
 
-  log.level('INFO')
+  log.level('info')
   console.log('#### Set Level to INFO ####')
   doLog()
 
   console.log('#### Set Level to ERR ####')
-  log.level('ERR')
+  log.level('error')
   doLog()
 
   console.log('#### Set Level to SILENT ####')
-  log.level('SILENT')
+  log.level('silent')
   doLog()
 
   console.log('#### BroLog Test Done ####')
