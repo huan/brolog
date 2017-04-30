@@ -1,0 +1,13 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "typescript.tsdk": "node_modules/typescript/lib"
+  , "editor.tabSize": 2
+  , "window.zoomLevel": 0
+  , "editor.minimap.enabled": true
+  , "files.exclude": {
+      "node_modules/": true
+    , "dist": true
+  }
+  ,
+  "editor.useTabStops": false
+}

@@ -40,3 +40,4 @@ jspm_packages
 
 t/
 .*.swp
+dist/

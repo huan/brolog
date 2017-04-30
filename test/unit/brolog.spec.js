@@ -7,7 +7,7 @@ const sinonTest = require('sinon-test')
 sinon.test      = sinonTest.configureTest(sinon)
 sinon.testCase  = sinonTest.configureTestCase(sinon)
 
-const Brolog = require('../..')
+const { Brolog } = require('../../dist/')
 
 test('Brolog factory/service/function init test', t => {
 

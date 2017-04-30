@@ -167,7 +167,7 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 # Changelog
 
-## v0.4 (master)
+## v0.4 (Mar 2017)
 
 1. added timestamp to log output
 1. fix CI back to work
