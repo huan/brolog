@@ -80,10 +80,7 @@ Link: [Brolog Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
 1. inject to @NgModule
   ```
   providers: [
-    {
-      provide: Brolog,
-      useFactory: function brologFactory() { return Brolog.instance('silly') },
-    },
+    Brolog,
   ]
   ```
 
