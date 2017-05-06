@@ -39,6 +39,7 @@ jspm_packages
 .DS_Store
 
 t/
+t.*
 .*.swp
 dist/
 /brolog-*.*.*.tgz

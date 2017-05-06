@@ -6,16 +6,14 @@ const { test } = require('tap')
 
 import * as sinon from 'sinon'
 import * as sinonTest from 'sinon-test'
-// const sinon     = require('sinon')
-// const sinonTest = require('sinon-test')
 
 sinon.test      = sinonTest.configureTest(sinon)
 sinon.testCase  = sinonTest.configureTestCase(sinon)
 
-import { Brolog } from '../../'
-import log from '../../'
+import { Brolog } from '../../src/brolog'
+import log from '../../src/brolog'
 
-test('Brolog factory/service/function init test', (t: any) => {
+test('Brolog static/instance construct test', (t: any) => {
 
   const EXPECTED_LEVEL = 'silly'
 
@@ -56,7 +54,7 @@ test('Brolog factory/service/function init test', (t: any) => {
   t.end()
 })
 
-test('Brolog log level test', t => {
+test('Brolog global log level test', t => {
   const log = Brolog
   let l // level
 
@@ -93,7 +91,7 @@ test('Brolog log level test', t => {
  * because monkey patch is not recover when it finish
  *
  */
-test('Brolog level filter test', t => {
+test('Brolog global instance level filter test', t => {
   const logFuncList = [
     'error'
     , 'warn'
@@ -161,7 +159,7 @@ test('Brolog level filter test', t => {
   }
 })
 
-test('Brolog prefix filter test', t => {
+test('Brolog global instance prefix filter test', t => {
   const logFuncList = [
     'error'
     , 'warn'
@@ -230,4 +228,28 @@ test('Brolog prefix filter test', t => {
     logger.verbose('Show', 'verbose message')
     logger.silly('Show', 'silly message')
   }
+})
+
+test('Brolog individual instance prefix filter test', t => {
+
+  // reset Brolog new instance default
+  log.level('info')
+  log.prefix(/.*/)
+
+  const log1 = new Brolog()
+  const log2 = new Brolog()
+
+  log2.level('silly')
+  log2.prefix('faint')
+
+  t.notEqual(log1, log, 'should not as the same as global instance')
+  t.notEqual(log1, log2, 'should not as the same between new instances')
+
+  t.equal(log1.level(), 'info', 'should stick with default level `info`')
+  t.equal(log1.prefix().toString(), '/.*/', 'should stick with default prefix filter by default')
+
+  t.equal(log2.level(), 'silly', 'should be set level `silly`')
+  t.equal(log2.prefix().toString(), '/faint/i', 'should be set prefix filter to /faint/i')
+
+  t.end()
 })

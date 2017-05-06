@@ -36,7 +36,13 @@ export class Brolog {
   private prefixFilter: RegExp = /.*/ // Match all by default
 
   constructor() {
-    // console.log('constructor')
+    const instance = Brolog.instance()
+    if (instance) { // skip the first init, which is for the globalInstance itself
+      // set level/prefix of this instance
+      // default to the global instance
+      this.level(instance.level())
+      this.prefix(instance.prefix())
+    }
   }
 
   /**
@@ -47,12 +53,12 @@ export class Brolog {
     prefix?:    string | RegExp,
   ): Brolog {
     if (levelName) {
-      globalBrolog.level(levelName)
+      sharedInstance.level(levelName)
     }
     if (prefix) {
-      globalBrolog.prefix(prefix)
+      sharedInstance.prefix(prefix)
     }
-    return globalBrolog
+    return sharedInstance
   }
 
   public static prefix(filter?: string | RegExp): RegExp {
@@ -201,7 +207,5 @@ export class Brolog {
   }
 }
 
-export const globalBrolog = new Brolog()
-
-export { globalBrolog as log }
-export default globalBrolog
+export const sharedInstance = new Brolog()
+export default sharedInstance
