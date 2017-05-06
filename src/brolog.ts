@@ -207,5 +207,13 @@ export class Brolog {
   }
 }
 
+/**
+ * install UMD module to browser global window
+ * http://stackoverflow.com/a/35298272/1123955
+ */
+if (typeof window !== 'undefined') {
+  (<any>window).Brolog = Brolog;
+}
+
 export const sharedInstance = new Brolog()
 export default sharedInstance
