@@ -168,7 +168,11 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 # Changelog
 
-## v1.0 (May 2017)
+## V1.1 (May 2017)
+
+1. Support to create individual instances.(We only have one singleton instance before)
+
+## v1.0 (Apr 2017)
 
 Compatible with AOT & WebPack with Angular v4.0
 
@@ -197,7 +201,6 @@ Compatible with AOT & WebPack with Angular v4.0
 1. supported show real line number by set blackbox
 1. added TypeScript definition file
 1. supported work with SystemJS & Angular
-
 
 # Reference
 
