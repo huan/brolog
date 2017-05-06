@@ -7,13 +7,14 @@ Brolog is Logger for Angular in Browser like Npmlog.
 
 # Feature
 
-1. Support TypeScript.
-1. Support Angular 4 & SystemJS. (brolog-angular-demo project [git repository](https://github.com/zixia/brolog-angular-demo))
+1. Out-of-Box Browser Support.(with `<script src='//unpkg.com/brolog'></script>`)
+1. Out-of-Box Angular & SystemJS Support.(See: [brolog-angular-demo project](https://github.com/zixia/brolog-angular-demo))
+1. Npmlog compatible interface.(i.e. `log.verbose('Brolog', 'Hello, %s', 'world!'')`)
+1. Native TypeScript Support.(With types)
+1. Node.js Support.([Node.js example](https://github.com/zixia/brolog/blob/master/example/npm-like-logger.js))
 1. Support show **real** line number in browser console.
     > What I really get frustrated by is that I cannot wrap console.* and preserve line numbers
-
     [We enabled this in Chrome DevTools via blackboxing a bit ago.](https://gist.github.com/paulirish/c307a5a585ddbcc17242)
-1. Can be used by nodejs if you like. (nodejs example [here](https://github.com/zixia/brolog/blob/master/example/npm-like-logger.js))
 
 # Example
 
@@ -25,8 +26,6 @@ Here's two example:
 ## 1. Super Easy to use in Browser
 
 You can enable Brolog in your page by simple add the following `script` tag.
-
-_FIXME: might broken on v1.0_
 
 ```
 <script src="//unpkg.com/brolog"></script>
@@ -45,14 +44,14 @@ _FIXME: might broken on v1.0_
 
       log.info('Test', '123 info message')
       log.verbose('Test', '123 verbose message')
-      log.silly('Test', '123 silly message')
+      log.silly('Test', '123 silly message(should not appear)')
 
     </script>
   </body>
 </html>
 ```
 
-Link: [Brolog Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
+Link: [Brolog Live demo](http://zixia.github.io/brolog)
 
 ## 2. Quick Setup to use in Angular
 
@@ -67,7 +66,7 @@ Link: [Brolog Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
   ```
   System.config({
     map: {
-      brolog: 'node_modules/brolog/dist/brolog.js'
+      brolog: 'node_modules/brolog/bundles/brolog.js'
     }
   })
   ```
@@ -97,20 +96,22 @@ Link: [Brolog Live demo on Plunker](http://embed.plnkr.co/tvO9MHscHuOM5XvZRIU6/)
   ```
   class LogApp {
     testLog() {
-      this.log.verbose('Brolog', 'test log %d', 123)
+      this.log.verbose('Brolog', 'test log:%s', 123)
       // this will log to browser console
     }
   }
   ```
 
-More details, please see the `brolog-angular-demo` git repository [here](https://github.com/zixia/brolog-angular-demo).
+More details, please see the `brolog-angular-demo` git repository at [here](https://github.com/zixia/brolog-angular-demo).
 
-Link: [Brolog ♥ Angular Live demo on Plunker](https://embed.plnkr.co/H8AqilBEAvHX6XvKarI7/)
+Link: [Brolog ♥ Angular Live demo](http://zixia.github.io/brolog)
 
 # Basic Usage
 
 ```
-var log = require('brolog')
+import { Brolog } from 'brolog'
+
+const log = new Brolog()
 
 // additional stuff ---------------------------+
 // message ----------+                         |
@@ -120,7 +121,7 @@ var log = require('brolog')
     log.info('fyi', 'I have a kitty cat: %j', myKittyCat)
 ```
 
-## log.level()
+## log.level(newLevel)
 
 * {String} 'silent' | 'error' | 'warn' | 'info' | 'verbose' | 'silly'
 
@@ -209,4 +210,3 @@ Compatible with AOT & WebPack with Angular v4.0
 3. [Angular Dependency injection tokens](https://angular.io/docs/ts/latest/guide/dependency-injection.html#!#token)
 4. [Angular 2 Errors](https://daveceddia.com/angular-2-errors/)
 1. [ES6 vs ES2015 - What to call a JavaScript version?](https://bytearcher.com/articles/es6-vs-es2015-name/)
-
