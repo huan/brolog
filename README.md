@@ -14,6 +14,7 @@ Brolog is Logger for Angular in Browser like Npmlog.
 1. Node.js Support.([Node.js example](https://github.com/zixia/brolog/blob/master/example/npm-like-logger.js))
 1. Support show **real** line number in browser console.
     > What I really get frustrated by is that I cannot wrap console.* and preserve line numbers
+    
     [We enabled this in Chrome DevTools via blackboxing a bit ago.](https://gist.github.com/paulirish/c307a5a585ddbcc17242)
 
 # Example
