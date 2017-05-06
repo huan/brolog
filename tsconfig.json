@@ -21,12 +21,12 @@
 
     , "lib": [
         "dom"
-      , "es2015"
+      , "es6"
     ]
     , "module": "commonjs"
     , "moduleResolution": "node"
     , "sourceMap": true
-    , "target": "es5"
+    , "target": "es6"
   }
   , "include": [
     "src/brolog.ts"

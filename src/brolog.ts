@@ -1,8 +1,8 @@
 /*!
- * Brolog JavaScript Library v0.2.0
+ * Brolog JavaScript Library v1.1.0
  * https://github.com/zixia/brolog
  *
- * Copyright Zhuohuan LI <zixia@zixia.net>
+ * Copyright Huan LI <zixia@zixia.net>
  * Released under the ISC license
  * https://github.com/zixia/brolog/blob/master/LICENSE
  *

@@ -41,5 +41,6 @@ jspm_packages
 t/
 t.*
 .*.swp
-dist/
+/dist/
 /brolog-*.*.*.tgz
+/bundles/

@@ -205,3 +205,4 @@ Compatible with AOT & WebPack with Angular v4.0
 2. [Writing Declaration Files](https://www.typescriptlang.org/docs/handbook/writing-declaration-files.html)
 3. [Angular Dependency injection tokens](https://angular.io/docs/ts/latest/guide/dependency-injection.html#!#token)
 4. [Angular 2 Errors](https://daveceddia.com/angular-2-errors/)
+1. [ES6 vs ES2015 - What to call a JavaScript version?](https://bytearcher.com/articles/es6-vs-es2015-name/)
