@@ -11,11 +11,12 @@ sinon.test      = sinonTest.configureTest(sinon)
 sinon.testCase  = sinonTest.configureTestCase(sinon)
 
 import { Brolog } from '../../src/brolog'
-import log from '../../src/brolog'
 
 test('Brolog static/instance construct test', (t: any) => {
 
   const EXPECTED_LEVEL = 'silly'
+
+  const log = Brolog.instance('info')
 
   /**
    *
@@ -115,7 +116,7 @@ test('Brolog global instance level filter test', t => {
     t.equal(console.log['callCount'], 2, 'should call log2(verbose + silly) 2 time with level SILLY')
   }).apply(log2)
 
-  log2 = log
+  log2 = Brolog.instance()
   log2.level('silent')
   sinon.test(function() {
     logFuncList.forEach(logFunc => this.stub(console, logFunc))
@@ -167,8 +168,8 @@ test('Brolog global instance prefix filter test', t => {
     , 'log',
   ]
 
-  log.level('info')
-  log.prefix(/Show/)
+  // filter log by prefix match /Show/
+  const log = Brolog.instance('info', /Show/)
 
   sinon.test(function() {
     logFuncList.forEach(logFunc => this.stub(console, logFunc))
@@ -232,9 +233,8 @@ test('Brolog global instance prefix filter test', t => {
 
 test('Brolog individual instance prefix filter test', t => {
 
-  // reset Brolog new instance default
-  log.level('info')
-  log.prefix(/.*/)
+  // important: reset all to default: 'info', /.*/
+  const log = Brolog.instance('info', /.*/)
 
   const log1 = new Brolog()
   const log2 = new Brolog()

@@ -22,7 +22,7 @@ export type LevelTitle = 'ERR'
                       | 'VERB'
                       | 'SILL'
 
-export enum LogLevel {
+enum LogLevel {
   silent  = 0,
   error   = 1,
   warn    = 2,
@@ -35,8 +35,10 @@ export class Brolog {
   private logLevel = LogLevel.info
   private prefixFilter: RegExp = /.*/ // Match all by default
 
+  private static _instance: Brolog
+
   constructor() {
-    const instance = Brolog.instance()
+    const instance = Brolog._instance
     if (instance) { // skip the first init, which is for the globalInstance itself
       // set level/prefix of this instance
       // default to the global instance
@@ -52,13 +54,16 @@ export class Brolog {
     levelName?: LevelName,
     prefix?:    string | RegExp,
   ): Brolog {
+    if (!this._instance) {
+      this._instance = new Brolog()
+    }
     if (levelName) {
-      sharedInstance.level(levelName)
+      this._instance.level(levelName)
     }
     if (prefix) {
-      sharedInstance.prefix(prefix)
+      this._instance.prefix(prefix)
     }
-    return sharedInstance
+    return this._instance
   }
 
   public static prefix(filter?: string | RegExp): RegExp {
@@ -206,14 +211,3 @@ export class Brolog {
     return stampStr
   }
 }
-
-/**
- * install UMD module to browser global window
- * http://stackoverflow.com/a/35298272/1123955
- */
-if (typeof window !== 'undefined') {
-  (<any>window).Brolog = Brolog;
-}
-
-export const sharedInstance = new Brolog()
-export default sharedInstance

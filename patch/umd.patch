@@ -1,0 +1,4 @@
+18a19,21
+>     else { // http://stackoverflow.com/questions/36935177/umd-syntax-with-fallback-global
+>       factory(null, window)
+>     }
