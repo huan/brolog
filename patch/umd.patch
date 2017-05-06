@@ -1,0 +1,4 @@
+4c4
+<             (factory((global.brolog = global.brolog || {})));
+---
+>             (factory(global));

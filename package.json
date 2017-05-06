@@ -6,7 +6,8 @@
   "types": "dist/brolog.d.ts",
   "scripts": {
     "clean": "rm -fr dist/* bundles/*",
-    "dist": "npm run clean && npm run build && npm run rollup && npm run es6to5",
+    "dist": "npm run clean && npm run build && npm run rollup && npm run es6to5 && npm run patch",
+    "patch": "patch < patch/umd.patch bundles/brolog.umd.js",
     "build": "tsc --module es6",
     "e2e": "test/protractor.sh",
     "lint": "npm run tslint",
