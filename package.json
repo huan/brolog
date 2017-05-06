@@ -51,6 +51,7 @@
     "README.md",
     "CHANGELOG.md",
     "LICENSE",
+    "bundles/",
     "dist/"
   ]
 }
