@@ -49,7 +49,7 @@ test('Brolog factory/service/function init test', (t: any) => {
    */
   const LEVEL_SILENT = 'silent'
   const log1 = new Brolog()
-  Brolog.level(LEVEL_SILENT)
+  log1.level(LEVEL_SILENT)
   ll = log1.level()
   t.equal(ll, LEVEL_SILENT, 'should has current level as LEVEL_SILENT after function init')
 

@@ -32,38 +32,49 @@ export enum LogLevel {
 }
 
 export class Brolog {
-  private static logLevel = LogLevel.info
-  private static prefixFilter: RegExp = /.*/ // Match all by default
+  private logLevel = LogLevel.info
+  private prefixFilter: RegExp = /.*/ // Match all by default
 
   constructor() {
     // console.log('constructor')
   }
 
+  /**
+   * Create a global Brolog Instance for sharing between modules
+   */
   public static instance(
     levelName?: LevelName,
     prefix?:    string | RegExp,
   ): Brolog {
-    Brolog.level(levelName)
-    Brolog.prefix(prefix)
-    return preSetInstance
+    if (levelName) {
+      globalBrolog.level(levelName)
+    }
+    if (prefix) {
+      globalBrolog.prefix(prefix)
+    }
+    return globalBrolog
   }
 
-  public prefix(filter?: string | RegExp): RegExp { return Brolog.prefix(filter) }
   public static prefix(filter?: string | RegExp): RegExp {
+    return Brolog.instance().prefix(filter)
+  }
+  public prefix(filter?: string | RegExp): RegExp {
     if (filter) {
       if (typeof filter === 'string') {
-        Brolog.prefixFilter = new RegExp(filter, 'i')
+        this.prefixFilter = new RegExp(filter, 'i')
       } else if (filter instanceof RegExp) {
-        Brolog.prefixFilter = filter
+        this.prefixFilter = filter
       } else {
         throw new Error('unsupported prefix filter')
       }
     }
-    return Brolog.prefixFilter
+    return this.prefixFilter
   }
 
-  public level(levelName?: LevelName) { return Brolog.level(levelName) }
   public static level(levelName?: LevelName): LevelName {
+    return Brolog.instance().level(levelName)
+  }
+  public level(levelName?: LevelName) {
     if (levelName) {
       // console.log('levelName: ' + levelName)
       // http://stackoverflow.com/a/21294925/1123955
@@ -74,14 +85,14 @@ export class Brolog {
         // console.log(LogLevel)
         throw new Error('level name error')
       }
-      Brolog.logLevel = logLevel
+      this.logLevel = logLevel
     }
-    return LogLevel[Brolog.logLevel] as LevelName
+    return LogLevel[this.logLevel] as LevelName
   }
 
   // private log(levelTitle: LevelTitle, prefix: string, message: string) { return Brolog.log(levelTitle, prefix, message) }
-  private static log(levelTitle: LevelTitle, prefix: string, message: string) {
-    if (!Brolog.prefixFilter.test(prefix)) {
+  private log(levelTitle: LevelTitle, prefix: string, message: string) {
+    if (!this.prefixFilter.test(prefix)) {
       return  // skip message not match prefix filter
     }
 
@@ -106,62 +117,73 @@ export class Brolog {
     }
   }
 
-  public error(prefix: string, ...args: any[]): void { return Brolog.error.apply(null, arguments)}
   public static error(prefix: string, ...args: any[]): void {
-    if (Brolog.logLevel < LogLevel.error) {
+    const instance = Brolog.instance()
+    return instance.error.apply(instance, arguments)
+  }
+  public error(prefix: string, ...args: any[]): void {
+    if (this.logLevel < LogLevel.error) {
       return
     }
-
     const argList = Array.prototype.slice.call(arguments)
     argList.unshift('ERR')
-    Brolog.log.apply(null, argList)
+    this.log.apply(this, argList)
   }
 
-  public warn(prefix: string, ...args: any[]): void { return Brolog.warn.apply(null, arguments)}
   public static warn(prefix: string, ...args: any[]): void {
-    if (Brolog.logLevel < LogLevel.warn) {
+    const instance = Brolog.instance()
+    return instance.warn.apply(instance, arguments)
+  }
+  public warn(prefix: string, ...args: any[]): void {
+    if (this.logLevel < LogLevel.warn) {
       return
     }
-
     const argList = Array.prototype.slice.call(arguments)
     argList.unshift('WARN')
-    Brolog.log.apply(null, argList)
+    this.log.apply(this, argList)
   }
 
-  public info(prefix: string, ...args: any[]): void { return Brolog.info.apply(null, arguments)}
   public static info(prefix: string, ...args: any[]): void {
-    if (Brolog.logLevel < LogLevel.info) {
+    const instance = Brolog.instance()
+    return instance.info.apply(instance, arguments)
+  }
+  public info(prefix: string, ...args: any[]): void {
+    if (this.logLevel < LogLevel.info) {
       return
     }
-
     const argList = Array.prototype.slice.call(arguments)
     argList.unshift('INFO')
-    Brolog.log.apply(null, argList)
+    this.log.apply(this, argList)
   }
 
-  public verbose(prefix: string, ...args: any[]): void { return Brolog.verbose.apply(null, arguments)}
   public static verbose(prefix: string, ...args: any[]): void {
-    if (Brolog.logLevel < LogLevel.verbose) {
+    const instance = Brolog.instance()
+    return instance.verbose.apply(instance, arguments)
+  }
+  public verbose(prefix: string, ...args: any[]): void {
+    if (this.logLevel < LogLevel.verbose) {
       return
     }
 
     const argList = Array.prototype.slice.call(arguments)
     argList.unshift('VERB')
-    Brolog.log.apply(null, argList)
+    this.log.apply(this, argList)
   }
 
-  public silly(prefix: string, ...args: any[]): void { return Brolog.silly.apply(null, arguments)}
   public static silly(prefix: string, ...args: any[]): void {
-    if (Brolog.logLevel < LogLevel.silly) {
+    const instance = Brolog.instance()
+    return instance.silly.apply(instance, arguments)
+  }
+  public silly(prefix: string, ...args: any[]): void {
+    if (this.logLevel < LogLevel.silly) {
       return
     }
-
     const argList = Array.prototype.slice.call(arguments)
     argList.unshift('SILL')
-    Brolog.log.apply(null, argList)
+    this.log.apply(this, argList)
   }
 
-  private static timestamp() {
+  public static timestamp() {
     const date  = new Date()
     const hour    = date.getHours()
     const min     = date.getMinutes()
@@ -179,7 +201,7 @@ export class Brolog {
   }
 }
 
-export const preSetInstance = new Brolog()
+export const globalBrolog = new Brolog()
 
-export { preSetInstance as log }
-export default preSetInstance
+export { globalBrolog as log }
+export default globalBrolog
