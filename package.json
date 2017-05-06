@@ -38,6 +38,7 @@
   "devDependencies": {
     "jasmine-spec-reporter": "^4.0.0",
     "protractor": "^5.1.1",
+    "rollup": "^0.41.6",
     "sinon": "^2.1.0",
     "sinon-test": "^1.0.1",
     "tap": "^10.3.0",
