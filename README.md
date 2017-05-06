@@ -170,7 +170,7 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 ## V1.1 (May 2017)
 
-1. Support to create individual instances.(We only have one singleton instance before)
+1. Support for creating individual instances.(We only have one singleton instance before)
 
 ## v1.0 (Apr 2017)
 
@@ -209,3 +209,4 @@ Compatible with AOT & WebPack with Angular v4.0
 3. [Angular Dependency injection tokens](https://angular.io/docs/ts/latest/guide/dependency-injection.html#!#token)
 4. [Angular 2 Errors](https://daveceddia.com/angular-2-errors/)
 1. [ES6 vs ES2015 - What to call a JavaScript version?](https://bytearcher.com/articles/es6-vs-es2015-name/)
+
