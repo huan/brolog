@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <script src="//unpkg.com/brolog"></script>
+  </head>
+  <body>
+    <h1>Brolog in Browser Demo</h1>
+    <script>
+
+      var log = Brolog.instance('verbose')
+
+      log.info('Test', '123 info message')
+      log.verbose('Test', '123 verbose message')
+      log.silly('Test', '123 silly message')
+
+    </script>
+  </body>
+</html>
