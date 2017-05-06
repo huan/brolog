@@ -2,3 +2,5 @@
 <             (factory((global.brolog = global.brolog || {})));
 ---
 >             (factory(global));
+227d226
+<     Object.defineProperty(exports, '__esModule', { value: true });
