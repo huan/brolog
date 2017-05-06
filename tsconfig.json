@@ -24,7 +24,7 @@
       , "es6"
     ]
     , "target": "es6"
-    , "module": "es6"
+    , "module": "commonjs"
     , "moduleResolution": "node"
     , "sourceMap": true
   }
