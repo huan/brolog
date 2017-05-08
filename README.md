@@ -176,7 +176,7 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 ## v1.0 (Apr 2017)
 
-Compatible with AOT & WebPack with Angular v4.0
+Compatible with AOT & WebPack with Angular v4
 
 1. Rewrite from JavaScript to TypeScript
 1. Add UMD/AMD/System Module support
