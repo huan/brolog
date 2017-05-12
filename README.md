@@ -174,6 +174,7 @@ Compatible with AOT & WebPack with Angular v4.0
 
 1. Rewrite from JavaScript to TypeScript
 1. Add UMD/AMD/System Module support
+1. Add a new method: `enableLogging()` to get/set logger
 
 ## v0.4 (Mar 2017)
 

@@ -80,9 +80,7 @@ export class Brolog implements Loggable {
       return Brolog.instance()
 
     } else if (typeof log.verbose === 'function') {
-      Brolog.instance().silly('Brolog', 'enableLogging() enabled/using %s as provided',
-                                        log.constructor && log.constructor.name
-                              )
+      Brolog.instance().silly('Brolog', 'enableLogging() enabled/using provided log')
       return log
     }
 
