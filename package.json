@@ -2,17 +2,17 @@
   "name": "brolog",
   "version": "1.0.17",
   "description": "Npmlog like logger for Browser",
-  "main": "dist/brolog.js",
-  "typings": "dist/brolog.d.ts",
+  "main": "bundles/brolog.umd.js",
+  "types": "dist/brolog.d.ts",
   "scripts": {
-    "clean": "rm -fr dist/",
-    "dist": "npm run clean && npm run build:umd && npm run build && npm run build:amd && npm run build:system",
-    "build": "tsc",
-    "build:umd": "tsc --module umd --outDir dist/umd",
-    "build:amd": "tsc --module amd --outDir dist/amd",
-    "build:system": "tsc --module system --outDir dist/system",
+    "clean": "rm -fr dist/* bundles/*",
+    "dist": "npm run clean && npm run build && npm run rollup && npm run es6to5 && npm run patch",
+    "patch": "patch < patch/umd.patch bundles/brolog.umd.js",
+    "build": "tsc --module es6",
     "e2e": "test/protractor.sh",
     "lint": "npm run tslint",
+    "rollup": "rollup -c",
+    "es6to5": "tsc --out ./bundles/brolog.umd.js --target es5 --allowJs bundles/brolog.es6.umd.js --lib es6,dom",
     "tslint": "tslint src/**/*.ts && tsc --noEmit",
     "test": "npm run dist && npm run unit && npm run e2e",
     "unit": "tap -R tap test/unit/**/*.spec.ts"
@@ -39,6 +39,7 @@
   "devDependencies": {
     "jasmine-spec-reporter": "^4.0.0",
     "protractor": "^5.1.1",
+    "rollup": "^0.41.6",
     "sinon": "^2.1.0",
     "sinon-test": "^1.0.1",
     "tap": "^10.3.0",
@@ -51,6 +52,7 @@
     "README.md",
     "CHANGELOG.md",
     "LICENSE",
+    "bundles/",
     "dist/"
   ]
 }

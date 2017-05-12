@@ -6,8 +6,6 @@ const { test } = require('tap')
 
 import * as sinon from 'sinon'
 import * as sinonTest from 'sinon-test'
-// const sinon     = require('sinon')
-// const sinonTest = require('sinon-test')
 
 sinon.test      = sinonTest.configureTest(sinon)
 sinon.testCase  = sinonTest.configureTestCase(sinon)
@@ -19,9 +17,11 @@ import {
   nullLogger,
 }             from '../../src/brolog'
 
-test('Brolog factory/service/function init test', (t: any) => {
+test('Brolog static/instance construct test', (t: any) => {
 
   const EXPECTED_LEVEL = 'silly'
+
+  const log = Brolog.instance('info')
 
   /**
    *
@@ -53,14 +53,14 @@ test('Brolog factory/service/function init test', (t: any) => {
    */
   const LEVEL_SILENT = 'silent'
   const log1 = new Brolog()
-  Brolog.level(LEVEL_SILENT)
+  log1.level(LEVEL_SILENT)
   ll = log1.level()
   t.equal(ll, LEVEL_SILENT, 'should has current level as LEVEL_SILENT after function init')
 
   t.end()
 })
 
-test('Brolog log level test', t => {
+test('Brolog global log level test', t => {
   const log = Brolog
   let l // level
 
@@ -97,7 +97,7 @@ test('Brolog log level test', t => {
  * because monkey patch is not recover when it finish
  *
  */
-test('Brolog level filter test', t => {
+test('Brolog global instance level filter test', t => {
   const logFuncList = [
     'error'
     , 'warn'
@@ -121,7 +121,7 @@ test('Brolog level filter test', t => {
     t.equal(console.log['callCount'], 2, 'should call log2(verbose + silly) 2 time with level SILLY')
   }).apply(log2)
 
-  log2 = log
+  log2 = Brolog.instance()
   log2.level('silent')
   sinon.test(function() {
     logFuncList.forEach(logFunc => this.stub(console, logFunc))
@@ -165,7 +165,7 @@ test('Brolog level filter test', t => {
   }
 })
 
-test('Brolog prefix filter test', t => {
+test('Brolog global instance prefix filter test', t => {
   const logFuncList = [
     'error'
     , 'warn'
@@ -173,8 +173,8 @@ test('Brolog prefix filter test', t => {
     , 'log',
   ]
 
-  log.level('info')
-  log.prefix(/Show/)
+  // filter log by prefix match /Show/
+  const log = Brolog.instance('info', /Show/)
 
   sinon.test(function() {
     logFuncList.forEach(logFunc => this.stub(console, logFunc))
@@ -234,6 +234,29 @@ test('Brolog prefix filter test', t => {
     logger.verbose('Show', 'verbose message')
     logger.silly('Show', 'silly message')
   }
+})
+
+test('Brolog individual instance prefix filter test', t => {
+
+  // important: reset all to default: 'info', /.*/
+  const log = Brolog.instance('info', /.*/)
+
+  const log1 = new Brolog()
+  const log2 = new Brolog()
+
+  log2.level('silly')
+  log2.prefix('faint')
+
+  t.notEqual(log1, log, 'should not as the same as global instance')
+  t.notEqual(log1, log2, 'should not as the same between new instances')
+
+  t.equal(log1.level(), 'info', 'should stick with default level `info`')
+  t.equal(log1.prefix().toString(), '/.*/', 'should stick with default prefix filter by default')
+
+  t.equal(log2.level(), 'silly', 'should be set level `silly`')
+  t.equal(log2.prefix().toString(), '/faint/i', 'should be set prefix filter to /faint/i')
+
+  t.end()
 })
 
 test('Brolog enableLogger() test', t => {
