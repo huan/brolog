@@ -46,6 +46,7 @@ export const nullLogger: Loggable = {
   verbose() { /* null */ },
   silly()   { /* null */ },
 }
+
 export class Brolog implements Loggable {
   private logLevel = LogLevel.info
   private prefixFilter: RegExp = /.*/ // Match all by default
@@ -75,9 +76,6 @@ export class Brolog implements Loggable {
     }
     return globalBrolog
   }
-
-  public static enableLogging(log: boolean):  Loggable
-  public static enableLogging(log: Loggable): Loggable
 
   public static enableLogging(log: boolean | Loggable): Loggable {
     Brolog.instance().verbose('Brolog', 'enableLogging(%s)', log)
