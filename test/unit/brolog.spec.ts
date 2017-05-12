@@ -12,8 +12,12 @@ import * as sinonTest from 'sinon-test'
 sinon.test      = sinonTest.configureTest(sinon)
 sinon.testCase  = sinonTest.configureTestCase(sinon)
 
-import { Brolog } from '../../'
-import log from '../../'
+import {
+  Brolog,
+  Loggable,
+  log,
+  nullLogger,
+}             from '../../src/brolog'
 
 test('Brolog factory/service/function init test', (t: any) => {
 
@@ -230,4 +234,20 @@ test('Brolog prefix filter test', t => {
     logger.verbose('Show', 'verbose message')
     logger.silly('Show', 'silly message')
   }
+})
+
+test('Brolog enableLogger() test', t => {
+  const log1 = Brolog.enableLogging(false)
+  t.equal(log1, nullLogger, 'should get null logger for enableLogging(false)')
+
+  const log2 = Brolog.enableLogging(true)
+  t.equal(log2, log, 'should get the Brolog global instance for enableLogging(true)')
+
+  const mockLogger = {
+    verbose() { /* */ },
+  }
+  const log3 = Brolog.enableLogging(mockLogger as any as Loggable)
+  t.equal(log3, mockLogger, 'should get the same logger when put the logger as the paramter of enableLogging(logger)')
+
+  t.end()
 })

@@ -31,7 +31,22 @@ export enum LogLevel {
   silly   = 5,
 }
 
-export class Brolog {
+export interface Loggable {
+  error   (prefix: string, message: string, ...args: any[]): void
+  warn    (prefix: string, message: string, ...args: any[]): void
+  info    (prefix: string, message: string, ...args: any[]): void
+  verbose (prefix: string, message: string, ...args: any[]): void
+  silly   (prefix: string, message: string, ...args: any[]): void
+}
+
+export const nullLogger: Loggable = {
+  error()   { /* null */ },
+  warn()    { /* null */ },
+  info()    { /* null */ },
+  verbose() { /* null */ },
+  silly()   { /* null */ },
+}
+export class Brolog implements Loggable {
   private static logLevel = LogLevel.info
   private static prefixFilter: RegExp = /.*/ // Match all by default
 
@@ -45,7 +60,33 @@ export class Brolog {
   ): Brolog {
     Brolog.level(levelName)
     Brolog.prefix(prefix)
-    return preSetInstance
+    return globalBrolog
+  }
+
+  public static enableLogging(log: boolean):  Loggable
+  public static enableLogging(log: Loggable): Loggable
+
+  public static enableLogging(log: boolean | Loggable): Loggable {
+    Brolog.instance().verbose('Brolog', 'enableLogging(%s)', log)
+
+    if (!log) {
+      Brolog.instance().silly('Brolog', 'enableLogging() disabled')
+
+      return nullLogger
+
+    } else if (typeof log === 'boolean') {
+      Brolog.instance().silly('Brolog', 'enableLogging() enabled/using blobal Brolog instance')
+
+      return Brolog.instance()
+
+    } else if (typeof log.verbose === 'function') {
+      Brolog.instance().silly('Brolog', 'enableLogging() enabled/using %s as provided',
+                                        log.constructor && log.constructor.name
+                              )
+      return log
+    }
+
+    throw new Error('got invalid logger')
   }
 
   public prefix(filter?: string | RegExp): RegExp { return Brolog.prefix(filter) }
@@ -179,7 +220,7 @@ export class Brolog {
   }
 }
 
-export const preSetInstance = new Brolog()
+export const globalBrolog = new Brolog()
 
-export { preSetInstance as log }
-export default preSetInstance
+export { globalBrolog as log }
+export default globalBrolog
