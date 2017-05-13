@@ -80,12 +80,12 @@ export class Brolog implements Loggable {
   public static enableLogging(log: boolean | Loggable): Loggable {
     Brolog.instance().verbose('Brolog', 'enableLogging(%s)', log)
 
-    if (!log) {
+    if (log === false) {
       Brolog.instance().silly('Brolog', 'enableLogging() disabled')
 
       return nullLogger
 
-    } else if (typeof log === 'boolean') {
+    } else if (log === true) {
       Brolog.instance().silly('Brolog', 'enableLogging() enabled/using blobal Brolog instance')
 
       return Brolog.instance()
