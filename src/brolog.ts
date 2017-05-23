@@ -142,27 +142,34 @@ export class Brolog implements Loggable {
     const args = Array.prototype.slice.call(arguments, 3) || []
     args.unshift(Brolog.timestamp() + ' ' + levelTitle + ' ' + prefix + ' ' + (message || ''))
 
+    // Use Reflect at:
+    // https://www.keithcirkel.co.uk/metaprogramming-in-es6-part-2-reflect/
     switch (levelTitle) {
       case 'ERR':
-        console.error.apply(console, args)
+        // console.error.apply(console, args)
+        Reflect.apply(console.error, console, args)
         break
       case 'WARN':
-        console.warn.apply(console, args)
+        // console.warn.apply(console, args)
+        Reflect.apply(console.warn, console, args)
         break
       case 'INFO':
-        console.info.apply(console, args)
+        // console.info.apply(console, args)
+        Reflect.apply(console.info, console, args)
         break
 
       default:
       case 'VERB':
       case 'SILL':
-        console.log.apply(console, args)
+        // console.log.apply(console, args)
+        Reflect.apply(console.log, console, args)
     }
   }
 
   public static error(prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    return instance.error.apply(instance, arguments)
+    // return instance.error.apply(instance, arguments)
+    return Reflect.apply(instance.error, instance, arguments)
   }
   public error(prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.error) {
@@ -170,12 +177,14 @@ export class Brolog implements Loggable {
     }
     const argList = Array.prototype.slice.call(arguments)
     argList.unshift('ERR')
-    this.log.apply(this, argList)
+    // this.log.apply(this, argList)
+    return Reflect.apply(this.log, this, argList)
   }
 
   public static warn(prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    return instance.warn.apply(instance, arguments)
+    // return instance.warn.apply(instance, arguments)
+    return Reflect.apply(instance.warn, instance, arguments)
   }
   public warn(prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.warn) {
@@ -183,12 +192,14 @@ export class Brolog implements Loggable {
     }
     const argList = Array.prototype.slice.call(arguments)
     argList.unshift('WARN')
-    this.log.apply(this, argList)
+    // return this.log.apply(this, argList)
+    return Reflect.apply(this.log, this, argList)
   }
 
   public static info(prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    return instance.info.apply(instance, arguments)
+    // return instance.info.apply(instance, arguments)
+    return Reflect.apply(instance.info, instance, arguments)
   }
   public info(prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.info) {
@@ -196,12 +207,14 @@ export class Brolog implements Loggable {
     }
     const argList = Array.prototype.slice.call(arguments)
     argList.unshift('INFO')
-    this.log.apply(this, argList)
+    // this.log.apply(this, argList)
+    return Reflect.apply(this.log, this, argList)
   }
 
   public static verbose(prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    return instance.verbose.apply(instance, arguments)
+    // return instance.verbose.apply(instance, arguments)
+    return Reflect.apply(instance.verbose, instance, arguments)
   }
   public verbose(prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.verbose) {
@@ -210,12 +223,14 @@ export class Brolog implements Loggable {
 
     const argList = Array.prototype.slice.call(arguments)
     argList.unshift('VERB')
-    this.log.apply(this, argList)
+    // this.log.apply(this, argList)
+    return Reflect.apply(this.log, this, argList)
   }
 
   public static silly(prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    return instance.silly.apply(instance, arguments)
+    // return instance.silly.apply(instance, arguments)
+    return Reflect.apply(instance.silly, instance, arguments)
   }
   public silly(prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.silly) {
@@ -223,7 +238,8 @@ export class Brolog implements Loggable {
     }
     const argList = Array.prototype.slice.call(arguments)
     argList.unshift('SILL')
-    this.log.apply(this, argList)
+    // this.log.apply(this, argList)
+    return Reflect.apply(this.log, this, argList)
   }
 
   public static timestamp() {
