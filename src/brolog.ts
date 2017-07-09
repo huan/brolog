@@ -48,17 +48,18 @@ export const nullLogger: Loggable = {
 }
 
 export class Brolog implements Loggable {
+  public static globalInstance: Brolog
+
   private enableTimestamp = true
   private logLevel        = LogLevel.info
   private prefixFilter    = /.*/ // Match all by default
 
   constructor() {
-    const instance = Brolog.instance()
-    if (instance) { // skip the first init, which is for the globalInstance itself
+    if (Brolog.globalInstance) { // skip the first init, which is for the globalInstance itself
       // set level/prefix of this instance
       // default to the global instance
-      this.level(instance.level())
-      this.prefix(instance.prefix())
+      this.level(Brolog.globalInstance.level())
+      this.prefix(Brolog.globalInstance.prefix())
     }
   }
 
@@ -69,13 +70,17 @@ export class Brolog implements Loggable {
     levelName?: LevelName,
     prefix?:    string | RegExp,
   ): Brolog {
+    if (!this.globalInstance) {
+      this.globalInstance = new Brolog()
+    }
     if (levelName) {
-      Brolog.level(levelName)
+      this.globalInstance.level(levelName)
     }
     if (prefix) {
-      Brolog.prefix(prefix)
+      this.globalInstance.prefix(prefix)
     }
-    return globalBrolog
+
+    return this.globalInstance
   }
 
   public static enableLogging(log: boolean | Loggable): Loggable {
@@ -273,7 +278,5 @@ export class Brolog implements Loggable {
   }
 }
 
-export const globalBrolog = new Brolog()
-
-export { globalBrolog as log }
-export default globalBrolog
+export const log = Brolog.instance()
+export default log
