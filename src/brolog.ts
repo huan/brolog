@@ -48,8 +48,9 @@ export const nullLogger: Loggable = {
 }
 
 export class Brolog implements Loggable {
-  private logLevel = LogLevel.info
-  private prefixFilter: RegExp = /.*/ // Match all by default
+  private enableTimestamp = true
+  private logLevel        = LogLevel.info
+  private prefixFilter    = /.*/ // Match all by default
 
   constructor() {
     const instance = Brolog.instance()
@@ -140,7 +141,7 @@ export class Brolog implements Loggable {
     }
 
     const args = Array.prototype.slice.call(arguments, 3) || []
-    args.unshift(Brolog.timestamp() + ' ' + levelTitle + ' ' + prefix + ' ' + (message || ''))
+    args.unshift(this.timestamp() + ' ' + levelTitle + ' ' + prefix + ' ' + (message || ''))
 
     // Use Reflect at:
     // https://www.keithcirkel.co.uk/metaprogramming-in-es6-part-2-reflect/
@@ -242,7 +243,19 @@ export class Brolog implements Loggable {
     return Reflect.apply(this.log, this, argList)
   }
 
-  public static timestamp() {
+  public timestamp(enable: boolean): void
+  public timestamp(): string
+
+  public timestamp(enable?: boolean): string | void {
+    if (typeof enable === 'boolean') {
+      this.enableTimestamp = enable
+      return
+    }
+
+    if (!this.enableTimestamp) {
+      return ''
+    }
+
     const date  = new Date()
     const hour    = date.getHours()
     const min     = date.getMinutes()

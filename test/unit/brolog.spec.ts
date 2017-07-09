@@ -274,3 +274,16 @@ test('Brolog enableLogger() test', t => {
 
   t.end()
 })
+
+test('Timestamp()', t => {
+  const log = new Brolog()
+  t.ok(log.timestamp(), 'should enable timestamp by default')
+
+  t.equal(log.timestamp(false), undefined, 'should return void when set timestamp to false')
+  t.equal(log.timestamp(), '', 'should return empty string when timestamp is disabled')
+
+  t.equal(log.timestamp(true), undefined, 'should return void when set timestamp to true')
+  t.ok(log.timestamp(), 'should return timestamp string when timestamp is enabled')
+
+  t.end()
+})
