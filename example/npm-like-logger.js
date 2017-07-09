@@ -1,4 +1,4 @@
-const { Brolog } = require('../')
+const { Brolog } = require('brolog')
 
 const log = new Brolog()
 
