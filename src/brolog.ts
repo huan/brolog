@@ -141,7 +141,7 @@ export class Brolog implements Loggable {
     }
 
     const args = Array.prototype.slice.call(arguments, 3) || []
-    args.unshift(this.timestamp() + ' ' + levelTitle + ' ' + prefix + ' ' + (message || ''))
+    args.unshift(this.timestamp() + levelTitle + ' ' + prefix + ' ' + (message || ''))
 
     // Use Reflect at:
     // https://www.keithcirkel.co.uk/metaprogramming-in-es6-part-2-reflect/
@@ -269,7 +269,7 @@ export class Brolog implements Loggable {
     stampStr += ':'
     stampStr += (sec < 10)  ? ('0' + sec)   : sec
 
-    return stampStr
+    return stampStr + ' '
   }
 }
 
