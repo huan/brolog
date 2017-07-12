@@ -1,7 +1,5 @@
 #!/usr/bin/env ts-node
 
-'use strict'
-
 const { test } = require('tap')
 
 import * as sinon from 'sinon'
@@ -12,7 +10,6 @@ sinon.testCase  = sinonTest.configureTestCase(sinon)
 
 import {
   Brolog,
-  Loggable,
   log,
   nullLogger,
 }             from '../../src/brolog'
@@ -167,7 +164,7 @@ test('Brolog global instance level filter test', t => {
 
 test('Brolog global instance prefix filter test', t => {
   const logFuncList = [
-    'error'
+      'error'
     , 'warn'
     , 'info'
     , 'log',
@@ -241,6 +238,9 @@ test('Brolog individual instance prefix filter test', t => {
   // important: reset all to default: 'info', /.*/
   const log = Brolog.instance('info', /.*/)
 
+  t.equal(log.level(), 'info', 'should be global level `info`')
+  t.equal(log.prefix().toString(), '/.*/', 'should be global prefix filter /.*/')
+
   const log1 = new Brolog()
   const log2 = new Brolog()
 
@@ -261,16 +261,19 @@ test('Brolog individual instance prefix filter test', t => {
 
 test('Brolog enableLogger() test', t => {
   const log1 = Brolog.enableLogging(false)
-  t.equal(log1, nullLogger, 'should get null logger for enableLogging(false)')
+  t.equal(log1.info, nullLogger.info, 'should get null logger for enableLogging(false)')
 
   const log2 = Brolog.enableLogging(true)
-  t.equal(log2, log, 'should get the Brolog global instance for enableLogging(true)')
+  t.equal(log2.info, (new Brolog()).info, 'should get the Brolog global instance for enableLogging(true)')
 
-  const mockLogger = {
-    verbose() { /* */ },
-  }
-  const log3 = Brolog.enableLogging(mockLogger as any as Loggable)
-  t.equal(log3, mockLogger, 'should get the same logger when put the logger as the paramter of enableLogging(logger)')
+  const log3 = Brolog.enableLogging(nullLogger)
+  t.notEqual(log3.info, (new Brolog()).info, 'should not equal to the default method')
+
+  Brolog.enableLogging(true)
+  t.equal(log['info'], (new Brolog()).info, 'should reset default logger instance')
+
+  const log4 = new Brolog()
+  t.equal(log4['info'], (new Brolog()).info, 'should create new logger with default methods')
 
   t.end()
 })

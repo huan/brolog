@@ -9,18 +9,18 @@
  * Date: 2016-07
  */
 
-export type LevelName = 'silent'
-                      | 'error'
-                      | 'warn'
-                      | 'info'
-                      | 'verbose'
-                      | 'silly'
+export type LogLevelName = 'silent'
+                          | 'error'
+                          | 'warn'
+                          | 'info'
+                          | 'verbose'
+                          | 'silly'
 
-export type LevelTitle = 'ERR'
-                      | 'WARN'
-                      | 'INFO'
-                      | 'VERB'
-                      | 'SILL'
+export type LogLevelTitle = 'ERR'
+                          | 'WARN'
+                          | 'INFO'
+                          | 'VERB'
+                          | 'SILL'
 
 enum LogLevel {
   silent  = 0,
@@ -40,72 +40,96 @@ export interface Loggable {
 }
 
 export const nullLogger: Loggable = {
-  error()   { /* null */ },
-  warn()    { /* null */ },
-  info()    { /* null */ },
-  verbose() { /* null */ },
-  silly()   { /* null */ },
+  error()   { /* nop */ },
+  warn()    { /* nop */ },
+  info()    { /* nop */ },
+  verbose() { /* nop */ },
+  silly()   { /* nop */ },
 }
 
 export class Brolog implements Loggable {
-  public static globalInstance: Brolog
+  private static globalInstance: Brolog
+  private static globalLogLevelName: LogLevelName = 'info'
+  private static globalPrefix: string | RegExp    = /.*/ // Match all by default
 
   private enableTimestamp = true
-  private logLevel        = LogLevel.info
-  private prefixFilter    = /.*/ // Match all by default
+  private logLevel:     LogLevel
+  private prefixFilter: RegExp
 
   constructor() {
-    if (Brolog.globalInstance) { // skip the first init, which is for the globalInstance itself
-      // set level/prefix of this instance
-      // default to the global instance
-      this.level(Brolog.globalInstance.level())
-      this.prefix(Brolog.globalInstance.prefix())
-    }
+    this.level(Brolog.globalLogLevelName)
+    this.prefix(Brolog.globalPrefix)
   }
 
   /**
    * Create a global Brolog Instance for sharing between modules
    */
   public static instance(
-    levelName?: LevelName,
+    levelName?: LogLevelName,
     prefix?:    string | RegExp,
   ): Brolog {
     if (!this.globalInstance) {
       this.globalInstance = new Brolog()
     }
+
     if (levelName) {
+      this.globalLogLevelName = levelName
       this.globalInstance.level(levelName)
     }
     if (prefix) {
+      this.globalPrefix = prefix
       this.globalInstance.prefix(prefix)
     }
 
     return this.globalInstance
   }
 
-  public static enableLogging(log: boolean | Loggable): Loggable {
-    Brolog.instance().verbose('Brolog', 'enableLogging(%s)', log)
+  public static enableLogging(log: boolean | Loggable): Brolog {
+    return Brolog.instance().enableLogging(log)
+  }
+
+  public enableLogging(log: boolean | Loggable): Brolog {
+    this.verbose('Brolog', 'enableLogging(%s)', log)
+
+    const loggerMethodList = [
+      'error',
+      'warn',
+      'info',
+      'verbose',
+      'silly',
+    ]
 
     if (log === false) {
-      Brolog.instance().silly('Brolog', 'enableLogging() disabled')
-
-      return nullLogger
+      this.silly('Brolog', 'enableLogging() disabled')
+      loggerMethodList.forEach(m => {
+        this[m] =  nullLogger[m]
+      })
 
     } else if (log === true) {
-      Brolog.instance().silly('Brolog', 'enableLogging() enabled: using blobal Brolog instance')
-
-      return Brolog.instance()
+      this.silly('Brolog', 'enableLogging() enabled: restore Brolog instance')
+      const restore = new Brolog()
+      loggerMethodList.forEach(m => {
+        this[m] = restore[m]
+      })
 
     } else if (typeof log.verbose === 'function') {
-      Brolog.instance().silly('Brolog', 'enableLogging() enabled: using provided logger')
-      return log
+      this.silly('Brolog', 'enableLogging() enabled: using provided logger')
+      loggerMethodList.forEach(m => {
+        this[m] = log[m].bind(log)
+      })
+
+    } else {
+      throw new Error('got invalid logger')
     }
 
-    throw new Error('got invalid logger')
+    return this
   }
 
   public static prefix(filter?: string | RegExp): RegExp {
-    return Brolog.instance().prefix(filter)
+    if (filter) {
+      this.globalPrefix = filter
+    }
+    return this.instance().prefix(filter)
   }
   public prefix(filter?: string | RegExp): RegExp {
     if (filter) {
@@ -120,27 +144,29 @@ export class Brolog implements Loggable {
     return this.prefixFilter
   }
 
-  public static level(levelName?: LevelName): LevelName {
-    return Brolog.instance().level(levelName)
+  public static level(levelName?: LogLevelName): LogLevelName {
+    if (levelName) {
+      this.globalLogLevelName = levelName
+    }
+    return this.instance().level(levelName)
   }
-  public level(levelName?: LevelName) {
+
+  public level(levelName?: LogLevelName) {
     if (levelName) {
       // console.log('levelName: ' + levelName)
       // http://stackoverflow.com/a/21294925/1123955
       // XXX: fix the any here?
       const logLevel = LogLevel[levelName.toLowerCase() as any] as any
       if (logLevel === undefined) { // be aware of number 0 here
-        // console.log(logLevel)
-        // console.log(LogLevel)
-        throw new Error('level name error')
+        throw new Error('level name error: ' + logLevel)
       }
       this.logLevel = logLevel
     }
-    return LogLevel[this.logLevel] as LevelName
+    return LogLevel[this.logLevel] as LogLevelName
   }
 
   // private log(levelTitle: LevelTitle, prefix: string, message: string) { return Brolog.log(levelTitle, prefix, message) }
-  private log(levelTitle: LevelTitle, prefix: string, message: string) {
+  private log(levelTitle: LogLevelTitle, prefix: string, message: string) {
     if (!this.prefixFilter.test(prefix)) {
       return  // skip message not match prefix filter
     }
