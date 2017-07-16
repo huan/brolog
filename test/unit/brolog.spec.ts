@@ -1,7 +1,5 @@
 #!/usr/bin/env ts-node
 
-'use strict'
-
 const { test } = require('tap')
 
 import * as sinon from 'sinon'
