@@ -18,7 +18,7 @@ set -e
 npm run lint
 
 [ -z "$CYGWIN" ] && {
-  npm version patch
+  npm version patch --no-package-lock
   WECHATY_INNER_PRE_HOOK=1 git push
 
   cat <<'_STR_'
