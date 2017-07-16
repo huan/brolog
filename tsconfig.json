@@ -30,7 +30,6 @@
   }
   , "include": [
       "src/brolog.ts"
-    , "test/**/*.ts"
   ]
   , "exclude": [
       "dist"
