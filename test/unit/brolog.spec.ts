@@ -8,7 +8,11 @@ import * as sinonTest from 'sinon-test'
 sinon.test      = sinonTest.configureTest(sinon)
 sinon.testCase  = sinonTest.configureTestCase(sinon)
 
-import { Brolog } from '../../src/brolog'
+import {
+  Brolog,
+  log,
+  nullLogger,
+}             from '../../src/brolog'
 
 test('Brolog static/instance construct test', (t: any) => {
 
@@ -160,7 +164,7 @@ test('Brolog global instance level filter test', t => {
 
 test('Brolog global instance prefix filter test', t => {
   const logFuncList = [
-    'error'
+      'error'
     , 'warn'
     , 'info'
     , 'log',
@@ -234,6 +238,9 @@ test('Brolog individual instance prefix filter test', t => {
   // important: reset all to default: 'info', /.*/
   const log = Brolog.instance('info', /.*/)
 
+  t.equal(log.level(), 'info', 'should be global level `info`')
+  t.equal(log.prefix().toString(), '/.*/', 'should be global prefix filter /.*/')
+
   const log1 = new Brolog()
   const log2 = new Brolog()
 
@@ -248,6 +255,38 @@ test('Brolog individual instance prefix filter test', t => {
 
   t.equal(log2.level(), 'silly', 'should be set level `silly`')
   t.equal(log2.prefix().toString(), '/faint/i', 'should be set prefix filter to /faint/i')
+
+  t.end()
+})
+
+test('Brolog enableLogger() test', t => {
+  const log1 = Brolog.enableLogging(false)
+  t.equal(log1.info, nullLogger.info, 'should get null logger for enableLogging(false)')
+
+  const log2 = Brolog.enableLogging(true)
+  t.equal(log2.info, (new Brolog()).info, 'should get the Brolog global instance for enableLogging(true)')
+
+  const log3 = Brolog.enableLogging(nullLogger)
+  t.notEqual(log3.info, (new Brolog()).info, 'should not equal to the default method')
+
+  Brolog.enableLogging(true)
+  t.equal(log['info'], (new Brolog()).info, 'should reset default logger instance')
+
+  const log4 = new Brolog()
+  t.equal(log4['info'], (new Brolog()).info, 'should create new logger with default methods')
+
+  t.end()
+})
+
+test('Timestamp()', t => {
+  const log = new Brolog()
+  t.ok(log.timestamp(), 'should enable timestamp by default')
+
+  t.equal(log.timestamp(false), undefined, 'should return void when set timestamp to false')
+  t.equal(log.timestamp(), '', 'should return empty string when timestamp is disabled')
+
+  t.equal(log.timestamp(true), undefined, 'should return void when set timestamp to true')
+  t.ok(log.timestamp(), 'should return timestamp string when timestamp is enabled')
 
   t.end()
 })

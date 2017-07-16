@@ -1,20 +1,21 @@
 {
   "name": "brolog",
-  "version": "1.1.17",
+  "version": "1.1.24",
   "description": "Npmlog like logger for Browser",
   "main": "bundles/brolog.umd.js",
   "types": "dist/brolog.d.ts",
   "scripts": {
     "clean": "rm -fr dist/* bundles/*",
-    "dist": "npm run clean && npm run build && npm run rollup && npm run es6to5 && npm run patch",
-    "patch": "patch < patch/umd.patch bundles/brolog.umd.js",
+    "dist": "npm run clean && npm run build && npm run rollup && npm run dist:es6to5",
+    "dist:es6to5": "tsc --out ./bundles/brolog.umd.js --target es5 --allowJs bundles/brolog.es6.umd.js --lib es6,dom",
+    "dist:patch": "echo 'DEPRECATED, use rollup.conf by set moduleName to windows.' && patch < patch/umd.patch bundles/brolog.umd.js",
     "build": "tsc --module es6",
     "lint": "npm run lint:ts",
-    "lint:ts": "tslint --project tsconfig.json --type-check src/**/*.ts test/**/*.ts && tsc --noEmit",
     "rollup": "rollup -c",
-    "es6to5": "tsc --out ./bundles/brolog.umd.js --target es5 --allowJs bundles/brolog.es6.umd.js --lib es6,dom",
+    "lint:ts": "tslint --type-check --project tsconfig.json src/**/*.ts && tsc --noEmit",
     "test": "npm run dist && npm run test:unit && npm run test:e2e",
     "test:e2e": "test/protractor.sh",
+    "test:npm": "export TMPDIR=/tmp/brolog-npm.$$ && mkdir $TMPDIR && npm pack && mv brolog-*.*.*.tgz $TMPDIR && cp example/npm-like-logger.js $TMPDIR && cd $TMPDIR && npm init -y && npm install brolog-*.*.*.tgz && node npm-like-logger.js",
     "test:unit": "tap -R tap test/unit/**/*.spec.ts"
   },
   "repository": {
