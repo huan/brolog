@@ -114,8 +114,21 @@ export class Brolog implements Loggable {
 
     } else if (typeof log.verbose === 'function') {
       this.silly('Brolog', 'enableLogging() enabled: using provided logger')
-      loggerMethodList.forEach(m => {
-        this[m] = log[m].bind(log)
+      loggerMethodList.forEach(method => {
+        const newMethod = log[method].bind(log)
+        this[method] = () => {
+          // In order to compatible with winston,
+          // we need to change the args from
+          // brolog.info('Main', 'Hello %s', 'world')
+          // to
+          // log.info('Main Hello %s', 'world')
+          const argList: string[] = Array.prototype.slice.call(arguments)
+          const module = argList.shift()
+          if (argList.length) {
+            argList[0] = `${module} ` + argList[0]
+          }
+          return Reflect.apply(newMethod, this, argList)
+        }
       })
 
     } else {
