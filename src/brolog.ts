@@ -123,8 +123,8 @@ export class Brolog implements Loggable {
           // to
           // log.info('Main Hello %s', 'world')
           const argList: string[] = Array.prototype.slice.call(arguments)
-          const module = argList.shift()
-          if (argList.length) {
+          if (argList.length > 1) {
+            const module = argList.shift()
             argList[0] = `${module} ` + argList[0]
           }
           return Reflect.apply(newMethod, this, argList)
