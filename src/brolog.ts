@@ -171,7 +171,7 @@ export class Brolog implements Loggable {
       return  // skip message not match prefix filter
     }
 
-    const args = Array.prototype.slice.call(arguments, 3) || []
+    const args = Array.from(arguments) || []
     args.unshift(this.timestamp() + levelTitle + ' ' + prefix + ' ' + (message || ''))
 
     // Use Reflect at:
@@ -207,7 +207,7 @@ export class Brolog implements Loggable {
     if (this.logLevel < LogLevel.error) {
       return
     }
-    const argList = Array.prototype.slice.call(arguments)
+    const argList = Array.from(arguments)
     argList.unshift('ERR')
     // this.log.apply(this, argList)
     return Reflect.apply(this.log, this, argList)
@@ -222,7 +222,7 @@ export class Brolog implements Loggable {
     if (this.logLevel < LogLevel.warn) {
       return
     }
-    const argList = Array.prototype.slice.call(arguments)
+    const argList = Array.from(arguments)
     argList.unshift('WARN')
     // return this.log.apply(this, argList)
     return Reflect.apply(this.log, this, argList)
@@ -237,7 +237,7 @@ export class Brolog implements Loggable {
     if (this.logLevel < LogLevel.info) {
       return
     }
-    const argList = Array.prototype.slice.call(arguments)
+    const argList = Array.from(arguments)
     argList.unshift('INFO')
     // this.log.apply(this, argList)
     return Reflect.apply(this.log, this, argList)
@@ -253,7 +253,7 @@ export class Brolog implements Loggable {
       return
     }
 
-    const argList = Array.prototype.slice.call(arguments)
+    const argList = Array.from(arguments)
     argList.unshift('VERB')
     // this.log.apply(this, argList)
     return Reflect.apply(this.log, this, argList)
@@ -268,7 +268,7 @@ export class Brolog implements Loggable {
     if (this.logLevel < LogLevel.silly) {
       return
     }
-    const argList = Array.prototype.slice.call(arguments)
+    const argList = Array.from(arguments)
     argList.unshift('SILL')
     // this.log.apply(this, argList)
     return Reflect.apply(this.log, this, argList)
