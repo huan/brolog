@@ -184,8 +184,10 @@ export class Brolog implements Loggable {
       return  // skip message not match prefix filter
     }
 
+    // const args = Array.prototype.slice.call(arguments, 3) || []
+    // args.unshift(this.timestamp() + levelTitle + ' ' + prefix + ' ' + (message || ''))
     const args = Array.from(arguments) || []
-    args.unshift(this.timestamp() + levelTitle + ' ' + prefix + ' ' + (message || ''))
+    args[0] = this.timestamp() + args[0]
 
     // Use Reflect at:
     // https://www.keithcirkel.co.uk/metaprogramming-in-es6-part-2-reflect/
