@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/zixia/brolog#readme",
   "devDependencies": {
+    "@types/node": "^8.0.17",
     "jasmine-spec-reporter": "^4.0.0",
     "protractor": "^5.1.1",
     "rollup": "^0.41.6",
