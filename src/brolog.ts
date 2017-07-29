@@ -122,7 +122,7 @@ export class Brolog implements Loggable {
           // brolog.info('Main', 'Hello %s', 'world')
           // to
           // log.info('Main Hello %s', 'world')
-          const argList: string[] = Array.prototype.slice.call(arguments)
+          const argList: string[] = Array.from(arguments)
           if (argList.length > 1) {
             const module = argList.shift()
             argList[0] = `${module} ` + argList[0]
@@ -178,16 +178,15 @@ export class Brolog implements Loggable {
     return LogLevel[this.logLevel] as LogLevelName
   }
 
-  // private log(levelTitle: LevelTitle, prefix: string, message: string) { return Brolog.log(levelTitle, prefix, message) }
   private log(levelTitle: LogLevelTitle, prefix: string, message: string) {
     if (!this.prefixFilter.test(prefix)) {
       return  // skip message not match prefix filter
     }
 
-    // const args = Array.prototype.slice.call(arguments, 3) || []
-    // args.unshift(this.timestamp() + levelTitle + ' ' + prefix + ' ' + (message || ''))
-    const args = Array.from(arguments) || []
-    args[0] = this.timestamp() + args[0]
+    const args = Array.prototype.slice.call(arguments, 3) || []
+    args.unshift(this.timestamp() + levelTitle + ' ' + prefix + ' ' + (message || ''))
+    // const args = Array.from(arguments) || []
+    // args[0] = this.timestamp() + args[0]
 
     // Use Reflect at:
     // https://www.keithcirkel.co.uk/metaprogramming-in-es6-part-2-reflect/
