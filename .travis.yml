@@ -43,6 +43,7 @@ notifications:
 
 before_deploy:
   - npm version
+  - grep version package.json
 
 deploy:
   provider: npm
