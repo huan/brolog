@@ -54,6 +54,7 @@
     "CHANGELOG.md",
     "LICENSE",
     "bundles/",
+    "src/",
     "dist/"
   ]
 }
