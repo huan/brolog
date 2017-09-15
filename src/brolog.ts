@@ -367,4 +367,4 @@ function sprintf() {
 }
 
 export const log = Brolog.instance()
-export default log
+export default Brolog
