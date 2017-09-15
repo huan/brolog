@@ -1,20 +1,17 @@
 #!/usr/bin/env ts-node
 
-const { test } = require('tap')
+const t = require('tap') // tslint:disable:no-shadowed-variable
 
 import * as sinon from 'sinon'
-import * as sinonTest from 'sinon-test'
-
-sinon.test      = sinonTest.configureTest(sinon)
-sinon.testCase  = sinonTest.configureTestCase(sinon)
+const sinonTest   = require('sinon-test')(sinon)
 
 import {
   Brolog,
-  log,
-  nullLogger,
+  // log,
+  // nullLogger,
 }             from '../../src/brolog'
 
-test('Brolog static/instance construct test', (t: any) => {
+t.test('Brolog static/instance construct test', (t: any) => {
 
   const EXPECTED_LEVEL = 'silly'
 
@@ -57,7 +54,7 @@ test('Brolog static/instance construct test', (t: any) => {
   t.end()
 })
 
-test('Brolog global log level test', t => {
+t.test('Brolog global log level test', t => {
   const log = Brolog
   let l // level
 
@@ -94,7 +91,7 @@ test('Brolog global log level test', t => {
  * because monkey patch is not recover when it finish
  *
  */
-test('Brolog global instance level filter test', t => {
+t.test('Brolog global instance level filter test', t => {
   const logFuncList = [
     'error'
     , 'warn'
@@ -105,14 +102,14 @@ test('Brolog global instance level filter test', t => {
   let log2: Brolog
 
   log2 = Brolog.instance('silent')
-  sinon.test(function() {
+  sinonTest(function() {
     logFuncList.forEach(logFunc => this.stub(console, logFunc))
     doLog(log2)
     t.ok(console.error['notCalled'], 'should not call error with level SILENT ##############')
   }).apply(log2)
 
   log2 = Brolog.instance('silly')
-  sinon.test(function() {
+  sinonTest(function() {
     logFuncList.forEach(logFunc => this.stub(console, logFunc))
     doLog(log2)
     t.equal(console.log['callCount'], 2, 'should call log2(verbose + silly) 2 time with level SILLY')
@@ -120,7 +117,7 @@ test('Brolog global instance level filter test', t => {
 
   log2 = Brolog.instance()
   log2.level('silent')
-  sinon.test(function() {
+  sinonTest(function() {
     logFuncList.forEach(logFunc => this.stub(console, logFunc))
     doLog(log2)
     t.equal(console.error['callCount'] , 0, 'should call error 0 time with level SILENT')
@@ -130,7 +127,7 @@ test('Brolog global instance level filter test', t => {
   }).apply(log2)
 
   log2.level('error')
-  sinon.test(function() {
+  sinonTest(function() {
     logFuncList.forEach(logFunc => this.stub(console, logFunc))
     doLog(log2)
     t.equal(console.error['callCount'] , 1, 'should call error 1 time with level ERR')
@@ -141,7 +138,7 @@ test('Brolog global instance level filter test', t => {
 
   log2.level('verbose')
 
-  sinon.test(function() {
+  sinonTest(function() {
     logFuncList.forEach(logFunc => this.stub(console, logFunc))
     doLog(log2)
     t.equal(console.error['callCount'] , 1, 'should call error 1 time with level VERBOSE')
@@ -162,7 +159,7 @@ test('Brolog global instance level filter test', t => {
   }
 })
 
-test('Brolog global instance prefix filter test', t => {
+t.test('Brolog global instance prefix filter test', t => {
   const logFuncList = [
       'error'
     , 'warn'
@@ -173,7 +170,7 @@ test('Brolog global instance prefix filter test', t => {
   // filter log by prefix match /Show/
   const log = Brolog.instance('info', /Show/)
 
-  sinon.test(function() {
+  sinonTest(function() {
     logFuncList.forEach(logFunc => this.stub(console, logFunc))
     doLogHide(log)
     t.equal(console.error['callCount'] , 0, 'should call error 0 time with prefix Hide')
@@ -182,7 +179,7 @@ test('Brolog global instance prefix filter test', t => {
     t.equal(console.log['callCount']   , 0, 'should call log2(verbose + silly) 0 time with prefix Hide')
   }).apply(log)
 
-  sinon.test(function() {
+  sinonTest(function() {
     logFuncList.forEach(logFunc => this.stub(console, logFunc))
     doLogShow(log)
     t.equal(console.error['callCount'] , 1, 'should call error 1 time with prefix Show')
@@ -193,7 +190,7 @@ test('Brolog global instance prefix filter test', t => {
 
   log.level('silent')
 
-  sinon.test(function() {
+  sinonTest(function() {
     logFuncList.forEach(logFunc => this.stub(console, logFunc))
     doLogShow(log)
     t.equal(console.error['callCount'] , 0, 'should call error 0 time with prefix Show with level silent')
@@ -204,7 +201,7 @@ test('Brolog global instance prefix filter test', t => {
 
   log.level('silly')
 
-  sinon.test(function() {
+  sinonTest(function() {
     logFuncList.forEach(logFunc => this.stub(console, logFunc))
     doLogShow(log)
     t.equal(console.error['callCount'] , 1, 'should call error 1 time with prefix Show with level silly')
@@ -233,8 +230,7 @@ test('Brolog global instance prefix filter test', t => {
   }
 })
 
-test('Brolog individual instance prefix filter test', t => {
-
+t.test('Brolog individual instance prefix filter test', async t => {
   // important: reset all to default: 'info', /.*/
   const log = Brolog.instance('info', /.*/)
 
@@ -259,26 +255,41 @@ test('Brolog individual instance prefix filter test', t => {
   t.end()
 })
 
-test('Brolog enableLogger() test', t => {
-  const log1 = Brolog.enableLogging(false)
-  t.equal(log1.info, nullLogger.info, 'should get null logger for enableLogging(false)')
+t.test('Brolog enableLogger()', sinonTest(async function (t: any) {
+  const spy  = sinon.spy()
+  const stub = sinon.stub(Brolog.prototype, 'printTextDefault')
 
-  const log2 = Brolog.enableLogging(true)
-  t.equal(log2.info, (new Brolog()).info, 'should get the Brolog global instance for enableLogging(true)')
+  t.test('enableLogging(false/true)', async (t: any) => {
+    spy.reset()
+    stub.reset()
 
-  const log3 = Brolog.enableLogging(nullLogger)
-  t.notEqual(log3.info, (new Brolog()).info, 'should not equal to the default method')
+    const log = Brolog.enableLogging(false)
+    log.error('TEST', 'Should not log')
 
-  Brolog.enableLogging(true)
-  t.equal(log['info'], (new Brolog()).info, 'should reset default logger instance')
+    t.ok(stub.notCalled, 'should not log anything after enableLogging(false)')
 
-  const log4 = new Brolog()
-  t.equal(log4['info'], (new Brolog()).info, 'should create new logger with default methods')
+    log.enableLogging(true)
+    stub.reset()
+    log.error('TEST', 'Should log')
+    t.ok(stub.calledOnce, 'should log after enableLogging(true)')
+  })
 
+  t.test('enableLogging(log function)', async (t: any) => {
+    spy.reset()
+    stub.reset()
+
+    const log = Brolog.enableLogging(spy)
+    log.error('TEST', 'should call spy')
+
+    t.ok(stub.notCalled, 'should not call printTextDefault')
+    t.ok(spy.calledOnce, 'should call spy after enableLogging(spy)')
+  })
+
+  // XXX why need t.end() inside async function(which will return a promise?)
   t.end()
-})
+}))
 
-test('Timestamp()', t => {
+t.test('Timestamp()', t => {
   const log = new Brolog()
   t.ok(log.timestamp(), 'should enable timestamp by default')
 

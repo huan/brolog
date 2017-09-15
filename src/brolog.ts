@@ -8,6 +8,7 @@
  *
  * Date: 2016-07
  */
+import * as util          from 'util'
 
 export type LogLevelName = 'silent'
                           | 'error'
@@ -21,6 +22,8 @@ export type LogLevelTitle = 'ERR'
                           | 'INFO'
                           | 'VERB'
                           | 'SILL'
+
+export type PrintTextFunc = (text: string) => void
 
 enum LogLevel {
   silent  = 0,
@@ -39,13 +42,13 @@ export interface Loggable {
   silly   (prefix: string, message: string, ...args: any[]): void
 }
 
-export const nullLogger: Loggable = {
-  error()   { /* nop */ },
-  warn()    { /* nop */ },
-  info()    { /* nop */ },
-  verbose() { /* nop */ },
-  silly()   { /* nop */ },
-}
+// export const nullLogger: Loggable = {
+//   error()   { /* nop */ },
+//   warn()    { /* nop */ },
+//   info()    { /* nop */ },
+//   verbose() { /* nop */ },
+//   silly()   { /* nop */ },
+// }
 
 export class Brolog implements Loggable {
   private static globalInstance: Brolog
@@ -56,9 +59,13 @@ export class Brolog implements Loggable {
   private logLevel:     LogLevel
   private prefixFilter: RegExp
 
+  public printText: (levelTitle: LogLevelTitle, text: string) => void
+
   constructor() {
     this.level(Brolog.globalLogLevelName)
     this.prefix(Brolog.globalPrefix)
+
+    this.printText = this.printTextDefault
   }
 
   /**
@@ -84,53 +91,60 @@ export class Brolog implements Loggable {
     return this.globalInstance
   }
 
-  public static enableLogging(log: boolean | Loggable): Brolog {
+  public static enableLogging(log: boolean | PrintTextFunc): Brolog {
     return Brolog.instance().enableLogging(log)
   }
 
-  public enableLogging(log: boolean | Loggable): Brolog {
+  public enableLogging(log: boolean | PrintTextFunc): Brolog {
     this.verbose('Brolog', 'enableLogging(%s)', log)
 
-    const loggerMethodList = [
-      'error',
-      'warn',
-      'info',
-      'verbose',
-      'silly',
-    ]
+    // const loggerMethodList = [
+    //   'error',
+    //   'warn',
+    //   'info',
+    //   'verbose',
+    //   'silly',
+    // ]
 
     if (log === false) {
       this.silly('Brolog', 'enableLogging() disabled')
-      loggerMethodList.forEach(m => {
-        this[m] =  nullLogger[m]
-      })
+      // loggerMethodList.forEach(m => {
+      //   this[m] =  nullLogger[m]
+      // })
+      this.printText = function () { /* null logger */ }
 
     } else if (log === true) {
       this.silly('Brolog', 'enableLogging() enabled: restore Brolog instance')
-      const restore = new Brolog()
-      loggerMethodList.forEach(m => {
-        this[m] = restore[m]
-      })
+      // const restore = new Brolog()
+      // loggerMethodList.forEach(m => {
+      //   this[m] = restore[m]
+      // })
+      this.printText = this.printTextDefault
 
-    } else if (typeof log.verbose === 'function') {
-      this.silly('Brolog', 'enableLogging() enabled: using provided logger')
-      loggerMethodList.forEach(method => {
-        const newMethod = log[method].bind(log)
-        this[method] = () => {
-          // In order to compatible with winston,
-          // we need to change the args from
-          // brolog.info('Main', 'Hello %s', 'world')
-          // to
-          // log.info('Main Hello %s', 'world')
-          const argList: string[] = Array.from(arguments)
-          if (argList.length > 1) {
-            const module = argList.shift()
-            argList[0] = `${module} ` + argList[0]
-          }
-          return Reflect.apply(newMethod, this, argList)
-        }
-      })
+    // } else if (typeof log.verbose === 'function') {
+    //   this.silly('Brolog', 'enableLogging() enabled: using provided logger')
+    //   for (const method of loggerMethodList) {
+    //     this[method] = () => {
+    //       // In order to compatible with winston,
+    //       // we need to change the args from
+    //       // brolog.info('Main', 'Hello %s', 'world')
+    //       // to
+    //       // log.info('Main Hello %s', 'world')
+    //       const argList: string[] = Array.from(arguments)
+    //       if (argList.length > 1) {
+    //         const module = argList.shift()
+    //         argList[0] = `${module} ` + argList[0]
+    //       }
+    //       return Reflect.apply(log[method], log, argList)
+    //     }
+    //   }
 
+    } else if (typeof log === 'function') {
+      this.silly('Brolog', 'enableLogging() enabled: using provided log function')
+      this.printText = function (levelTitle: LogLevelTitle, text: string): void {
+        log(text)
+        return
+      }
     } else {
       throw new Error('got invalid logger')
     }
@@ -188,30 +202,39 @@ export class Brolog implements Loggable {
     // const args = Array.from(arguments) || []
     // args[0] = this.timestamp() + args[0]
 
+    const text = Reflect.apply(util.format, util, args)
+    this.printText(levelTitle, text)
+  }
+
+  public printTextDefault(levelTitle: LogLevelTitle, text: string): void {
     // Use Reflect at:
     // https://www.keithcirkel.co.uk/metaprogramming-in-es6-part-2-reflect/
     switch (levelTitle) {
       case 'ERR':
         // console.error.apply(console, args)
-        Reflect.apply(console.error, console, args)
+        // Reflect.apply(console.error, console, args)
+        console.error(text)
         break
       case 'WARN':
         // console.warn.apply(console, args)
-        Reflect.apply(console.warn, console, args)
+        // Reflect.apply(console.warn, console, args)
+        console.warn(text)
         break
       case 'INFO':
         // console.info.apply(console, args)
-        Reflect.apply(console.info, console, args)
+        // Reflect.apply(console.info, console, args)
+        console.info(text)
         break
 
       default:
       case 'VERB':
       case 'SILL':
         // console.log.apply(console, args)
-        Reflect.apply(console.log, console, args)
+        // Reflect.apply(console.log, console, args)
+        console.log(text)
     }
-  }
 
+  }
   public static error(prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
     // return instance.error.apply(instance, arguments)
@@ -319,4 +342,4 @@ export class Brolog implements Loggable {
 }
 
 export const log = Brolog.instance()
-export default log
+export default Brolog
