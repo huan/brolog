@@ -8,8 +8,6 @@
  *
  * Date: 2016-07
  */
-import * as util          from 'util'
-
 export type LogLevelName = 'silent'
                           | 'error'
                           | 'warn'
@@ -202,7 +200,7 @@ export class Brolog implements Loggable {
     // const args = Array.from(arguments) || []
     // args[0] = this.timestamp() + args[0]
 
-    const text = Reflect.apply(util.format, util, args)
+    const text = Reflect.apply(sprintf, null, args)
     this.printText(levelTitle, text)
   }
 
@@ -339,6 +337,33 @@ export class Brolog implements Loggable {
 
     return stampStr + ' '
   }
+}
+
+// Credit: https://stackoverflow.com/a/4795914/1123955
+function sprintf() {
+  const args = arguments
+  const text = args[0]
+  let i = 1
+  return text.replace(/%((%)|s|d)/g, function (m) {
+      // m is the matched format, e.g. %s, %d
+      let val = null as any
+      if (m[2]) {
+          val = m[2];
+      } else {
+          val = args[i];
+          // A switch statement so that the formatter can be extended. Default is %s
+          switch (m) {
+              case '%d':
+                  val = parseFloat(val)
+                  if (isNaN(val)) {
+                      val = 0
+                  }
+                  break
+          }
+          i++
+      }
+      return val
+  })
 }
 
 export const log = Brolog.instance()
