@@ -44,3 +44,4 @@ t.*
 /dist/
 /brolog-*.*.*.tgz
 /bundles/
+/package-lock.json
