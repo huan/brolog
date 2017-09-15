@@ -342,4 +342,4 @@ export class Brolog implements Loggable {
 }
 
 export const log = Brolog.instance()
-export default Brolog
+export default log
