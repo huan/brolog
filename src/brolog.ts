@@ -91,12 +91,12 @@ export class Brolog implements Loggable {
     return this.globalInstance
   }
 
-  public static enableLogging(log: boolean | PrintTextFunc): Brolog {
-    return Brolog.instance().enableLogging(log)
+  public static enableLogging(logSetting: boolean | PrintTextFunc): Brolog {
+    return Brolog.instance().enableLogging(logSetting)
   }
 
-  public enableLogging(log: boolean | PrintTextFunc): Brolog {
-    this.verbose('Brolog', 'enableLogging(%s)', log)
+  public enableLogging(logSetting: boolean | PrintTextFunc): Brolog {
+    this.verbose('Brolog', 'enableLogging(%s)', logSetting)
 
     // const loggerMethodList = [
     //   'error',
@@ -106,14 +106,14 @@ export class Brolog implements Loggable {
     //   'silly',
     // ]
 
-    if (log === false) {
+    if (logSetting === false) {
       this.silly('Brolog', 'enableLogging() disabled')
       // loggerMethodList.forEach(m => {
       //   this[m] =  nullLogger[m]
       // })
       this.printText = function () { /* null logger */ }
 
-    } else if (log === true) {
+    } else if (logSetting === true) {
       this.silly('Brolog', 'enableLogging() enabled: restore Brolog instance')
       // const restore = new Brolog()
       // loggerMethodList.forEach(m => {
@@ -139,10 +139,10 @@ export class Brolog implements Loggable {
     //     }
     //   }
 
-    } else if (typeof log === 'function') {
+    } else if (typeof logSetting === 'function') {
       this.silly('Brolog', 'enableLogging() enabled: using provided log function')
       this.printText = function (levelTitle: LogLevelTitle, text: string): void {
-        log(text)
+        logSetting(text)
         return
       }
     } else {
