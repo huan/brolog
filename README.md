@@ -170,6 +170,13 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 # Changelog
 
+## V1.2 (Sep 2017)
+
+1. Add `Brolog.enableLogging()` method for:
+    1. `false` for disable logging
+    1. `true` for enable logging
+    1. `printTextFunc: (text: string)` for enable logging to a function.
+
 ## V1.1 (May 2017)
 
 1. Support for creating individual instances.(We only have one singleton instance before)
