@@ -40,13 +40,7 @@ export interface Loggable {
   silly   (prefix: string, message: string, ...args: any[]): void
 }
 
-// export const nullLogger: Loggable = {
-//   error()   { /* nop */ },
-//   warn()    { /* nop */ },
-//   info()    { /* nop */ },
-//   verbose() { /* nop */ },
-//   silly()   { /* nop */ },
-// }
+export let log: Brolog
 
 export class Brolog implements Loggable {
   private static globalInstance: Brolog
@@ -367,5 +361,5 @@ function sprintf() {
   })
 }
 
-export const log = Brolog.instance()
+log = Brolog.instance()
 export default Brolog
