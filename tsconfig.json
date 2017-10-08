@@ -29,7 +29,7 @@
     , "sourceMap": true
   }
   , "include": [
-      "src/brolog.ts"
+      "src/**/*.ts"
   ]
   , "exclude": [
       "dist"
