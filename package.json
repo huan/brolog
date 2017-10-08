@@ -16,7 +16,7 @@
     "test": "npm run dist && npm run test:unit && npm run test:e2e",
     "test:e2e": "test/protractor.sh",
     "test:npm": "export TMPDIR=/tmp/brolog-npm.$$ && mkdir $TMPDIR && npm pack && mv brolog-*.*.*.tgz $TMPDIR && cp example/npm-like-logger.js $TMPDIR && cd $TMPDIR && npm init -y && npm install brolog-*.*.*.tgz && node npm-like-logger.js",
-    "test:unit": "tap -R tap test/unit/**/*.spec.ts"
+    "test:unit": "tap -R tap \"src/**/*.spec.ts\""
   },
   "repository": {
     "type": "git",

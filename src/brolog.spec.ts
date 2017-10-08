@@ -7,9 +7,7 @@ const sinonTest   = require('sinon-test')(sinon)
 
 import {
   Brolog,
-  // log,
-  // nullLogger,
-}             from '../../src/brolog'
+}             from './brolog'
 
 t.test('Brolog static/instance construct test', (t: any) => {
 
@@ -58,9 +56,8 @@ t.test('Brolog global log level test', t => {
   const log = Brolog
   let l // level
 
-  t.throws(function() {
-    log.level('UN_EXIST_LEVEL' as any)
-  }, 'should throw Exception when level set to UNKNOWN')
+  log.level('UN_EXIST_LEVEL' as any)
+  t.equal(log.level(), 'silly', 'should set level to SILLY when level set to UNKNOWN')
 
   log.level('error')
   l = log.level()
@@ -103,14 +100,14 @@ t.test('Brolog global instance level filter test', t => {
 
   log2 = Brolog.instance('silent')
   sinonTest(function() {
-    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    logFuncList.forEach(logFunc => this.stub(console, logFunc).callThrough())
     doLog(log2)
     t.ok(console.error['notCalled'], 'should not call error with level SILENT ##############')
   }).apply(log2)
 
   log2 = Brolog.instance('silly')
   sinonTest(function() {
-    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    logFuncList.forEach(logFunc => this.stub(console, logFunc).callThrough())
     doLog(log2)
     t.equal(console.log['callCount'], 2, 'should call log2(verbose + silly) 2 time with level SILLY')
   }).apply(log2)
@@ -118,7 +115,7 @@ t.test('Brolog global instance level filter test', t => {
   log2 = Brolog.instance()
   log2.level('silent')
   sinonTest(function() {
-    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    logFuncList.forEach(logFunc => this.stub(console, logFunc).callThrough())
     doLog(log2)
     t.equal(console.error['callCount'] , 0, 'should call error 0 time with level SILENT')
     t.equal(console.warn['callCount']  , 0, 'should call warn 0 time with level SILENT')
@@ -128,7 +125,7 @@ t.test('Brolog global instance level filter test', t => {
 
   log2.level('error')
   sinonTest(function() {
-    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    logFuncList.forEach(logFunc => this.stub(console, logFunc).callThrough())
     doLog(log2)
     t.equal(console.error['callCount'] , 1, 'should call error 1 time with level ERR')
     t.equal(console.warn['callCount']  , 0, 'should call warn 0 time with level ERR')
@@ -139,7 +136,7 @@ t.test('Brolog global instance level filter test', t => {
   log2.level('verbose')
 
   sinonTest(function() {
-    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    logFuncList.forEach(logFunc => this.stub(console, logFunc).callThrough())
     doLog(log2)
     t.equal(console.error['callCount'] , 1, 'should call error 1 time with level VERBOSE')
     t.equal(console.warn['callCount']  , 1, 'should call warn 1 time with level VERBOSE')
@@ -171,7 +168,7 @@ t.test('Brolog global instance prefix filter test', t => {
   const log = Brolog.instance('info', /Show/)
 
   sinonTest(function() {
-    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    logFuncList.forEach(logFunc => this.stub(console, logFunc).callThrough())
     doLogHide(log)
     t.equal(console.error['callCount'] , 0, 'should call error 0 time with prefix Hide')
     t.equal(console.warn['callCount']  , 0, 'should call warn 0 time with prefix Hide')
@@ -180,7 +177,7 @@ t.test('Brolog global instance prefix filter test', t => {
   }).apply(log)
 
   sinonTest(function() {
-    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    logFuncList.forEach(logFunc => this.stub(console, logFunc).callThrough())
     doLogShow(log)
     t.equal(console.error['callCount'] , 1, 'should call error 1 time with prefix Show')
     t.equal(console.warn['callCount']  , 1, 'should call warn 1 time with prefix Show')
@@ -191,7 +188,7 @@ t.test('Brolog global instance prefix filter test', t => {
   log.level('silent')
 
   sinonTest(function() {
-    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    logFuncList.forEach(logFunc => this.stub(console, logFunc).callThrough())
     doLogShow(log)
     t.equal(console.error['callCount'] , 0, 'should call error 0 time with prefix Show with level silent')
     t.equal(console.warn['callCount']  , 0, 'should call warn 0 time with prefix Show with level silent')
@@ -202,7 +199,7 @@ t.test('Brolog global instance prefix filter test', t => {
   log.level('silly')
 
   sinonTest(function() {
-    logFuncList.forEach(logFunc => this.stub(console, logFunc))
+    logFuncList.forEach(logFunc => this.stub(console, logFunc).callThrough())
     doLogShow(log)
     t.equal(console.error['callCount'] , 1, 'should call error 1 time with prefix Show with level silly')
     t.equal(console.warn['callCount']  , 1, 'should call warn 1 time with prefix Show with level silly')
