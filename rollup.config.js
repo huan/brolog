@@ -5,5 +5,5 @@ export default {
   format: 'umd',
   moduleName: 'window',
   banner: '/* Brolog version ' + require('./package.json').version + ' */',
-  footer: '/* https://git.io/zixia/ */'
+  footer: '/* https://github.com/zixia */'
 }

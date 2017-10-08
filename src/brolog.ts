@@ -181,9 +181,10 @@ export class Brolog implements Loggable {
       // console.log('levelName: ' + levelName)
       // http://stackoverflow.com/a/21294925/1123955
       // XXX: fix the any here?
-      const logLevel = LogLevel[levelName.toLowerCase() as any] as any
+      let logLevel = LogLevel[levelName.toLowerCase() as any] as any as LogLevel
       if (logLevel === undefined) { // be aware of number 0 here
-        throw new Error('level name error: ' + logLevel)
+        log.error('Brolog', 'level(%s) not exist, set to silly.', levelName)
+        logLevel = LogLevel.silly
       }
       this.logLevel = logLevel
     }
