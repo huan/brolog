@@ -298,3 +298,9 @@ t.test('Timestamp()', t => {
 
   t.end()
 })
+
+t.test('version()', t => {
+  const log = new Brolog()
+  t.ok(log.version(), 'should get version')
+  t.end()
+})

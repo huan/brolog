@@ -44,6 +44,7 @@
     "jasmine-spec-reporter": "^4.0.0",
     "protractor": "^5.1.1",
     "rollup": "^0.41.6",
+    "rollup-plugin-json": "^2.3.0",
     "sinon": "^2.4.1",
     "sinon-test": "git://github.com/zixia/sinon-test.git#patch-1",
     "tap": "^10.7.2",

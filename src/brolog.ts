@@ -8,6 +8,8 @@
  *
  * Date: 2016-07
  */
+import { version as VERSION } from '../package.json'
+
 export type LogLevelName = 'silent'
                           | 'error'
                           | 'warn'
@@ -81,6 +83,14 @@ export class Brolog implements Loggable {
     }
 
     return this.globalInstance
+  }
+
+  public static version(): string {
+    return VERSION
+  }
+
+  public version(): string {
+    return Brolog.version()
   }
 
   public static enableLogging(logSetting: boolean | PrintTextFunc): Brolog {
@@ -359,6 +369,10 @@ function sprintf() {
       }
       return val
   })
+}
+
+export {
+  VERSION,
 }
 
 log = Brolog.instance()
