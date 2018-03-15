@@ -42,6 +42,7 @@ export interface Loggable {
   silly   (prefix: string, message: string, ...args: any[]): void
 }
 
+// declare the `log` variable first
 export let log: Brolog
 
 export class Brolog implements Loggable {
@@ -376,4 +377,10 @@ export {
 }
 
 log = Brolog.instance()
+
+const BROLOG_LEVEL = 'BROLOG_LEVEL'
+if (process && process.env) {
+  log.level(process.env[BROLOG_LEVEL] as any)
+}
+
 export default Brolog

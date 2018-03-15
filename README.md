@@ -109,7 +109,17 @@ Link: [Brolog ♥ Angular Live demo](http://zixia.github.io/brolog)
 
 # Basic Usage
 
+Get a _out-of-the-box_ `log` instance to use it directly.
+
+```ts
+import { log } from 'brolog'
 ```
+
+If fhe environment variable `BROLOG_LEVEL` is set, that will be used to set log.level() for the global Brolog instance `log`.
+
+## log.{error,warn,info,verbose,silly}
+
+```ts
 import { Brolog } from 'brolog'
 
 const log = new Brolog()
