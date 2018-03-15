@@ -180,6 +180,10 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 # Changelog
 
+## Master
+
+1. Add environment variable `BROLOG_LEVEL` to set the loglevel of global `log` instance.
+
 ## V1.2 (Sep 2017)
 
 1. Add `Brolog.enableLogging()` method for:
