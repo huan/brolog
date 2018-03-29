@@ -379,7 +379,7 @@ export {
 log = Brolog.instance()
 
 const BROLOG_LEVEL = 'BROLOG_LEVEL'
-if (process && process.env) {
+if (typeof process !== 'undefined' && process.env) {
   log.level(process.env[BROLOG_LEVEL] as any)
 }
 
