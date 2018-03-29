@@ -7,7 +7,13 @@ const sinonTest   = require('sinon-test')(sinon)
 
 import {
   Brolog,
+  VERSION,
 }             from './brolog'
+
+t.test('VERSION', (t: any) => {
+  t.ok(/^\d+\.\d+\.\d+$/.test(VERSION), 'should get semver VERSION')
+  t.end()
+})
 
 t.test('Brolog static/instance construct test', (t: any) => {
 

@@ -8,7 +8,9 @@
  *
  * Date: 2016-07
  */
-import { version as VERSION } from '../package.json'
+import {
+  VERSION,
+}           from './config'
 
 export type LogLevelName = 'silent'
                           | 'error'
