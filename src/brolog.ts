@@ -10,7 +10,8 @@
  */
 import {
   VERSION,
-}           from './config'
+  BROLOG_LEVEL,
+}               from './config'
 
 export type LogLevelName = 'silent'
                           | 'error'
@@ -380,9 +381,13 @@ export {
 
 log = Brolog.instance()
 
-const BROLOG_LEVEL = 'BROLOG_LEVEL'
-if (typeof process !== 'undefined' && process.env) {
-  log.level(process.env[BROLOG_LEVEL] as any)
+if (BROLOG_LEVEL) {
+  /**
+   * set logLevel from:
+   * 1. process.env['BROLOG_LEVEL'], or
+   * 2. in URL: `?BROLOG_LEVEL=verbose&...`
+   */
+  log.level(BROLOG_LEVEL as any)
 }
 
 export default Brolog
