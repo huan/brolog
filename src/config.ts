@@ -42,7 +42,7 @@ if (typeof process !== 'undefined' && process.env) {
   }
 }
 
-if (typeof window !== undefined && window.location && typeof window.location.search === 'string') {
+if (typeof window !== 'undefined' && window.location && typeof window.location.search === 'string') {
   /**
    * Browser
    */
