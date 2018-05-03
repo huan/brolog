@@ -6,7 +6,7 @@ GIT_URL="https://github.com/zixia/brolog-angular-demo.git"
 
 npm link
 
-// https://github.com/angular/webdriver-manager/issues/307#issuecomment-377684918
+# https://github.com/angular/webdriver-manager/issues/307#issuecomment-377684918
 webdriver-manager update --gecko=false
 
 git clone "$GIT_URL" "$E2E_TESTING_DIR"
