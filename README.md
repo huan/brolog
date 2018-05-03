@@ -1,5 +1,7 @@
 # brolog  [![Build Status](https://travis-ci.org/zixia/brolog.svg?branch=master)](https://travis-ci.org/zixia/brolog)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/zixia/brolog.svg)](https://greenkeeper.io/)
+
 Brolog is Logger for Angular in Browser like Npmlog.
 
 [![npm version](https://badge.fury.io/js/brolog.svg)](https://badge.fury.io/js/brolog)
