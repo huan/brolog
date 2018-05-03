@@ -12,7 +12,7 @@ Brolog is Logger for Angular in Browser like Npmlog.
 1. Out-of-Box Browser Support.(with `<script src='//unpkg.com/brolog'></script>`)
 1. Out-of-Box Angular & SystemJS Support.(See: [brolog-angular-demo project](https://github.com/zixia/brolog-angular-demo))
 1. Npmlog compatible interface.(i.e. `log.verbose('Brolog', 'Hello, %s', 'world!'')`)
-1. Native TypeScript Support.(With types)
+1. Native TypeScript Support.(With typings)
 1. Node.js Support.([Node.js example](https://github.com/zixia/brolog/blob/master/example/npm-like-logger.js))
 1. Support show **real** line number in browser console.
     > What I really get frustrated by is that I cannot wrap console.* and preserve line numbers
