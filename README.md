@@ -5,6 +5,8 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/zixia/brolog.svg)](https://greenkeeper.io/)
 [![TypeScript definitions on DefinitelyTyped](http://definitelytyped.org/badges/standard-flat.svg)](http://definitelytyped.org)
 
+![Brolog](https://zixia.github.io/brolog/images/brolog-logo.png)
+
 Brolog is Logger for Angular in Browser like Npmlog.
 
 ## FEATURE
