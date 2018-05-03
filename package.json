@@ -72,5 +72,7 @@
       "pre-push": "bash ./scripts/pre-push.sh"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/rollup-plugin-json": "^2.3.1"
+  }
 }

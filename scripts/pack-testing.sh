@@ -9,7 +9,7 @@ cp tests/fixtures/smoke-testing.js "$TMPDIR"
 
 cd $TMPDIR
 npm init -y
-npm install brolog-*.*.*.tgz
+npm install *-*.*.*.tgz
 
 ls -l
 ls -l node_modules/

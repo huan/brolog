@@ -15,6 +15,14 @@ cache:
   directories:
     - node_modules
 
+install: travis_retry npm install
+
+script:
+  - echo $TRAVIS_OS_NAME
+  - node --version
+  - npm --version
+  - HEADLESS=1 npm test
+
 stages:
   - test
   - pack
@@ -22,17 +30,8 @@ stages:
     if: branch =~ ^(master|v\d+\.\d+)
         AND (type NOT IN (cron, pull_request))
 
-install: travis_retry npm install
-
 jobs:
   include:
-    - stage: test
-      script:
-        - echo $TRAVIS_OS_NAME
-        - node --version
-        - npm --version
-        - HEADLESS=1 npm test
-
     - stage: pack
       script:
         - echo "NPM Pack Testing..."
@@ -40,7 +39,7 @@ jobs:
         - echo 'NPM Pack Testing is PASSED.'
 
     - stage: deploy
-      before_deploy:
+      script:
         - echo "Packing NPM ..."
         - npm version
         - if ./scripts/development-release.ts; then ./scripts/package-publish-config-tag-next.ts; fi
