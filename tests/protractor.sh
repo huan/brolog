@@ -5,7 +5,7 @@ E2E_TESTING_DIR="/tmp/brolog-angular-demo.$$"
 GIT_URL="https://github.com/zixia/brolog-angular-demo.git"
 
 npm link
-# webdriver-manager update
+webdriver-manager update
 
 git clone "$GIT_URL" "$E2E_TESTING_DIR"
 
