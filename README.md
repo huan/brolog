@@ -1,13 +1,13 @@
-# brolog  [![Build Status](https://travis-ci.org/zixia/brolog.svg?branch=master)](https://travis-ci.org/zixia/brolog)
+# BROLOG
 
+[![npm version](https://badge.fury.io/js/brolog.svg)](https://badge.fury.io/js/brolog)
+[![Build Status](https://travis-ci.org/zixia/brolog.svg?branch=master)](https://travis-ci.org/zixia/brolog)
 [![Greenkeeper badge](https://badges.greenkeeper.io/zixia/brolog.svg)](https://greenkeeper.io/)
+[![TypeScript definitions on DefinitelyTyped](http://definitelytyped.org/badges/standard-flat.svg)](http://definitelytyped.org)
 
 Brolog is Logger for Angular in Browser like Npmlog.
 
-[![npm version](https://badge.fury.io/js/brolog.svg)](https://badge.fury.io/js/brolog)
-[![TypeScript definitions on DefinitelyTyped](http://definitelytyped.org/badges/standard-flat.svg)](http://definitelytyped.org)
-
-# Feature
+## FEATURE
 
 1. Out-of-Box Browser Support.(with `<script src='//unpkg.com/brolog'></script>`)
 1. Out-of-Box Angular & SystemJS Support.(See: [brolog-angular-demo project](https://github.com/zixia/brolog-angular-demo))
@@ -19,14 +19,14 @@ Brolog is Logger for Angular in Browser like Npmlog.
     
     [We enabled this in Chrome DevTools via blackboxing a bit ago.](https://gist.github.com/paulirish/c307a5a585ddbcc17242)
 
-# Example
+## EXAMPLE
 
 Here's two example:
 
 1. First example to demo easy to use in browser, and how it looks like npmlog.
 1. Second example to demo intergrate with angular DI & SystemJS.
 
-## 1. Super Easy to use in Browser
+### 1. Super Easy to use in Browser
 
 You can enable Brolog in your page by simple add the following `script` tag.
 
@@ -56,7 +56,7 @@ You can enable Brolog in your page by simple add the following `script` tag.
 
 Link: [Brolog Live demo](http://zixia.github.io/brolog)
 
-## 2. Quick Setup to use in Angular
+### 2. Quick Setup to use in Angular
 
 `Brolog` is writen mainly for act as a logger with Angular. Here's how to Inject Brolog in Angular.
 
@@ -109,7 +109,7 @@ More details, please see the `brolog-angular-demo` git repository at [here](http
 
 Link: [Brolog ♥ Angular Live demo](http://zixia.github.io/brolog)
 
-# Basic Usage
+## BASIC USAGE
 
 Get a _out-of-the-box_ `log` instance to use it directly.
 
@@ -119,7 +119,7 @@ import { log } from 'brolog'
 
 If fhe environment variable `BROLOG_LEVEL` is set, that will be used to set log.level() for the global Brolog instance `log`.
 
-## log.{error,warn,info,verbose,silly}
+### log.{error,warn,info,verbose,silly}
 
 ```ts
 import { Brolog } from 'brolog'
@@ -134,7 +134,7 @@ const log = new Brolog()
     log.info('fyi', 'I have a kitty cat: %j', myKittyCat)
 ```
 
-## log.level(newLevel)
+### log.level(newLevel)
 
 * {String} 'silent' | 'error' | 'warn' | 'info' | 'verbose' | 'silly'
 
@@ -142,7 +142,7 @@ The level to display logs at.  Any logs at or above this level will be
 displayed.  The special level `silent` will prevent anything from being
 displayed ever.
 
-## log\[level](prefix, message, ...)
+### log\[level](prefix, message, ...)
 
 * `level` {String} The level to emit the message at
 * `prefix` {String} A string prefix.  Set to "" to skip.
@@ -158,11 +158,11 @@ For example,
 * log.warn(prefix, message, ...)
 * log.error(prefix, message, ...)
 
-# Test
+## TEST
 
 Brolog comes with well test suit to ensure the behaviour is expected.
 
-## Unit Test
+### Unit Test
 
 ```
 $ npm run unit
@@ -170,7 +170,7 @@ $ npm run unit
 
 Unite Test Suite: [link](https://github.com/zixia/brolog/tree/master/test/unit)
 
-## End to End Test
+### End to End Test
 
 ```
 $ npm run e2e
@@ -180,27 +180,31 @@ End to End Test Suite: [link](https://github.com/zixia/brolog/tree/master/test/e
 
 P.S. runing E2E test is based on *brolog demo project*: [git repository](https://github.com/zixia/brolog-angular-demo)
 
-# Changelog
+## CHANGELOG
 
-## Master
+### Master
 
-## v1.3 (Apr 2018)
+### v1.4 (May 2018)
+
+1. Continus Deployment to `brolog@next` when the minor version in SemVer is _odd_(development release).
+
+### v1.3 (Apr 2018)
 
 1. Node.js: Add environment variable `BROLOG_LEVEL` to set the loglevel of global `log` instance.
 1. Browser: Add URL parameter variable `BROLOG_LEVEL` to set the loglevel of global `log` instance.
 
-## v1.2 (Sep 2017)
+### v1.2 (Sep 2017)
 
 1. Add `Brolog.enableLogging()` method for:
     1. `false` for disable logging
     1. `true` for enable logging
     1. `printTextFunc: (text: string)` for enable logging to a function.
 
-## v1.1 (May 2017)
+### v1.1 (May 2017)
 
 1. Support for creating individual instances.(We only have one singleton instance before)
 
-## v1.0 (Apr 2017)
+### v1.0 (Apr 2017)
 
 Compatible with AOT & WebPack with Angular v4
 
@@ -208,30 +212,30 @@ Compatible with AOT & WebPack with Angular v4
 1. Add UMD/AMD/System Module support
 1. Add a new method: `enableLogging()` to get/set logger
 
-## v0.4 (Mar 2017)
+### v0.4 (Mar 2017)
 
 1. added timestamp to log output
 1. fix CI back to work
 1. added CD to auto deploy source code to NPM after passed CI
 
-## v0.3.7 (Aug 2016)
+### v0.3.7 (Aug 2016)
 
 1. added End to End test with Angular
 1. supported include by `script` tag
 1. full support unpkg.com
 
-## v0.2.0 (Jul 16 2016)
+### v0.2.0 (Jul 16 2016)
 
 1. added Unit Test
 1. supported Angular Dependience Injection
 
-## v0.1.0 (Jul 14 2016)
+### v0.1.0 (Jul 14 2016)
 
 1. supported show real line number by set blackbox
 1. added TypeScript definition file
 1. supported work with SystemJS & Angular
 
-# Reference
+## REFERENCE
 
 1. [JavaScript Modules & Build Tools - YouTube](https://www.youtube.com/watch?v=U4ja6HeBm6s)
 2. [Writing Declaration Files](https://www.typescriptlang.org/docs/handbook/writing-declaration-files.html)
@@ -239,7 +243,7 @@ Compatible with AOT & WebPack with Angular v4
 4. [Angular 2 Errors](https://daveceddia.com/angular-2-errors/)
 1. [ES6 vs ES2015 - What to call a JavaScript version?](https://bytearcher.com/articles/es6-vs-es2015-name/)
 
-# AUTHOR
+## AUTHOR
 
 Huan LI \<zixia@zixia.net\> (http://linkedin.com/in/zixia)
 
@@ -247,7 +251,7 @@ Huan LI \<zixia@zixia.net\> (http://linkedin.com/in/zixia)
   <img src="http://stackoverflow.com/users/flair/1123955.png" width="208" height="58" alt="profile for zixia at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for zixia at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
 </a>
 
-# COPYRIGHT & LICENSE
+## COPYRIGHT & LICENSE
 
 * Code & Docs © 2017-2018 Huan LI \<zixia@zixia.net\>
 * Code released under the Apache-2.0 License
