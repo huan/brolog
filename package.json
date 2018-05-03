@@ -65,5 +65,10 @@
     "access": "public",
     "tag": "latest"
   },
+  "git": {
+    "scripts": {
+      "pre-push": "bash ./scripts/pre-push.sh"
+    }
+  },
   "dependencies": {}
 }
