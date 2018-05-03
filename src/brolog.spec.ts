@@ -264,8 +264,8 @@ t.test('Brolog enableLogger()', sinonTest(async function (t: any) {
   const stub = sinon.stub(Brolog.prototype, 'printTextDefault')
 
   t.test('enableLogging(false/true)', async (t: any) => {
-    spy.reset()
-    stub.reset()
+    spy.resetHistory()
+    stub.resetHistory()
 
     const log = Brolog.enableLogging(false)
     log.error('TEST', 'Should not log')
@@ -273,14 +273,14 @@ t.test('Brolog enableLogger()', sinonTest(async function (t: any) {
     t.ok(stub.notCalled, 'should not log anything after enableLogging(false)')
 
     log.enableLogging(true)
-    stub.reset()
+    stub.resetHistory()
     log.error('TEST', 'Should log')
     t.ok(stub.calledOnce, 'should log after enableLogging(true)')
   })
 
   t.test('enableLogging(log function)', async (t: any) => {
-    spy.reset()
-    stub.reset()
+    spy.resetHistory()
+    stub.resetHistory()
 
     const log = Brolog.enableLogging(spy)
     log.error('TEST', 'should call spy')
