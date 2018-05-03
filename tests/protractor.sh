@@ -5,7 +5,7 @@ E2E_TESTING_DIR="/tmp/brolog-angular-demo.$$"
 GIT_URL="https://github.com/zixia/brolog-angular-demo.git"
 
 npm link
-webdriver-manager update
+# webdriver-manager update
 
 git clone "$GIT_URL" "$E2E_TESTING_DIR"
 
@@ -16,7 +16,7 @@ npm start
 cd -
 
 # http://stackoverflow.com/a/3474556/1123955
-protractor tests/protractor.conf.js
+ts-node ./node_modules/.bin/protractor tests/protractor.conf.ts
 
 cd "$E2E_TESTING_DIR"
 npm stop
