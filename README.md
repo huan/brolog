@@ -170,7 +170,7 @@ Brolog comes with well test suit to ensure the behaviour is expected.
 $ npm run unit
 ```
 
-Unite Test Suite: [link](https://github.com/zixia/brolog/tree/master/test/unit)
+Unite Test Suite: [link](https://github.com/zixia/brolog/tree/master/src/brolog.spec.ts)
 
 ### End to End Test
 
@@ -178,7 +178,7 @@ Unite Test Suite: [link](https://github.com/zixia/brolog/tree/master/test/unit)
 $ npm run e2e
 ```
 
-End to End Test Suite: [link](https://github.com/zixia/brolog/tree/master/test/e2e)
+End to End Test Suite: [link](https://github.com/zixia/brolog/tree/master/tests/e2e)
 
 P.S. runing E2E test is based on *brolog demo project*: [git repository](https://github.com/zixia/brolog-angular-demo)
 

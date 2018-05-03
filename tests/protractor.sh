@@ -16,7 +16,7 @@ npm start
 cd -
 
 # http://stackoverflow.com/a/3474556/1123955
-protractor test/protractor.conf.js
+protractor tests/protractor.conf.js
 
 cd "$E2E_TESTING_DIR"
 npm stop
