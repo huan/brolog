@@ -50,7 +50,6 @@ jobs:
         - npm version
         - if ./scripts/development-release.ts; then ./scripts/package-publish-config-tag-next.ts; fi
         - npm run dist
-        - cd dist/
         - echo "Deploying to NPM ..."
 
       deploy:
