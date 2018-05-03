@@ -6,8 +6,7 @@ os:
 language: node_js
 node_js:
   - '9'
-  - '8'
-  - '7'
+  - '10'
 
 addons:
   chrome: stable
@@ -17,16 +16,50 @@ before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
-script:
-  - echo $TRAVIS_OS_NAME
-  - node --version
-  - npm --version
-  - npm test
-  - npm run test:pack && echo 'Npm packing test passed'
-
 cache:
   directories:
     - node_modules
+
+stages:
+  - test
+  - pack
+  - name: deploy
+    if: branch =~ ^(master|v\d+\.\d+)
+        AND (type NOT IN (cron, pull_request))
+
+install: travis_retry npm install
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - echo $TRAVIS_OS_NAME
+        - node --version
+        - npm --version
+        - npm test
+
+    - stage: pack
+      script:
+        - echo "NPM Pack Testing..."
+        - npm run test:pack
+        - echo 'NPM Pack Testing is PASSED.'
+
+    - stage: deploy
+      before_deploy:
+        - echo "Packing NPM ..."
+        - npm version
+        - if ./scripts/development-release.ts; then ./scripts/package-publish-config-tag-next.ts; fi
+        - npm run dist
+        - cd dist/
+        - echo "Deploying to NPM ..."
+
+      deploy:
+        provider: npm
+        email: zixia@zixia.net
+        api_key: "$NPM_TOKEN"
+        skip_cleanup: true
+        on:
+          all_branches: true
 
 notifications:
   webhooks:
@@ -35,15 +68,4 @@ notifications:
     on_success: change  # options: [always|never|change] default: always
     on_failure: change  # options: [always|never|change] default: always
     on_start: never     # options: [always|never|change] default: always
-
-before_deploy:
-  - npm version
-  - grep version package.json
-  - npm run dist
-
-deploy:
-  provider: npm
-  email: zixia@zixia.net
-  api_key: "$NPM_TOKEN"
-  skip_cleanup: true
 
