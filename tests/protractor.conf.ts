@@ -15,15 +15,19 @@ export const config: Config = {
     'e2e/**/*.e2e-spec.js',
   ],
   capabilities: {
+    directConnect: true,
     browserName: 'chrome',
     chromeOptions: {
       args: process.env.HEADLESS
-        ? ['--headless', '--no-sandbox', '--disable-dev-shm-usage']
+        ? [
+            '--headless',
+            '--no-sandbox',
+            '--disable-dev-shm-usage',
+          ]
         : [],
       binary: process.env.HEADLESS ? puppeteer.executablePath() : undefined,
     },
   },
-  directConnect: true,
   baseUrl: 'http://localhost:3000',
   framework: 'jasmine',
   jasmineNodeOpts: {

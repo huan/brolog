@@ -1,13 +1,15 @@
 import json from 'rollup-plugin-json'
 
 export default {
-  entry: 'dist/src/brolog.js',
-  dest: 'bundles/brolog.es6.umd.js',
-  sourceMap: true,
-  format: 'umd',
-  moduleName: 'window',
-  banner: '/* Brolog version ' + require('./package.json').version + ' */',
-  footer: '/* https://github.com/zixia */',
+  input: 'dist/src/brolog.js',
+  output: {
+    file: 'bundles/brolog.es6.umd.js',
+    name: 'window',
+    sourcemap: true,
+    format: 'umd',
+    banner: '/* Brolog version ' + require('./package.json').version + ' */',
+    footer: '/* https://github.com/zixia */',
+  },
   plugins: [
     json({
       // All JSON files will be parsed by default,
