@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
+npm run dist
+npm pack
+
 TMPDIR="/tmp/brolog-npm.$$"
 mkdir "$TMPDIR"
-npm pack
 mv *-*.*.*.tgz "$TMPDIR"
 cp tests/fixtures/smoke-testing.js "$TMPDIR"
 
