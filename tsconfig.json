@@ -11,8 +11,8 @@
     , "noFallthroughCasesInSwitch": true
     , "strictNullChecks": true
     , "alwaysStrict": true
-    , "noImplicitAny": false
-    , "noImplicitThis": false
+    , "noImplicitAny": true
+    , "noImplicitThis": true
 
     , "noUnusedParameters": false
     , "traceResolution": false
@@ -21,7 +21,7 @@
 
     , "lib": [
         "dom"
-      , "es6"
+      , "esnext"
     ]
     , "target": "es6"
     , "module": "commonjs"

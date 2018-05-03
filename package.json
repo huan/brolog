@@ -1,6 +1,6 @@
 {
   "name": "brolog",
-  "version": "1.3.3",
+  "version": "1.3.5",
   "description": "Npmlog like logger for Browser",
   "main": "bundles/brolog.umd.js",
   "types": "dist/brolog.d.ts",
@@ -11,7 +11,7 @@
     "build": "tsc --module es6",
     "lint": "npm run lint:ts",
     "rollup": "rollup -c",
-    "lint:ts": "tslint --project tsconfig.json src/**/*.ts && tsc --noEmit",
+    "lint:ts": "tslint --project tsconfig.json && tsc --noEmit",
     "test": "npm run dist && npm run test:unit && npm run test:e2e",
     "test:e2e": "test/protractor.sh",
     "test:pack": "export TMPDIR=/tmp/brolog-npm.$$ && mkdir $TMPDIR && npm pack && mv brolog-*.*.*.tgz $TMPDIR && cp example/npm-like-logger.js $TMPDIR && cd $TMPDIR && npm init -y && npm install brolog-*.*.*.tgz && node npm-like-logger.js",
@@ -40,6 +40,7 @@
     "@types/node": "^10.0.3",
     "@types/sinon": "^4.3.1",
     "@types/sinon-test": "^1.0.2",
+    "git-scripts": "^0.2.1",
     "jasmine-spec-reporter": "^4.0.0",
     "protractor": "^5.1.1",
     "rollup": "^0.58.2",
@@ -60,5 +61,14 @@
     "src/",
     "dist/"
   ],
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  },
+  "git": {
+    "scripts": {
+      "pre-push": "bash ./scripts/pre-push.sh"
+    }
+  },
   "dependencies": {}
 }

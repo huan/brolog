@@ -351,7 +351,7 @@ export class Brolog implements Loggable {
 // Credit: https://stackoverflow.com/a/4795914/1123955
 function sprintf() {
   const args = arguments
-  const text = args[0]
+  const text = args[0] as string
   let i = 1
   return text.replace(/%((%)|s|d)/g, function (m) {
       // m is the matched format, e.g. %s, %d
