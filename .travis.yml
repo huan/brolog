@@ -16,12 +16,6 @@ cache:
 
 install: travis_retry npm install
 
-script:
-  - echo $TRAVIS_OS_NAME
-  - node --version
-  - npm --version
-  - HEADLESS=1 npm test
-
 stages:
   - test
   - pack
@@ -31,6 +25,13 @@ stages:
 
 jobs:
   include:
+    - stage: test
+      script:
+        - echo $TRAVIS_OS_NAME
+        - node --version
+        - npm --version
+        - HEADLESS=1 npm test
+
     - stage: pack
       script:
         - echo "NPM Pack Testing..."
