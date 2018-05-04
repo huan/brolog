@@ -189,9 +189,6 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 ### v1.4 (May 2018)
 
 1. Continus Deployment to `brolog@next` when the minor version in SemVer is _odd_(development release).
-
-### v1.3 (Apr 2018)
-
 1. Node.js: Add environment variable `BROLOG_LEVEL` to set the loglevel of global `log` instance.
 1. Browser: Add URL parameter variable `BROLOG_LEVEL` to set the loglevel of global `log` instance.
 
@@ -201,9 +198,6 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
     1. `false` for disable logging
     1. `true` for enable logging
     1. `printTextFunc: (text: string)` for enable logging to a function.
-
-### v1.1 (May 2017)
-
 1. Support for creating individual instances.(We only have one singleton instance before)
 
 ### v1.0 (Apr 2017)
