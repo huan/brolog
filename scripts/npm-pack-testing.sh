@@ -12,8 +12,7 @@ cp tests/fixtures/smoke-testing.ts "$TMPDIR"
 cd $TMPDIR
 npm init -y
 npm install *-*.*.*.tgz \
-  source-map@latest \
-  typescript@latest
+  typescript
 
 ./node_modules/.bin/tsc \
   --lib esnext,dom \
