@@ -27,7 +27,7 @@ stages:
   - test
   - pack
   - name: deploy
-    if: branch =~ ^(master|v\d+\.\d+) AND (type IN (push))
+    if: (type = push) AND branch =~ ^(master|v\d+\.\d+)$
 
 jobs:
   include:
