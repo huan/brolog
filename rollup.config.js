@@ -4,6 +4,7 @@ export default {
   input: 'dist/src/brolog.js',
   output: {
     file: 'bundles/brolog.es6.umd.js',
+    extend: true, // Issue #69
     name: 'window',
     sourcemap: true,
     format: 'umd',
