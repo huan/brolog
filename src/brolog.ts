@@ -11,14 +11,8 @@
 import {
   VERSION,
   BROLOG_LEVEL,
-}               from './config'
-
-export type LogLevelName = 'silent'
-                          | 'error'
-                          | 'warn'
-                          | 'info'
-                          | 'verbose'
-                          | 'silly'
+  BROLOG_MODULE,
+}                 from './config'
 
 export type LogLevelTitle = 'ERR'
                           | 'WARN'
@@ -26,9 +20,9 @@ export type LogLevelTitle = 'ERR'
                           | 'VERB'
                           | 'SILL'
 
-export type PrintTextFunc = (text: string) => void
+export type TextPrinterFunction = (title: string, text?: string) => void
 
-enum LogLevel {
+export enum LogLevel {
   silent  = 0,
   error   = 1,
   warn    = 2,
@@ -37,33 +31,38 @@ enum LogLevel {
   silly   = 5,
 }
 
+export type LogLevelName = keyof typeof LogLevel
+
 export interface Loggable {
-  error   (prefix: string, message: string, ...args: any[]): void
-  warn    (prefix: string, message: string, ...args: any[]): void
-  info    (prefix: string, message: string, ...args: any[]): void
-  verbose (prefix: string, message: string, ...args: any[]): void
-  silly   (prefix: string, message: string, ...args: any[]): void
+  error   (moduleName: string, message: string, ...args: any[]): void
+  warn    (moduleName: string, message: string, ...args: any[]): void
+  info    (moduleName: string, message: string, ...args: any[]): void
+  verbose (moduleName: string, message: string, ...args: any[]): void
+  silly   (moduleName: string, message: string, ...args: any[]): void
 }
 
 // declare the `log` variable first
 export let log: Brolog
 
 export class Brolog implements Loggable {
-  private static globalInstance: Brolog
-  private static globalLogLevelName: LogLevelName = 'info'
-  private static globalPrefix: string | RegExp    = /.*/ // Match all by default
+  private static globalInstance    : Brolog
+  private static globalLogLevelName: LogLevelName     = 'info'
+  private static globalPrefix      : string | RegExp  = /.*/  // Match all by default
 
   private enableTimestamp = true
   private logLevel:     LogLevel
   private prefixFilter: RegExp
 
-  public printText: (levelTitle: LogLevelTitle, text: string) => void
+  public textPrinter: (levelTitle: LogLevelTitle, text: string) => void
 
   constructor() {
     this.level(Brolog.globalLogLevelName)
-    this.prefix(Brolog.globalPrefix)
+    this.logLevel = LogLevel[this.level()]
 
-    this.printText = this.printTextDefault
+    this.prefix(Brolog.globalPrefix)
+    this.prefixFilter = this.prefix()
+
+    this.textPrinter = this.defaultTextPrinter
   }
 
   /**
@@ -97,12 +96,12 @@ export class Brolog implements Loggable {
     return Brolog.version()
   }
 
-  public static enableLogging(logSetting: boolean | PrintTextFunc): Brolog {
-    return Brolog.instance().enableLogging(logSetting)
+  public static enableLogging(printerFunc: boolean | TextPrinterFunction): Brolog {
+    return Brolog.instance().enableLogging(printerFunc)
   }
 
-  public enableLogging(logSetting: boolean | PrintTextFunc): Brolog {
-    this.verbose('Brolog', 'enableLogging(%s)', logSetting)
+  public enableLogging(printerFunc: boolean | TextPrinterFunction): Brolog {
+    this.verbose('Brolog', 'enableLogging(%s)', printerFunc)
 
     // const loggerMethodList = [
     //   'error',
@@ -112,20 +111,20 @@ export class Brolog implements Loggable {
     //   'silly',
     // ]
 
-    if (logSetting === false) {
+    if (printerFunc === false) {
       this.silly('Brolog', 'enableLogging() disabled')
       // loggerMethodList.forEach(m => {
       //   this[m] =  nullLogger[m]
       // })
-      this.printText = function () { /* null logger */ }
+      this.textPrinter = function () { /* null logger */ }
 
-    } else if (logSetting === true) {
+    } else if (printerFunc === true) {
       this.silly('Brolog', 'enableLogging() enabled: restore Brolog instance')
       // const restore = new Brolog()
       // loggerMethodList.forEach(m => {
       //   this[m] = restore[m]
       // })
-      this.printText = this.printTextDefault
+      this.textPrinter = this.defaultTextPrinter
 
     // } else if (typeof log.verbose === 'function') {
     //   this.silly('Brolog', 'enableLogging() enabled: using provided logger')
@@ -145,10 +144,10 @@ export class Brolog implements Loggable {
     //     }
     //   }
 
-    } else if (typeof logSetting === 'function') {
+    } else if (typeof printerFunc === 'function') {
       this.silly('Brolog', 'enableLogging() enabled: using provided log function')
-      this.printText = function (levelTitle: LogLevelTitle, text: string): void {
-        logSetting(text)
+      this.textPrinter = function (levelTitle: LogLevelTitle, text: string): void {
+        printerFunc(levelTitle, text)
         return
       }
     } else {
@@ -158,23 +157,32 @@ export class Brolog implements Loggable {
     return this
   }
 
-  public static prefix(filter?: string | RegExp): RegExp {
+  public static prefix(): RegExp
+  public static prefix(filter: string | RegExp): void
+
+  public static prefix(filter?: string | RegExp): void | RegExp {
     if (filter) {
       this.globalPrefix = filter
+      this.globalInstance.prefix(filter)
+    } else {
+      return this.instance().prefix()
     }
-    return this.instance().prefix(filter)
   }
-  public prefix(filter?: string | RegExp): RegExp {
+
+  public prefix(): RegExp
+  public prefix(filter: string | RegExp): void
+  public prefix(filter?: string | RegExp): void | RegExp {
     if (filter) {
       if (typeof filter === 'string') {
-        this.prefixFilter = new RegExp(filter, 'i')
+        this.prefixFilter = new RegExp('^' + filter + '$', 'i')
       } else if (filter instanceof RegExp) {
         this.prefixFilter = filter
       } else {
         throw new Error('unsupported prefix filter')
       }
+    } else {
+      return this.prefixFilter
     }
-    return this.prefixFilter
   }
 
   public static level(levelName?: LogLevelName): LogLevelName {
@@ -200,7 +208,7 @@ export class Brolog implements Loggable {
   }
 
   private log(levelTitle: LogLevelTitle, prefix: string, message: string) {
-    if (!this.prefixFilter.test(prefix)) {
+    if (this.prefixFilter && !this.prefixFilter.test(prefix)) {
       return  // skip message not match prefix filter
     }
 
@@ -210,10 +218,10 @@ export class Brolog implements Loggable {
     // args[0] = this.timestamp() + args[0]
 
     const text = Reflect.apply(sprintf, null, args)
-    this.printText(levelTitle, text)
+    this.textPrinter(levelTitle, text)
   }
 
-  public printTextDefault(levelTitle: LogLevelTitle, text: string): void {
+  public defaultTextPrinter(levelTitle: LogLevelTitle, text: string): void {
     // Use Reflect at:
     // https://www.keithcirkel.co.uk/metaprogramming-in-es6-part-2-reflect/
     switch (levelTitle) {
@@ -245,76 +253,67 @@ export class Brolog implements Loggable {
   public static error(prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
     // return instance.error.apply(instance, arguments)
-    return Reflect.apply(instance.error, instance, arguments)
+    return Reflect.apply(instance.error, instance, ([] as any).concat(prefix, args))
   }
   public error(prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.error) {
       return
     }
-    const argList = Array.from(arguments)
+    const argList = Array.from([prefix, ...args])
     argList.unshift('ERR')
-    // this.log.apply(this, argList)
     return Reflect.apply(this.log, this, argList)
   }
 
   public static warn(prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    // return instance.warn.apply(instance, arguments)
-    return Reflect.apply(instance.warn, instance, arguments)
+    return Reflect.apply(instance.warn, instance, ([] as any).concat(prefix, args))
   }
   public warn(prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.warn) {
       return
     }
-    const argList = Array.from(arguments)
+    const argList = Array.from([prefix, ...args])
     argList.unshift('WARN')
-    // return this.log.apply(this, argList)
     return Reflect.apply(this.log, this, argList)
   }
 
   public static info(prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    // return instance.info.apply(instance, arguments)
-    return Reflect.apply(instance.info, instance, arguments)
+    return Reflect.apply(instance.info, instance, ([] as any).concat(prefix, args))
   }
   public info(prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.info) {
       return
     }
-    const argList = Array.from(arguments)
+    const argList = Array.from([prefix, ...args])
     argList.unshift('INFO')
-    // this.log.apply(this, argList)
     return Reflect.apply(this.log, this, argList)
   }
 
   public static verbose(prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    // return instance.verbose.apply(instance, arguments)
-    return Reflect.apply(instance.verbose, instance, arguments)
+    return Reflect.apply(instance.verbose, instance, ([] as any).concat(prefix, args))
   }
   public verbose(prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.verbose) {
       return
     }
 
-    const argList = Array.from(arguments)
+    const argList = Array.from([prefix, ...args])
     argList.unshift('VERB')
-    // this.log.apply(this, argList)
     return Reflect.apply(this.log, this, argList)
   }
 
   public static silly(prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    // return instance.silly.apply(instance, arguments)
-    return Reflect.apply(instance.silly, instance, arguments)
+    return Reflect.apply(instance.silly, instance, ([] as any).concat(prefix, args))
   }
   public silly(prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.silly) {
       return
     }
-    const argList = Array.from(arguments)
+    const argList = Array.from([prefix, ...args])
     argList.unshift('SILL')
-    // this.log.apply(this, argList)
     return Reflect.apply(this.log, this, argList)
   }
 
@@ -387,7 +386,15 @@ if (BROLOG_LEVEL) {
    * 1. process.env['BROLOG_LEVEL'], or
    * 2. in URL: `?BROLOG_LEVEL=verbose&...`
    */
-  log.level(BROLOG_LEVEL as any)
+  if (BROLOG_LEVEL === '*') {
+    log.level('silly')
+  } else {
+    log.level(BROLOG_LEVEL as any)
+  }
+}
+
+if (BROLOG_MODULE && BROLOG_MODULE !== '*') {
+  log.prefix(BROLOG_MODULE)
 }
 
 export default Brolog

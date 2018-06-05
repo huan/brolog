@@ -5,14 +5,14 @@ let pkg: {
   version: string,
 } | undefined
 
-let VERSION = 'unknown'
+let VERSION = '0.0.0'
 try {
   pkg = require('../package.json')
   if (pkg) {
     VERSION = pkg.version
   }
 } catch (e) {
-  VERSION = 'not found'
+  VERSION = '0.0.0'
 }
 
 export {
@@ -23,10 +23,12 @@ export {
  * BROLOG_LEVEL
  */
 
-const DEFAULT_LEVEL         = 'info'
-const BROLOG_LEVEL_VAR_NAME = 'BROLOG_LEVEL'
+const DEFAULT_LEVEL          = 'info'
+const BROLOG_LEVEL_VAR_NAME  = 'BROLOG_LEVEL'
+const BROLOG_MODULE_VAR_NAME = 'BROLOG_MODULE'
 
-let level: string | undefined
+let level      : undefined | string
+let debugModule: undefined | string
 
 /**
  * Sometimes there's a `process` in browser (ionic3 & angular5)
@@ -40,6 +42,9 @@ if (typeof process !== 'undefined' && process.env) {
   if (!level) {
     level = process.env[BROLOG_LEVEL_VAR_NAME]
   }
+  if (!debugModule) {
+    debugModule = process.env[BROLOG_MODULE_VAR_NAME]
+  }
 }
 
 if (typeof window !== 'undefined' && window.location && typeof window.location.search === 'string') {
@@ -48,6 +53,9 @@ if (typeof window !== 'undefined' && window.location && typeof window.location.s
    */
   if (!level) {
     level = getJsonFromUrl()[BROLOG_LEVEL_VAR_NAME]
+  }
+  if (!debugModule) {
+    debugModule = getJsonFromUrl()[BROLOG_LEVEL_VAR_NAME]
   }
 
   function getJsonFromUrl() {
@@ -63,3 +71,4 @@ if (typeof window !== 'undefined' && window.location && typeof window.location.s
 }
 
 export const BROLOG_LEVEL = level || DEFAULT_LEVEL
+export const BROLOG_MODULE = debugModule || '*'
