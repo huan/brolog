@@ -6,6 +6,7 @@ os:
 language: node_js
 node_js:
   - '9'
+  - '10'
 
 addons:
   chrome: stable
@@ -16,21 +17,20 @@ cache:
 
 install: travis_retry npm install
 
+script:
+  - echo $TRAVIS_OS_NAME
+  - node --version
+  - npm --version
+  - HEADLESS=1 npm test
+
 stages:
   - test
   - pack
   - name: deploy
-    if: branch =~ ^(master|v\d+\.\d+)
-        AND (type NOT IN (cron, pull_request))
+    if: (type = push) AND branch =~ ^(master|v\d+\.\d+)$
 
 jobs:
   include:
-    - stage: test
-      script:
-        - echo $TRAVIS_OS_NAME
-        - node --version
-        - npm --version
-        - HEADLESS=1 npm test
 
     - stage: pack
       script:

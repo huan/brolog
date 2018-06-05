@@ -184,7 +184,9 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 ## CHANGELOG
 
-### Master
+### v1.6 master (May 28th, 2018)
+
+1. Fix browser broken problem caused by the `rollup` behavior change. ([#69](https://github.com/zixia/brolog/issues/69))
 
 ### v1.4 (May 2018)
 
