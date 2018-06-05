@@ -254,14 +254,16 @@ t.test('Brolog individual instance prefix filter test', async (t: any) => {
   t.equal(log1.prefix().toString(), '/.*/', 'should stick with default prefix filter by default')
 
   t.equal(log2.level(), 'silly', 'should be set level `silly`')
-  t.equal(log2.prefix().toString(), '/faint/i', 'should be set prefix filter to /faint/i')
+  t.equal(log2.prefix().toString(), '/^faint$/i', 'should be set prefix filter to /faint/i')
 
   t.end()
 })
 
 t.test('Brolog enableLogger()', sinonTest(async function (t: any) {
-  const spy  = sinon.spy()
-  const stub = sinon.stub(Brolog.prototype, 'printTextDefault')
+  const sandbox = sinon.createSandbox()
+
+  const spy  = sandbox.spy()
+  const stub = sandbox.stub(Brolog.prototype, 'defaultTextPrinter')
 
   t.test('enableLogging(false/true)', async (t: any) => {
     spy.resetHistory()
@@ -290,6 +292,7 @@ t.test('Brolog enableLogger()', sinonTest(async function (t: any) {
   })
 
   // XXX why need t.end() inside async function(which will return a promise?)
+  sandbox.restore()
   t.end()
 }))
 

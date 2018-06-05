@@ -1,7 +1,7 @@
 # BROLOG
 
 [![npm version](https://badge.fury.io/js/brolog.svg)](https://badge.fury.io/js/brolog)
-[![Build Status](https://travis-ci.org/zixia/brolog.svg?branch=master)](https://travis-ci.org/zixia/brolog)
+[![Build Status](https://travis-ci.com/zixia/brolog.svg?branch=master)](https://travis-ci.com/zixia/brolog)
 [![Greenkeeper badge](https://badges.greenkeeper.io/zixia/brolog.svg)](https://greenkeeper.io/)
 [![TypeScript definitions on DefinitelyTyped](http://definitelytyped.org/badges/standard-flat.svg)](http://definitelytyped.org)
 
@@ -18,7 +18,7 @@ Brolog is Logger for Angular in Browser like Npmlog.
 1. Node.js Support.([Node.js example](https://github.com/zixia/brolog/blob/master/example/npm-like-logger.js))
 1. Support show **real** line number in browser console.
     > What I really get frustrated by is that I cannot wrap console.* and preserve line numbers
-    
+    >
     [We enabled this in Chrome DevTools via blackboxing a bit ago.](https://gist.github.com/paulirish/c307a5a585ddbcc17242)
 
 ## EXAMPLE
@@ -32,11 +32,11 @@ Here's two example:
 
 You can enable Brolog in your page by simple add the following `script` tag.
 
-```
+```html
 <script src="//unpkg.com/brolog"></script>
 ```
 
-```
+```html
 <html>
   <head>
     <script src="//unpkg.com/brolog"></script>
@@ -63,12 +63,15 @@ Link: [Brolog Live demo](http://zixia.github.io/brolog)
 `Brolog` is writen mainly for act as a logger with Angular. Here's how to Inject Brolog in Angular.
 
 1. install brolog
-  ```
+
+  ```shell
   $ npm install brolog --save
+  ...
   ```
 
 1. setup SystemJS
-  ```
+
+  ```ts
   System.config({
     map: {
       brolog: 'node_modules/brolog/bundles/brolog.js'
@@ -77,19 +80,22 @@ Link: [Brolog Live demo](http://zixia.github.io/brolog)
   ```
 
 1. import
-  ```
+
+  ```ts
   import { Brolog } from 'brolog'
   ```
 
 1. inject to @NgModule
-  ```
+
+  ```ts
   providers: [
     Brolog,
   ]
   ```
 
 1. inject to constructor
-  ```
+
+  ```ts
   class LogApp {
     constructor(
       private log: Brolog
@@ -98,7 +104,8 @@ Link: [Brolog Live demo](http://zixia.github.io/brolog)
   ```
 
 1. log
-  ```
+
+  ```ts
   class LogApp {
     testLog() {
       this.log.verbose('Brolog', 'test log:%s', 123)
@@ -166,16 +173,18 @@ Brolog comes with well test suit to ensure the behaviour is expected.
 
 ### Unit Test
 
-```
+```shell
 $ npm run unit
+...
 ```
 
 Unite Test Suite: [link](https://github.com/zixia/brolog/tree/master/src/brolog.spec.ts)
 
 ### End to End Test
 
-```
+```shell
 $ npm run e2e
+...
 ```
 
 End to End Test Suite: [link](https://github.com/zixia/brolog/tree/master/tests/e2e)
@@ -187,6 +196,8 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 ### v1.6 master (May 28th, 2018)
 
 1. Fix browser broken problem caused by the `rollup` behavior change. ([#69](https://github.com/zixia/brolog/issues/69))
+1. Node.js: Add environment variable `BROLOG_MODULE` to set the `prefix` filter of global `log` instance.
+1. Browser: Add URL parameter variable `BROLOG_MODULE` to set the `prefix` filter of global `log` instance.
 
 ### v1.4 (May 2018)
 
