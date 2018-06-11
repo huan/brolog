@@ -53,7 +53,7 @@
     "rollup-plugin-json": "^3.0.0",
     "rollup": "^0.60.0",
     "semver": "^5.5.0",
-    "sinon": "^5.0.3",
+    "sinon": "^6.0.0",
     "sinon-test": "git://github.com/zixia/sinon-test.git#patch-1",
     "source-map": "^0.7.2",
     "tap": "^12.0.0",
