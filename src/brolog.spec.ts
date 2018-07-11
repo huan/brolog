@@ -254,7 +254,7 @@ t.test('Brolog individual instance prefix filter test', async (t: any) => {
   t.equal(log1.prefix().toString(), '/.*/', 'should stick with default prefix filter by default')
 
   t.equal(log2.level(), 'silly', 'should be set level `silly`')
-  t.equal(log2.prefix().toString(), '/^faint$/i', 'should be set prefix filter to /faint/i')
+  t.equal(log2.prefix().toString(), '/^faint$/', 'should be set prefix filter to /faint/')
 
   t.end()
 })
