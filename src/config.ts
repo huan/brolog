@@ -25,7 +25,7 @@ export {
 
 const DEFAULT_LEVEL          = 'info'
 const BROLOG_LEVEL_VAR_NAME  = 'BROLOG_LEVEL'
-const BROLOG_MODULE_VAR_NAME = 'BROLOG_MODULE'
+const BROLOG_PREFIX_VAR_NAME = 'BROLOG_PREFIX'
 
 let level      : undefined | string
 let debugModule: undefined | string
@@ -43,7 +43,7 @@ if (typeof process !== 'undefined' && process.env) {
     level = process.env[BROLOG_LEVEL_VAR_NAME]
   }
   if (!debugModule) {
-    debugModule = process.env[BROLOG_MODULE_VAR_NAME]
+    debugModule = process.env[BROLOG_PREFIX_VAR_NAME]
   }
 }
 
@@ -71,4 +71,4 @@ if (typeof window !== 'undefined' && window.location && typeof window.location.s
 }
 
 export const BROLOG_LEVEL = level || DEFAULT_LEVEL
-export const BROLOG_MODULE = debugModule || '*'
+export const BROLOG_PREFIX = debugModule || '*'

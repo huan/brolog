@@ -167,6 +167,19 @@ For example,
 * log.warn(prefix, message, ...)
 * log.error(prefix, message, ...)
 
+### Environment Variable: `BROLOG_PREFIX`
+
+Example:
+
+1. Shell
+    ```sh
+    BROLOG_PREFIX="(Contact|Puppet)" node wechaty.js
+    ```
+2. This will equals to set by code API:
+    ```ts
+    log.prefix(/^(Contact|Puppet)$/)
+    ```
+
 ## TEST
 
 Brolog comes with well test suit to ensure the behaviour is expected.
@@ -196,8 +209,8 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 ### v1.6 master (May 28th, 2018)
 
 1. Fix browser broken problem caused by the `rollup` behavior change. ([#69](https://github.com/zixia/brolog/issues/69))
-1. Node.js: Add environment variable `BROLOG_MODULE` to set the `prefix` filter of global `log` instance.
-1. Browser: Add URL parameter variable `BROLOG_MODULE` to set the `prefix` filter of global `log` instance.
+1. Node.js: Add environment variable `BROLOG_PREFIX` to set the `prefix` filter of global `log` instance.
+1. Browser: Add URL parameter variable `BROLOG_PREFIX` to set the `prefix` filter of global `log` instance.
 
 ### v1.4 (May 2018)
 

@@ -11,7 +11,7 @@
 import {
   VERSION,
   BROLOG_LEVEL,
-  BROLOG_MODULE,
+  BROLOG_PREFIX,
 }                 from './config'
 
 export type LogLevelTitle = 'ERR'
@@ -174,7 +174,7 @@ export class Brolog implements Loggable {
   public prefix(filter?: string | RegExp): void | RegExp {
     if (filter) {
       if (typeof filter === 'string') {
-        this.prefixFilter = new RegExp('^' + filter + '$', 'i')
+        this.prefixFilter = new RegExp('^' + filter + '$')
       } else if (filter instanceof RegExp) {
         this.prefixFilter = filter
       } else {
@@ -393,8 +393,8 @@ if (BROLOG_LEVEL) {
   }
 }
 
-if (BROLOG_MODULE && BROLOG_MODULE !== '*') {
-  log.prefix(BROLOG_MODULE)
+if (BROLOG_PREFIX && BROLOG_PREFIX !== '*') {
+  log.prefix(BROLOG_PREFIX)
 }
 
 export default Brolog
