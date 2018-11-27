@@ -1,21 +1,21 @@
 # BROLOG
 
 [![npm version](https://badge.fury.io/js/brolog.svg)](https://badge.fury.io/js/brolog)
-[![Build Status](https://travis-ci.com/zixia/brolog.svg?branch=master)](https://travis-ci.com/zixia/brolog)
-[![Greenkeeper badge](https://badges.greenkeeper.io/zixia/brolog.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.com/huan/brolog.svg?branch=master)](https://travis-ci.com/huan/brolog)
+[![Greenkeeper badge](https://badges.greenkeeper.io/huan/brolog.svg)](https://greenkeeper.io/)
 [![TypeScript definitions on DefinitelyTyped](http://definitelytyped.org/badges/standard-flat.svg)](http://definitelytyped.org)
 
-![Brolog](https://zixia.github.io/brolog/images/brolog-logo.png)
+![Brolog](https://huan.github.io/brolog/images/brolog-logo.png)
 
 Brolog is Logger for Angular in Browser like Npmlog.
 
 ## FEATURE
 
 1. Out-of-Box Browser Support.(with `<script src='//unpkg.com/brolog'></script>`)
-1. Out-of-Box Angular & SystemJS Support.(See: [brolog-angular-demo project](https://github.com/zixia/brolog-angular-demo))
+1. Out-of-Box Angular & SystemJS Support.(See: [brolog-angular-demo project](https://github.com/huan/brolog-angular-demo))
 1. Npmlog compatible interface.(i.e. `log.verbose('Brolog', 'Hello, %s', 'world!'')`)
 1. Native TypeScript Support.(With typings)
-1. Node.js Support.([Node.js example](https://github.com/zixia/brolog/blob/master/example/npm-like-logger.js))
+1. Node.js Support.([Node.js example](https://github.com/huan/brolog/blob/master/example/npm-like-logger.js))
 1. Support show **real** line number in browser console.
     > What I really get frustrated by is that I cannot wrap console.* and preserve line numbers
     >
@@ -56,7 +56,7 @@ You can enable Brolog in your page by simple add the following `script` tag.
 </html>
 ```
 
-Link: [Brolog Live demo](http://zixia.github.io/brolog)
+Link: [Brolog Live demo](http://huan.github.io/brolog)
 
 ### 2. Quick Setup to use in Angular
 
@@ -114,9 +114,9 @@ Link: [Brolog Live demo](http://zixia.github.io/brolog)
   }
   ```
 
-More details, please see the `brolog-angular-demo` git repository at [here](https://github.com/zixia/brolog-angular-demo).
+More details, please see the `brolog-angular-demo` git repository at [here](https://github.com/huan/brolog-angular-demo).
 
-Link: [Brolog ♥ Angular Live demo](http://zixia.github.io/brolog)
+Link: [Brolog ♥ Angular Live demo](http://huan.github.io/brolog)
 
 ## BASIC USAGE
 
@@ -191,7 +191,7 @@ $ npm run unit
 ...
 ```
 
-Unite Test Suite: [link](https://github.com/zixia/brolog/tree/master/src/brolog.spec.ts)
+Unite Test Suite: [link](https://github.com/huan/brolog/tree/master/src/brolog.spec.ts)
 
 ### End to End Test
 
@@ -200,15 +200,15 @@ $ npm run e2e
 ...
 ```
 
-End to End Test Suite: [link](https://github.com/zixia/brolog/tree/master/tests/e2e)
+End to End Test Suite: [link](https://github.com/huan/brolog/tree/master/tests/e2e)
 
-P.S. runing E2E test is based on *brolog demo project*: [git repository](https://github.com/zixia/brolog-angular-demo)
+P.S. runing E2E test is based on *brolog demo project*: [git repository](https://github.com/huan/brolog-angular-demo)
 
 ## CHANGELOG
 
 ### v1.6 master (May 28th, 2018)
 
-1. Fix browser broken problem caused by the `rollup` behavior change. ([#69](https://github.com/zixia/brolog/issues/69))
+1. Fix browser broken problem caused by the `rollup` behavior change. ([#69](https://github.com/huan/brolog/issues/69))
 1. Node.js: Add environment variable `BROLOG_PREFIX` to set the `prefix` filter of global `log` instance.
 1. Browser: Add URL parameter variable `BROLOG_PREFIX` to set the `prefix` filter of global `log` instance.
 
