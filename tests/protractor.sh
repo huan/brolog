@@ -2,7 +2,7 @@
 set -e # http://stackoverflow.com/a/3474556/1123955
 
 E2E_TESTING_DIR="/tmp/brolog-angular-demo.$$"
-GIT_URL="https://github.com/zixia/brolog-angular-demo.git"
+GIT_URL="https://github.com/huan/brolog-angular-demo.git"
 
 npm link
 
