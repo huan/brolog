@@ -172,10 +172,13 @@ For example,
 Example:
 
 1. Shell
+
     ```sh
     BROLOG_PREFIX="(Contact|Puppet)" node wechaty.js
     ```
+
 2. This will equals to set by code API:
+
     ```ts
     log.prefix(/^(Contact|Puppet)$/)
     ```
