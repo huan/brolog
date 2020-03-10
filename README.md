@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/brolog.svg)](https://badge.fury.io/js/brolog)
 [![Build Status](https://travis-ci.com/huan/brolog.svg?branch=master)](https://travis-ci.com/huan/brolog)
-[![Greenkeeper badge](https://badges.greenkeeper.io/huan/brolog.svg)](https://greenkeeper.io/)
+
 [![TypeScript definitions on DefinitelyTyped](http://definitelytyped.org/badges/standard-flat.svg)](http://definitelytyped.org)
 
 ![Brolog](https://huan.github.io/brolog/images/brolog-logo.png)
