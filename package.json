@@ -44,7 +44,7 @@
     "@types/semver": "^5.5.0",
     "@types/sinon": "^5.0.0",
     "@types/sinon-test": "^1.0.2",
-    "chokidar": "^2.0.3",
+    "chokidar": "^3.4.0",
     "git-scripts": "^0.2.1",
     "jasmine-spec-reporter": "^4.0.0",
     "magic-string": "^0.25.0",
