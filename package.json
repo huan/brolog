@@ -43,7 +43,7 @@
     "@types/rollup-plugin-json": "^3.0.0",
     "@types/semver": "^7.2.0",
     "@types/sinon": "^5.0.0",
-    "@types/sinon-test": "^1.0.2",
+    "@types/sinon-test": "^2.4.1",
     "chokidar": "^3.4.0",
     "git-scripts": "^0.2.1",
     "jasmine-spec-reporter": "^5.0.2",
