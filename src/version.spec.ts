@@ -19,11 +19,11 @@
  *   limitations under the License.
  *
  */
-const t = require('tap')  // tslint:disable:no-shadowed-variable
-
 import {
   VERSION,
 }                   from './version'
+
+const t = require('tap')  // tslint:disable:no-shadowed-variable
 
 t.test('Make sure the VERSION is fresh in source code', (t: any) => {
   t.equal(VERSION, '0.0.0', 'version should be 0.0.0 in source code, only updated before publish to NPM')

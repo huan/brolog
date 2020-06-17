@@ -38,17 +38,17 @@ if (typeof window !== 'undefined' && window.location && typeof window.location.s
   if (!debugModule) {
     debugModule = getJsonFromUrl()[BROLOG_LEVEL_VAR_NAME]
   }
+}
 
-  function getJsonFromUrl() {
-    // https://stackoverflow.com/questions/8486099/how-do-i-parse-a-url-query-parameters-in-javascript
-    const query = location.search.substr(1)
-    const result = {} as { [idx: string]: string }
-    query.split('&').forEach(function(part) {
-      const item = part.split('=')
-      result[item[0]] = decodeURIComponent(item[1])
-    })
-    return result
-  }
+function getJsonFromUrl () {
+  // https://stackoverflow.com/questions/8486099/how-do-i-parse-a-url-query-parameters-in-javascript
+  const query = location.search.substr(1)
+  const result = {} as { [idx: string]: string }
+  query.split('&').forEach(function (part) {
+    const item = part.split('=')
+    result[item[0]] = decodeURIComponent(item[1])
+  })
+  return result
 }
 
 export const BROLOG_LEVEL = level || DEFAULT_LEVEL

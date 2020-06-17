@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*!
  * Brolog JavaScript Library v1.1.0
  * https://github.com/huan/brolog
@@ -45,6 +46,7 @@ export interface Loggable {
 export let log: Brolog
 
 export class Brolog implements Loggable {
+
   private static globalInstance    : Brolog
   private static globalLogLevelName: LogLevelName     = 'info'
   private static globalPrefix      : string | RegExp  = /.*/  // Match all by default
@@ -55,7 +57,7 @@ export class Brolog implements Loggable {
 
   public textPrinter: (levelTitle: LogLevelTitle, text: string) => void
 
-  constructor() {
+  constructor () {
     this.level(Brolog.globalLogLevelName)
     this.logLevel = LogLevel[this.level()]
 
@@ -68,7 +70,7 @@ export class Brolog implements Loggable {
   /**
    * Create a global Brolog Instance for sharing between modules
    */
-  public static instance(
+  public static instance (
     levelName?: LogLevelName,
     prefix?:    string | RegExp,
   ): Brolog {
@@ -88,19 +90,19 @@ export class Brolog implements Loggable {
     return this.globalInstance
   }
 
-  public static version(): string {
+  public static version (): string {
     return VERSION
   }
 
-  public version(): string {
+  public version (): string {
     return Brolog.version()
   }
 
-  public static enableLogging(printerFunc: boolean | TextPrinterFunction): Brolog {
+  public static enableLogging (printerFunc: boolean | TextPrinterFunction): Brolog {
     return Brolog.instance().enableLogging(printerFunc)
   }
 
-  public enableLogging(printerFunc: boolean | TextPrinterFunction): Brolog {
+  public enableLogging (printerFunc: boolean | TextPrinterFunction): Brolog {
     this.verbose('Brolog', 'enableLogging(%s)', printerFunc)
 
     // const loggerMethodList = [
@@ -126,29 +128,28 @@ export class Brolog implements Loggable {
       // })
       this.textPrinter = this.defaultTextPrinter
 
-    // } else if (typeof log.verbose === 'function') {
-    //   this.silly('Brolog', 'enableLogging() enabled: using provided logger')
-    //   for (const method of loggerMethodList) {
-    //     this[method] = () => {
-    //       // In order to compatible with winston,
-    //       // we need to change the args from
-    //       // brolog.info('Main', 'Hello %s', 'world')
-    //       // to
-    //       // log.info('Main Hello %s', 'world')
-    //       const argList: string[] = Array.from(arguments)
-    //       if (argList.length > 1) {
-    //         const module = argList.shift()
-    //         argList[0] = `${module} ` + argList[0]
-    //       }
-    //       return Reflect.apply(log[method], log, argList)
-    //     }
-    //   }
+      // } else if (typeof log.verbose === 'function') {
+      //   this.silly('Brolog', 'enableLogging() enabled: using provided logger')
+      //   for (const method of loggerMethodList) {
+      //     this[method] = () => {
+      //       // In order to compatible with winston,
+      //       // we need to change the args from
+      //       // brolog.info('Main', 'Hello %s', 'world')
+      //       // to
+      //       // log.info('Main Hello %s', 'world')
+      //       const argList: string[] = Array.from(arguments)
+      //       if (argList.length > 1) {
+      //         const module = argList.shift()
+      //         argList[0] = `${module} ` + argList[0]
+      //       }
+      //       return Reflect.apply(log[method], log, argList)
+      //     }
+      //   }
 
     } else if (typeof printerFunc === 'function') {
       this.silly('Brolog', 'enableLogging() enabled: using provided log function')
       this.textPrinter = function (levelTitle: LogLevelTitle, text: string): void {
         printerFunc(levelTitle, text)
-        return
       }
     } else {
       throw new Error('got invalid logger')
@@ -157,10 +158,10 @@ export class Brolog implements Loggable {
     return this
   }
 
-  public static prefix(): RegExp
-  public static prefix(filter: string | RegExp): void
+  public static prefix (): RegExp
+  public static prefix (filter: string | RegExp): void
 
-  public static prefix(filter?: string | RegExp): void | RegExp {
+  public static prefix (filter?: string | RegExp): void | RegExp {
     if (filter) {
       this.globalPrefix = filter
       this.globalInstance.prefix(filter)
@@ -169,9 +170,9 @@ export class Brolog implements Loggable {
     }
   }
 
-  public prefix(): RegExp
-  public prefix(filter: string | RegExp): void
-  public prefix(filter?: string | RegExp): void | RegExp {
+  public prefix (): RegExp
+  public prefix (filter: string | RegExp): void
+  public prefix (filter?: string | RegExp): void | RegExp {
     if (filter) {
       if (typeof filter === 'string') {
         this.prefixFilter = new RegExp('^' + filter + '$')
@@ -185,14 +186,14 @@ export class Brolog implements Loggable {
     }
   }
 
-  public static level(levelName?: LogLevelName): LogLevelName {
+  public static level (levelName?: LogLevelName): LogLevelName {
     if (levelName) {
       this.globalLogLevelName = levelName
     }
     return this.instance().level(levelName)
   }
 
-  public level(levelName?: LogLevelName) {
+  public level (levelName?: LogLevelName) {
     if (levelName) {
       // console.log('levelName: ' + levelName)
       // http://stackoverflow.com/a/21294925/1123955
@@ -207,7 +208,7 @@ export class Brolog implements Loggable {
     return LogLevel[this.logLevel] as LogLevelName
   }
 
-  private log(levelTitle: LogLevelTitle, prefix: string, message: string) {
+  private log (levelTitle: LogLevelTitle, prefix: string, message: string) {
     if (this.prefixFilter && !this.prefixFilter.test(prefix)) {
       return  // skip message not match prefix filter
     }
@@ -221,7 +222,7 @@ export class Brolog implements Loggable {
     this.textPrinter(levelTitle, text)
   }
 
-  public defaultTextPrinter(levelTitle: LogLevelTitle, text: string): void {
+  public defaultTextPrinter (levelTitle: LogLevelTitle, text: string): void {
     // Use Reflect at:
     // https://www.keithcirkel.co.uk/metaprogramming-in-es6-part-2-reflect/
     switch (levelTitle) {
@@ -250,12 +251,12 @@ export class Brolog implements Loggable {
     }
 
   }
-  public static error(prefix: string, ...args: any[]): void {
+  public static error (prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
     // return instance.error.apply(instance, arguments)
     return Reflect.apply(instance.error, instance, ([] as any).concat(prefix, args))
   }
-  public error(prefix: string, ...args: any[]): void {
+  public error (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.error) {
       return
     }
@@ -264,11 +265,11 @@ export class Brolog implements Loggable {
     return Reflect.apply(this.log, this, argList)
   }
 
-  public static warn(prefix: string, ...args: any[]): void {
+  public static warn (prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
     return Reflect.apply(instance.warn, instance, ([] as any).concat(prefix, args))
   }
-  public warn(prefix: string, ...args: any[]): void {
+  public warn (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.warn) {
       return
     }
@@ -277,11 +278,11 @@ export class Brolog implements Loggable {
     return Reflect.apply(this.log, this, argList)
   }
 
-  public static info(prefix: string, ...args: any[]): void {
+  public static info (prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
     return Reflect.apply(instance.info, instance, ([] as any).concat(prefix, args))
   }
-  public info(prefix: string, ...args: any[]): void {
+  public info (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.info) {
       return
     }
@@ -290,11 +291,11 @@ export class Brolog implements Loggable {
     return Reflect.apply(this.log, this, argList)
   }
 
-  public static verbose(prefix: string, ...args: any[]): void {
+  public static verbose (prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
     return Reflect.apply(instance.verbose, instance, ([] as any).concat(prefix, args))
   }
-  public verbose(prefix: string, ...args: any[]): void {
+  public verbose (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.verbose) {
       return
     }
@@ -304,11 +305,11 @@ export class Brolog implements Loggable {
     return Reflect.apply(this.log, this, argList)
   }
 
-  public static silly(prefix: string, ...args: any[]): void {
+  public static silly (prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
     return Reflect.apply(instance.silly, instance, ([] as any).concat(prefix, args))
   }
-  public silly(prefix: string, ...args: any[]): void {
+  public silly (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.silly) {
       return
     }
@@ -317,10 +318,10 @@ export class Brolog implements Loggable {
     return Reflect.apply(this.log, this, argList)
   }
 
-  public timestamp(enable: boolean): void
-  public timestamp(): string
+  public timestamp (enable: boolean): void
+  public timestamp (): string
 
-  public timestamp(enable?: boolean): string | void {
+  public timestamp (enable?: boolean): string | void {
     if (typeof enable === 'boolean') {
       this.enableTimestamp = enable
       return
@@ -345,32 +346,33 @@ export class Brolog implements Loggable {
 
     return stampStr + ' '
   }
+
 }
 
 // Credit: https://stackoverflow.com/a/4795914/1123955
-function sprintf() {
+function sprintf () {
   const args = arguments
   const text = args[0] as string
   let i = 1
   return text.replace(/%((%)|s|d)/g, function (m) {
-      // m is the matched format, e.g. %s, %d
-      let val = null as any
-      if (m[2]) {
-          val = m[2];
-      } else {
-          val = args[i];
-          // A switch statement so that the formatter can be extended. Default is %s
-          switch (m) {
-              case '%d':
-                  val = parseFloat(val)
-                  if (isNaN(val)) {
-                      val = 0
-                  }
-                  break
+    // m is the matched format, e.g. %s, %d
+    let val = null as any
+    if (m[2]) {
+      val = m[2]
+    } else {
+      val = args[i]
+      // A switch statement so that the formatter can be extended. Default is %s
+      switch (m) {
+        case '%d':
+          val = parseFloat(val)
+          if (isNaN(val)) {
+            val = 0
           }
-          i++
+          break
       }
-      return val
+      i++
+    }
+    return val
   })
 }
 

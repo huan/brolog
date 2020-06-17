@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys */
 // Protractor configuration file, see link for more information
 // https://github.com/angular/protractor/blob/master/docs/referenceConf.js
 
@@ -6,7 +7,7 @@ import * as puppeteer   from 'puppeteer'
 
 import { Config } from 'protractor'
 
-/*global jasmine */
+/* global jasmine */
 declare const jasmine: any
 
 export const config: Config = {
@@ -35,17 +36,17 @@ export const config: Config = {
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 11000,
-    print: function() {
+    print: function () {
       //
     },
   },
   useAllAngular2AppRoots: true,
-  beforeLaunch: function() {
+  beforeLaunch: function () {
     //
   },
-  onPrepare: function() {
+  onPrepare: function () {
     jasmine.getEnv().addReporter(new SpecReporter())
   },
 }
 
-console.log(JSON.stringify(exports.config, null, '  '))
+console.info(JSON.stringify(exports.config, null, '  '))
