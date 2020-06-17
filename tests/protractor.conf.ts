@@ -17,6 +17,10 @@ export const config: Config = {
   capabilities: {
     directConnect: true,
     browserName: 'chrome',
+    /**
+     * Huan(202006): How to use Protractor with Puppeteer? #4695
+     *  https://github.com/angular/protractor/issues/4695#issuecomment-364039288
+     */
     chromeOptions: {
       args: [
         '--headless',
