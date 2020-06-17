@@ -12,9 +12,11 @@ webdriver-manager update --gecko=false
 
 git clone "$GIT_URL" "$E2E_TESTING_DIR"
 
+mv brolog-*.*.*.tgz "$E2E_TESTING_DIR"
 cd "$E2E_TESTING_DIR"
+
 npm install
-npm install ../brolog-*.*.*.tgz
+npm install ../
 npm start
 cd -
 
