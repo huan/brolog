@@ -1,23 +1,4 @@
-/**
- * VERSION
- */
-let pkg: {
-  version: string,
-} | undefined
-
-let VERSION = '0.0.0'
-try {
-  pkg = require('../package.json')
-  if (pkg) {
-    VERSION = pkg.version
-  }
-} catch (e) {
-  VERSION = '0.0.0'
-}
-
-export {
-  VERSION,
-}
+export { VERSION } from './version'
 
 /**
  * BROLOG_LEVEL
