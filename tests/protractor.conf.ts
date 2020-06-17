@@ -18,14 +18,12 @@ export const config: Config = {
     directConnect: true,
     browserName: 'chrome',
     chromeOptions: {
-      args: process.env.HEADLESS
-        ? [
-            '--headless',
-            '--no-sandbox',
-            '--disable-dev-shm-usage',
-          ]
-        : [],
-      binary: process.env.HEADLESS ? puppeteer.executablePath() : undefined,
+      args: [
+        '--headless',
+        '--no-sandbox',
+        '--disable-dev-shm-usage',
+      ],
+      binary: puppeteer.executablePath(),
     },
   },
   baseUrl: 'http://localhost:3000',
