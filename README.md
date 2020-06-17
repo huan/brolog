@@ -208,7 +208,13 @@ P.S. running E2E test is based on *brolog demo project*: [git repository](https:
 
 ## CHANGELOG
 
-### v1.6 master (May 28th, 2018)
+### v1.12 (Jun 18, 2020)
+
+1. Update to use Chatie DevOps toolsets.
+1. Upgrade TypeScript, ESLint, RollUp, etc.
+1. Enable GitHub Actions.
+
+### v1.6 (May 28th, 2018)
 
 1. Fix browser broken problem caused by the `rollup` behavior change. ([#69](https://github.com/huan/brolog/issues/69))
 1. Node.js: Add environment variable `BROLOG_PREFIX` to set the `prefix` filter of global `log` instance.
