@@ -1,9 +1,8 @@
 # BROLOG
 
 [![npm version](https://badge.fury.io/js/brolog.svg)](https://badge.fury.io/js/brolog)
-[![Build Status](https://travis-ci.com/huan/brolog.svg?branch=master)](https://travis-ci.com/huan/brolog)
-
-[![TypeScript definitions on DefinitelyTyped](http://definitelytyped.org/badges/standard-flat.svg)](http://definitelytyped.org)
+[![NPM](https://github.com/huan/brolog/workflows/NPM/badge.svg)](https://github.com/huan/brolog/actions?query=workflow%3ANPM)
+[![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue.svg)](https://www.typescriptlang.org/)
 
 ![Brolog](https://huan.github.io/brolog/images/brolog-logo.png)
 
@@ -26,7 +25,7 @@ Brolog is Logger for Angular in Browser like Npmlog.
 Here's two example:
 
 1. First example to demo easy to use in browser, and how it looks like npmlog.
-1. Second example to demo intergrate with angular DI & SystemJS.
+1. Second example to demo integrate with angular DI & SystemJS.
 
 ### 1. Super Easy to use in Browser
 
@@ -60,7 +59,7 @@ Link: [Brolog Live demo](http://huan.github.io/brolog)
 
 ### 2. Quick Setup to use in Angular
 
-`Brolog` is writen mainly for act as a logger with Angular. Here's how to Inject Brolog in Angular.
+`Brolog` is written mainly for act as a logger with Angular. Here's how to Inject Brolog in Angular.
 
 1. install brolog
 
@@ -185,7 +184,7 @@ Example:
 
 ## TEST
 
-Brolog comes with well test suit to ensure the behaviour is expected.
+Brolog comes with well test suit to ensure the behavior is expected.
 
 ### Unit Test
 
@@ -205,7 +204,7 @@ $ npm run e2e
 
 End to End Test Suite: [link](https://github.com/huan/brolog/tree/master/tests/e2e)
 
-P.S. runing E2E test is based on *brolog demo project*: [git repository](https://github.com/huan/brolog-angular-demo)
+P.S. running E2E test is based on *brolog demo project*: [git repository](https://github.com/huan/brolog-angular-demo)
 
 ## CHANGELOG
 
@@ -217,7 +216,7 @@ P.S. runing E2E test is based on *brolog demo project*: [git repository](https:/
 
 ### v1.4 (May 2018)
 
-1. Continus Deployment to `brolog@next` when the minor version in SemVer is _odd_(development release).
+1. Continuous Deployment to `brolog@next` when the minor version in SemVer is _odd_(development release).
 1. Node.js: Add environment variable `BROLOG_LEVEL` to set the loglevel of global `log` instance.
 1. Browser: Add URL parameter variable `BROLOG_LEVEL` to set the loglevel of global `log` instance.
 
@@ -252,7 +251,7 @@ Compatible with AOT & WebPack with Angular v4
 ### v0.2.0 (Jul 16 2016)
 
 1. added Unit Test
-1. supported Angular Dependience Injection
+1. supported Angular Dependency Injection
 
 ### v0.1.0 (Jul 14 2016)
 
@@ -263,9 +262,9 @@ Compatible with AOT & WebPack with Angular v4
 ## REFERENCE
 
 1. [JavaScript Modules & Build Tools - YouTube](https://www.youtube.com/watch?v=U4ja6HeBm6s)
-2. [Writing Declaration Files](https://www.typescriptlang.org/docs/handbook/writing-declaration-files.html)
-3. [Angular Dependency injection tokens](https://angular.io/docs/ts/latest/guide/dependency-injection.html#!#token)
-4. [Angular 2 Errors](https://daveceddia.com/angular-2-errors/)
+1. [Writing Declaration Files](https://www.typescriptlang.org/docs/handbook/writing-declaration-files.html)
+1. [Angular Dependency injection tokens](https://angular.io/docs/ts/latest/guide/dependency-injection.html#!#token)
+1. [Angular 2 Errors](https://daveceddia.com/angular-2-errors/)
 1. [ES6 vs ES2015 - What to call a JavaScript version?](https://bytearcher.com/articles/es6-vs-es2015-name/)
 
 ## AUTHOR
@@ -276,6 +275,6 @@ Compatible with AOT & WebPack with Angular v4
 
 ## COPYRIGHT & LICENSE
 
-* Code & Docs © 2017-2018 Huan LI \<zixia@zixia.net\>
+* Code & Docs © 2017 Huan LI \<zixia@zixia.net\>
 * Code released under the Apache-2.0 License
 * Docs released under Creative Commons

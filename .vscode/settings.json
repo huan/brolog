@@ -6,5 +6,11 @@
   , "files.exclude": {
       "node_modules/": true
     , "dist": true
-  }
+  },
+  "cSpell.words": [
+    "Npmlog",
+    "blackbox",
+    "blackboxing",
+    "loglevel"
+  ]
 }
