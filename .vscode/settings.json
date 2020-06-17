@@ -2,7 +2,7 @@
 {
     "typescript.tsdk": "node_modules/typescript/lib"
   ,
-  "window.zoomLevel": 0, "editor.minimap.enabled": true
+  "window.zoomLevel": 1, "editor.minimap.enabled": true
   , "files.exclude": {
       "node_modules/": true
     , "dist": true
