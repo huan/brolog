@@ -1,46 +1,21 @@
 {
+  "extends": "@chatie/tsconfig",
   "compilerOptions": {
-      "target": "es6"
-    , "module": "commonjs"
-    , "moduleResolution": "node"
-    , "sourceMap": true
-    , "allowSyntheticDefaultImports": true
-    , "declaration": true
-    , "skipLibCheck": true
-    , "traceResolution": false
-    , "outDir": "dist"
-
-    , "emitDecoratorMetadata": true
-    , "experimentalDecorators": true
-
-    , "lib": [
-        "dom"
-      , "esnext"
-    ]
-    , "strict"                      : true
-    , "strictFunctionTypes"         : true
-    , "strictPropertyInitialization": true
-    , "noUnusedLocals"              : true
-    , "noImplicitReturns"           : true
-    , "noFallthroughCasesInSwitch"  : true
-    , "strictNullChecks"            : true
-    , "alwaysStrict"                : true
-    , "noImplicitAny"               : true
-    , "noImplicitThis"              : true
-    , "noUnusedParameters"          : true
-  }
-  , "include": [
-      "src/**/*.ts"
-    , "scripts/**/*.ts"
-    , "tests/**/*.ts"
-  ]
-  , "exclude": [
-      "dist"
-    , "node_modules"
-    , "tests/fixtures/**/*.ts"
-  ]
-  , "compileOnSave": false
-  , "atom": {
-    "rewriteTsconfig": false
-  }
+    "outDir": "dist",
+    "resolveJsonModule": false,
+  },
+  "exclude": [
+    "node_modules/",
+    "dist/",
+    "tests/fixtures/",
+  ],
+  "include": [
+    "app/**/*.ts",
+    "bin/*.ts",
+    "bot/**/*.ts",
+    "examples/**/*.ts",
+    "scripts/**/*.ts",
+    "src/**/*.ts",
+    "tests/**/*.spec.ts",
+  ],
 }
