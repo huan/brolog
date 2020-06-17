@@ -16,7 +16,7 @@ mv brolog-*.*.*.tgz "$E2E_TESTING_DIR"
 cd "$E2E_TESTING_DIR"
 
 npm install
-npm install ../
+npm install brolog-*.*.*.tgz
 npm start
 cd -
 
