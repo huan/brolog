@@ -1,23 +1,12 @@
-import json from 'rollup-plugin-json'
-
 export default {
-  input: 'dist/src/brolog.js',
+  input: 'dist/brolog.js',
   output: {
-    file: 'bundles/brolog.es6.umd.js',
+    banner: '/* Brolog version ' + require('./package.json').version + ' */',
     extend: true, // Issue #69
+    file: 'bundles/brolog.es6.umd.js',
+    footer: '/* https://github.com/huan */',
+    format: 'umd',
     name: 'window',
     sourcemap: true,
-    format: 'umd',
-    banner: '/* Brolog version ' + require('./package.json').version + ' */',
-    footer: '/* https://github.com/huan */',
   },
-  plugins: [
-    json({
-      // All JSON files will be parsed by default,
-      // but you can also specifically include/exclude files
-      // include: 'node_modules/**',  // Default: undefined
-      // exclude: [ 'node_modules/foo/**', 'node_modules/bar/**' ],  // Default: undefined
-      preferConst: true, // Default: false
-    })
-  ]
 }

@@ -3,7 +3,7 @@
 // https://github.com/angular/protractor/blob/master/docs/referenceConf.js
 
 import { SpecReporter } from 'jasmine-spec-reporter'
-import * as puppeteer   from 'puppeteer'
+import puppeteer from 'puppeteer'
 
 import { Config } from 'protractor'
 
