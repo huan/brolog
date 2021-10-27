@@ -43,7 +43,7 @@ if (typeof window !== 'undefined' && typeof window?.location?.search === 'string
   }
 }
 
-function getJsonFromUrl() {
+function getJsonFromUrl () {
   // https://stackoverflow.com/questions/8486099/how-do-i-parse-a-url-query-parameters-in-javascript
   const query = location.search.substr(1)
   const result = {} as { [idx: string]: string }
