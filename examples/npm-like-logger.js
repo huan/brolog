@@ -1,4 +1,4 @@
-const { Brolog } = require('brolog')
+import { Brolog } from 'brolog'
 
 const log = new Brolog()
 

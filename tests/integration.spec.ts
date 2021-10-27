@@ -18,12 +18,8 @@
  *   limitations under the License.
  *
  */
-import {
-  VERSION,
-}                   from './version.js'
-
 import { test } from 'tstest'
 
-test('Make sure the VERSION is fresh in source code', async t => {
-  t.equal(VERSION, '0.0.0', 'version should be 0.0.0 in source code, only updated before publish to NPM')
+test('tbw', async t => {
+  t.pass('tbw')
 })
