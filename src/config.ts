@@ -1,4 +1,4 @@
-export { VERSION } from './version'
+export { VERSION } from './version.js'
 
 /**
  * BROLOG_LEVEL
@@ -12,11 +12,13 @@ let level      : undefined | string
 let debugModule: undefined | string
 
 /**
+ *
  * Sometimes there's a `process` in browser (ionic3 & angular5)
  * Sometimes there's a window in Node.js (browserify)
+ *
  */
-
-if (typeof process !== 'undefined' && process.env) {
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (typeof process !== 'undefined' && process['env']) {
   /**
    * Node.js
    */
@@ -28,7 +30,8 @@ if (typeof process !== 'undefined' && process.env) {
   }
 }
 
-if (typeof window !== 'undefined' && window.location && typeof window.location.search === 'string') {
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+if (typeof window !== 'undefined' && typeof window?.location?.search === 'string') {
   /**
    * Browser
    */
@@ -45,8 +48,10 @@ function getJsonFromUrl () {
   const query = location.search.substr(1)
   const result = {} as { [idx: string]: string }
   query.split('&').forEach(function (part) {
-    const item = part.split('=')
-    result[item[0]] = decodeURIComponent(item[1])
+    const [key, val] = part.split('=')
+    if (typeof key !== 'undefined' && typeof val !== 'undefined') {
+      result[key] = decodeURIComponent(val)
+    }
   })
   return result
 }

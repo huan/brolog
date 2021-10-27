@@ -8,7 +8,7 @@ npm run dist
 npm pack
 
 # https://github.com/angular/webdriver-manager/issues/307#issuecomment-377684918
-webdriver-manager update --gecko=false
+npx webdriver-manager update --gecko=false
 
 git clone "$GIT_URL" "$E2E_TESTING_DIR"
 
@@ -21,7 +21,8 @@ npm start
 cd -
 
 # http://stackoverflow.com/a/3474556/1123955
-ts-node ./node_modules/.bin/protractor tests/protractor.conf.ts
+# npx cross-env NODE_OPTIONS="--no-warnings --loader=ts-node/esm" protractor tests/protractor.conf.ts
+npx protractor tests/protractor.conf.cjs
 
 cd "$E2E_TESTING_DIR"
 npm stop

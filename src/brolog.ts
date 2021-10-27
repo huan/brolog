@@ -13,17 +13,18 @@ import {
   VERSION,
   BROLOG_LEVEL,
   BROLOG_PREFIX,
-}                 from './config'
+}                 from './config.js'
 
-export type LogLevelTitle = 'ERR'
-                          | 'WARN'
-                          | 'INFO'
-                          | 'VERB'
-                          | 'SILL'
+type LogLevelTitle =
+  | 'ERR'
+  | 'WARN'
+  | 'INFO'
+  | 'VERB'
+  | 'SILL'
 
-export type TextPrinterFunction = (title: string, text?: string) => void
+type TextPrinterFunction = (title: string, text?: string) => void
 
-export enum LogLevel {
+enum LogLevel {
   silent  = 0,
   error   = 1,
   warn    = 2,
@@ -32,9 +33,9 @@ export enum LogLevel {
   silly   = 5,
 }
 
-export type LogLevelName = keyof typeof LogLevel
+type LogLevelName = keyof typeof LogLevel
 
-export interface Loggable {
+interface Loggable {
   error   (moduleName: string, message: string, ...args: any[]): void
   warn    (moduleName: string, message: string, ...args: any[]): void
   info    (moduleName: string, message: string, ...args: any[]): void
@@ -42,18 +43,15 @@ export interface Loggable {
   silly   (moduleName: string, message: string, ...args: any[]): void
 }
 
-// declare the `log` variable first
-export let log: Brolog
+class Brolog implements Loggable {
 
-export class Brolog implements Loggable {
-
-  private static globalInstance    : Brolog
+  private static globalInstance?  : Brolog
   private static globalLogLevelName: LogLevelName     = 'info'
   private static globalPrefix      : string | RegExp  = /.*/  // Match all by default
 
   private enableTimestamp = true
   private logLevel:     LogLevel
-  private prefixFilter: RegExp
+  private prefixFilter?: RegExp
 
   public textPrinter: (levelTitle: LogLevelTitle, text: string) => void
 
@@ -164,7 +162,7 @@ export class Brolog implements Loggable {
   public static prefix (filter?: string | RegExp): void | RegExp {
     if (filter) {
       this.globalPrefix = filter
-      this.globalInstance.prefix(filter)
+      this.globalInstance?.prefix(filter)
     } else {
       return this.instance().prefix()
     }
@@ -198,7 +196,7 @@ export class Brolog implements Loggable {
       // console.log('levelName: ' + levelName)
       // http://stackoverflow.com/a/21294925/1123955
       // XXX: fix the any here?
-      let logLevel = LogLevel[levelName.toLowerCase() as any] as any as LogLevel
+      let logLevel = LogLevel[levelName.toLowerCase() as any] as any as (undefined | LogLevel)
       if (logLevel === undefined) { // be aware of number 0 here
         log.error('Brolog', 'level(%s) not exist, set to silly.', levelName)
         logLevel = LogLevel.silly
@@ -213,7 +211,7 @@ export class Brolog implements Loggable {
       return  // skip message not match prefix filter
     }
 
-    const args = Array.prototype.slice.call(arguments, 3) || []
+    const args = Array.prototype.slice.call(arguments, 3)
     args.unshift(this.timestamp() + levelTitle + ' ' + prefix + ' ' + (message || ''))
     // const args = Array.from(arguments) || []
     // args[0] = this.timestamp() + args[0]
@@ -242,6 +240,7 @@ export class Brolog implements Loggable {
         console.info(text)
         break
 
+      // eslint-disable-next-line default-case-last
       default:
       case 'VERB':
       case 'SILL':
@@ -251,11 +250,13 @@ export class Brolog implements Loggable {
     }
 
   }
+
   public static error (prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
     // return instance.error.apply(instance, arguments)
     return Reflect.apply(instance.error, instance, ([] as any).concat(prefix, args))
   }
+
   public error (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.error) {
       return
@@ -269,6 +270,7 @@ export class Brolog implements Loggable {
     const instance = Brolog.instance()
     return Reflect.apply(instance.warn, instance, ([] as any).concat(prefix, args))
   }
+
   public warn (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.warn) {
       return
@@ -282,6 +284,7 @@ export class Brolog implements Loggable {
     const instance = Brolog.instance()
     return Reflect.apply(instance.info, instance, ([] as any).concat(prefix, args))
   }
+
   public info (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.info) {
       return
@@ -295,6 +298,7 @@ export class Brolog implements Loggable {
     const instance = Brolog.instance()
     return Reflect.apply(instance.verbose, instance, ([] as any).concat(prefix, args))
   }
+
   public verbose (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.verbose) {
       return
@@ -309,6 +313,7 @@ export class Brolog implements Loggable {
     const instance = Brolog.instance()
     return Reflect.apply(instance.silly, instance, ([] as any).concat(prefix, args))
   }
+
   public silly (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.silly) {
       return
@@ -380,7 +385,7 @@ export {
   VERSION,
 }
 
-log = Brolog.instance()
+const log = Brolog.instance()
 
 if (BROLOG_LEVEL) {
   /**
@@ -399,4 +404,13 @@ if (BROLOG_PREFIX && BROLOG_PREFIX !== '*') {
   log.prefix(BROLOG_PREFIX)
 }
 
-export default Brolog
+export type {
+  LogLevelTitle,
+  Loggable,
+  LogLevelName,
+}
+export {
+  LogLevel,
+  Brolog,
+  log,
+}

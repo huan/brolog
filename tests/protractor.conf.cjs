@@ -2,15 +2,15 @@
 // Protractor configuration file, see link for more information
 // https://github.com/angular/protractor/blob/master/docs/referenceConf.js
 
-import { SpecReporter } from 'jasmine-spec-reporter'
-import puppeteer from 'puppeteer'
+const { SpecReporter } = require('jasmine-spec-reporter')
+const puppeteer = require('puppeteer')
 
-import { Config } from 'protractor'
+// import { Config } from 'protractor'
 
 /* global jasmine */
-declare const jasmine: any
+// declare const jasmine: any
 
-export const config: Config = {
+const config = {
   allScriptsTimeout: 11000,
   specs: [
     'e2e/**/*.e2e-spec.js',
@@ -28,6 +28,8 @@ export const config: Config = {
         '--no-sandbox',
         '--disable-dev-shm-usage',
       ],
+      // Huan(202110) "as any as ...": https://github.com/puppeteer/puppeteer/issues/6899#issuecomment-878415393
+      // binary: (puppeteer as any as puppeteer.PuppeteerNode).executablePath(),
       binary: puppeteer.executablePath(),
     },
   },
@@ -50,3 +52,7 @@ export const config: Config = {
 }
 
 console.info(JSON.stringify(exports.config, null, '  '))
+
+module.exports = {
+  config,
+}
