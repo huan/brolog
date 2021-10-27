@@ -46,7 +46,7 @@
   },
   "homepage": "https://github.com/huan/brolog#readme",
   "dependencies": {
-    "nop": "^1.0.0"
+    "@pipeletteio/nop": "^1.0.0"
   },
   "devDependencies": {
     "@chatie/eslint-config": "^1.0.2",

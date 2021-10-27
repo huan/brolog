@@ -1,4 +1,4 @@
-import NOP from 'nop'
+import { nop } from '@pipeletteio/nop'
 
 interface Loggable {
   error   (moduleName: string, message: string, ...args: any[]): void
@@ -14,11 +14,11 @@ const getLoggable = (logger?: Loggable): Loggable => {
   }
 
   return {
-    error   : NOP,
-    info    : NOP,
-    silly   : NOP,
-    verbose : NOP,
-    warn    : NOP,
+    error   : nop,
+    info    : nop,
+    silly   : nop,
+    verbose : nop,
+    warn    : nop,
   }
 }
 
