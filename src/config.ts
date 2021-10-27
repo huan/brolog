@@ -4,11 +4,11 @@ export { VERSION } from './version.js'
  * BROLOG_LEVEL
  */
 
-const DEFAULT_LEVEL          = 'info'
-const BROLOG_LEVEL_VAR_NAME  = 'BROLOG_LEVEL'
+const DEFAULT_LEVEL = 'info'
+const BROLOG_LEVEL_VAR_NAME = 'BROLOG_LEVEL'
 const BROLOG_PREFIX_VAR_NAME = 'BROLOG_PREFIX'
 
-let level      : undefined | string
+let level: undefined | string
 let debugModule: undefined | string
 
 /**
@@ -43,7 +43,7 @@ if (typeof window !== 'undefined' && typeof window?.location?.search === 'string
   }
 }
 
-function getJsonFromUrl () {
+function getJsonFromUrl() {
   // https://stackoverflow.com/questions/8486099/how-do-i-parse-a-url-query-parameters-in-javascript
   const query = location.search.substr(1)
   const result = {} as { [idx: string]: string }
