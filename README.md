@@ -20,6 +20,26 @@ Brolog is Logger for Angular in Browser like Npmlog.
     >
     [We enabled this in Chrome DevTools via blackboxing a bit ago.](https://gist.github.com/paulirish/c307a5a585ddbcc17242)
 
+### Loggable Interface
+
+Brolog implementes [Loggable](https://github.com/huan/brolog/blob/main/src/loggable.ts):
+
+```ts
+interface Loggable {
+  error   (moduleName: string, message: string, ...args: any[]): void
+  warn    (moduleName: string, message: string, ...args: any[]): void
+  info    (moduleName: string, message: string, ...args: any[]): void
+  verbose (moduleName: string, message: string, ...args: any[]): void
+  silly   (moduleName: string, message: string, ...args: any[]): void
+}
+```
+
+You can import and use it by:
+
+```ts
+import { Loggable } from 'brolog'
+```
+
 ## EXAMPLE
 
 Here's two example:
