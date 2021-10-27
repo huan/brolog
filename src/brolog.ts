@@ -15,6 +15,10 @@ import {
   BROLOG_PREFIX,
 }                 from './config.js'
 
+import type {
+  Loggable,
+}                 from './loggable.js'
+
 type LogLevelTitle =
   | 'ERR'
   | 'WARN'
@@ -34,14 +38,6 @@ enum LogLevel {
 }
 
 type LogLevelName = keyof typeof LogLevel
-
-interface Loggable {
-  error   (moduleName: string, message: string, ...args: any[]): void
-  warn    (moduleName: string, message: string, ...args: any[]): void
-  info    (moduleName: string, message: string, ...args: any[]): void
-  verbose (moduleName: string, message: string, ...args: any[]): void
-  silly   (moduleName: string, message: string, ...args: any[]): void
-}
 
 class Brolog implements Loggable {
 

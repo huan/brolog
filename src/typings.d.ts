@@ -2,3 +2,4 @@
 //   export const version: string
 //   // export default version
 // }
+declare module 'nop'

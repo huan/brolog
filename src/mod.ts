@@ -7,7 +7,10 @@ import {
 }               from './brolog.js'
 import type {
   Loggable,
-}               from './brolog.js'
+}               from './loggable.js'
+import {
+  getLoggable,
+}               from './loggable.js'
 
 export type {
   Loggable,
@@ -15,5 +18,6 @@ export type {
 export {
   VERSION,
   Brolog,
+  getLoggable,
   log,
 }

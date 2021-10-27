@@ -45,7 +45,9 @@
     "url": "https://github.com/huan/brolog/issues"
   },
   "homepage": "https://github.com/huan/brolog#readme",
-  "dependencies": {},
+  "dependencies": {
+    "nop": "^1.0.0"
+  },
   "devDependencies": {
     "@chatie/eslint-config": "^1.0.2",
     "@chatie/git-scripts": "^0.6.2",
