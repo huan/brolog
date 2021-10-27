@@ -1,6 +1,6 @@
 {
   "name": "brolog",
-  "version": "1.14.1",
+  "version": "1.13.1",
   "description": "Npmlog like logger for Browser",
   "type": "module",
   "exports": {

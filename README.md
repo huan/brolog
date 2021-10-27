@@ -208,7 +208,7 @@ P.S. running E2E test is based on *brolog demo project*: [git repository](https:
 
 ## CHANGELOG
 
-### main v1.14 (Oct 27, 2021)
+### main v1.13 (Oct 27, 2021)
 
 1. ES Module support
 1. export `Loggable` interface
