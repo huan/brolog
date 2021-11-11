@@ -17,7 +17,7 @@ import {
 
 import type {
   Loggable,
-}                 from './loggable.js'
+}                 from './logger.js'
 
 type LogLevelTitle =
   | 'ERR'

@@ -6,18 +6,22 @@ import {
   log,
 }               from './brolog.js'
 import type {
-  Loggable,
-}               from './loggable.js'
+  Loggable,   // @deprecated: use Logger instead. will be removed after Dec 31, 2022
+  Logger,
+}               from './logger.js'
 import {
-  getLoggable,
-}               from './loggable.js'
+  getLoggable,  // @deprecated: use getLogger instead. will be removed after Dec 31, 2022
+  getLogger,
+}               from './logger.js'
 
 export type {
-  Loggable,
+  Loggable, // @deprecated: use Logger instead. will be removed after Dec 31, 2022
+  Logger,
 }
 export {
   VERSION,
   Brolog,
-  getLoggable,
+  getLoggable,  // @deprecated: use getLogger instead. will be removed after Dec 31, 2022
+  getLogger,
   log,
 }
