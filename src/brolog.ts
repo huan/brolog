@@ -365,10 +365,16 @@ function sprintf () {
       // A switch statement so that the formatter can be extended. Default is %s
       switch (m) {
         case '%d':
-          val = parseFloat(val)
-          if (isNaN(val)) {
-            val = 0
-          }
+          val = Number(val)
+          /**
+           * Huan(202111): use Number() to replace parseFloat,
+           *  and keep the `NaN` as a result for easy debugging
+           *  when we use `%d` mistakenly when `%s` should be expected.
+           */
+          // val = parseFloat(val)
+          // if (isNaN(val)) {
+          //   val = 0
+          // }
           break
       }
       i++
