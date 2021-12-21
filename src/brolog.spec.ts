@@ -9,8 +9,10 @@ import {
 import {
   Brolog,
   VERSION,
-  Loggable,
-}             from './brolog.js'
+}               from './brolog.js'
+import type {
+  Logger,
+}               from './logger.js'
 
 test('VERSION', t => {
   t.ok(/^\d+\.\d+\.\d+$/.test(VERSION), 'should get semver VERSION')
@@ -231,7 +233,7 @@ test('Brolog global instance prefix filter test', async t => {
 
   /**  */
 
-  function doLogHide (logger: Loggable) {
+  function doLogHide (logger: Logger) {
     logger.error('Hide', 'error message')
     logger.warn('Hide', 'warn message')
     logger.info('Hide', 'info message')
@@ -239,7 +241,7 @@ test('Brolog global instance prefix filter test', async t => {
     logger.silly('Hide', 'silly message')
   }
 
-  function doLogShow (logger: Loggable) {
+  function doLogShow (logger: Logger) {
     logger.error('Show', 'error message')
     logger.warn('Show', 'warn message')
     logger.info('Show', 'info message')

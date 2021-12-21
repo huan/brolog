@@ -22,11 +22,7 @@ const getLogger = (logger?: Logger): Logger => {
   }
 }
 
-export type {
-  Logger as Loggable, // @deprecated: use Logger instead. will be removed after Dec 31, 2022
-  Logger,
-}
 export {
-  getLogger as getLoggable, // @deprecated: use getLogger instead. will be removed after Dec 31, 2022
+  type Logger,
   getLogger,
 }

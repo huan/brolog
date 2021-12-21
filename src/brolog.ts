@@ -16,7 +16,7 @@ import {
 }                 from './config.js'
 
 import type {
-  Loggable,
+  Logger,
 }                 from './logger.js'
 
 type LogLevelTitle =
@@ -39,7 +39,7 @@ enum LogLevel {
 
 type LogLevelName = keyof typeof LogLevel
 
-class Brolog implements Loggable {
+class Brolog implements Logger {
 
   private static globalInstance?  : Brolog
   private static globalLogLevelName: LogLevelName     = 'info'
@@ -408,7 +408,6 @@ if (BROLOG_PREFIX && BROLOG_PREFIX !== '*') {
 
 export type {
   LogLevelTitle,
-  Loggable,
   LogLevelName,
 }
 export {
