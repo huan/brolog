@@ -1,3 +1,6 @@
+/**
+ * Logger interface and fallback zero-dependency no-op logger generator for Brolog.
+ */
 const nop = (..._args: any[]): void => {}
 
 interface Logger {

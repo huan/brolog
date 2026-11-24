@@ -1,22 +1,25 @@
+/**
+ * Public entry point for Brolog: isomorphic leveled logger for browser, Node.js, and Deno.
+ */
 import {
   VERSION,
-}               from './config.js'
+}               from './config.ts'
 import {
   Brolog,
   log,
-}               from './brolog.js'
+}               from './brolog.ts'
 import {
   type Logger,
   getLogger,
-}               from './logger.js'
+}               from './logger.ts'
 
 /**
- * @deprecated: use Logger instead. will be removed after Dec 31, 2022
+ * @deprecated: use Logger instead.
  */
 type Loggable = Logger
 
 /**
- * @deprecated: use getLogger instead. will be removed after Dec 31, 2022
+ * @deprecated: use getLogger instead.
  */
 const getLoggable = getLogger
 

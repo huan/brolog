@@ -1,31 +1,30 @@
 {
   "name": "brolog",
   "version": "2.0.0",
-  "description": "Npmlog like logger for Browser",
+  "description": "Npmlog like logger for Browser, Node.js, and Deno",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/esm/src/mod.js",
-      "require": "./dist/cjs/src/mod.js"
+      "types": "./dist/esm/src/mod.d.ts",
+      "import": "./dist/esm/src/mod.js"
     }
   },
-  "typings": "./dist/esm/src/mod.d.ts",
+  "types": "./dist/esm/src/mod.d.ts",
   "engines": {
-    "node": ">=16",
-    "npm": ">=7"
+    "node": ">=26",
+    "npm": ">=10"
   },
   "scripts": {
-    "build": "tsc && tsc -p tsconfig.cjs.json",
+    "build": "tsc",
     "clean": "shx rm -fr dist/*",
-    "dist": "npm-run-all clean build dist:commonjs",
-    "dist:commonjs": "jq -n \"{ type: \\\"commonjs\\\" }\" > dist/cjs/package.json",
-    "lint": "npm-run-all lint:es lint:ts",
+    "dist": "npm run clean && npm run build",
+    "lint": "npm run lint:biome && npm run lint:ts",
+    "lint:biome": "biome lint src tests",
     "lint:ts": "tsc --isolatedModules --noEmit",
-    "test": "npm-run-all lint dist test:unit test:e2e",
-    "test:e2e": "bash -x tests/protractor.sh",
-    "test:pack": "bash -x scripts/npm-pack-testing.sh",
-    "test:unit": "cross-env NODE_OPTIONS=\"--no-warnings --loader=ts-node/esm\" tap -R tap \"src/**/*.spec.ts\"",
-    "lint:es": "eslint --ignore-pattern tests/fixtures/ '{bin,examples,scripts,src,tests}/**/*.ts'"
+    "test": "npm run lint && npm run test:unit",
+    "test:unit": "node --test src tests",
+    "test:unit:deno": "deno test --no-check --allow-env src tests",
+    "test:pack": "bash -x scripts/npm-pack-testing.sh"
   },
   "repository": {
     "type": "git",
@@ -37,7 +36,7 @@
     "logger",
     "console.log",
     "browser",
-    "angular"
+    "deno"
   ],
   "author": "Huan LI <zixia@zixia.net>",
   "license": "Apache-2.0",
@@ -47,15 +46,10 @@
   "homepage": "https://github.com/huan/brolog#readme",
   "dependencies": {},
   "devDependencies": {
-    "@chatie/eslint-config": "^1.0.4",
-    "@chatie/git-scripts": "^0.6.2",
-    "@chatie/semver": "^0.4.7",
-    "@chatie/tsconfig": "^4.6.2",
-    "@types/jasmine": "^3.10.2",
-    "@types/puppeteer": "^5.4.4",
-    "jasmine-spec-reporter": "^7.0.0",
-    "protractor": "^7.0.0",
-    "puppeteer": "^13.0.0"
+    "@biomejs/biome": "^2.6.5",
+    "@types/node": "^26.6.6",
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "shx": "^0.3.4"
   },
   "files": [
     "src/",
@@ -64,10 +58,5 @@
   "publishConfig": {
     "access": "public",
     "tag": "next"
-  },
-  "git": {
-    "scripts": {
-      "pre-push": "npx git-scripts-pre-push"
-    }
   }
 }
