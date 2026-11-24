@@ -167,12 +167,15 @@ class Brolog implements Logger {
     return (LogLevelNames[this.logLevel] ?? 'info') as LogLevelName
   }
 
-  private log (levelTitle: LogLevelTitle, prefix: string, message: string, ...rest: any[]) {
+  private log (levelTitle: LogLevelTitle, prefix: string, message?: unknown, ...rest: unknown[]) {
     if (this.prefixFilter && !this.prefixFilter.test(prefix)) {
       return
     }
 
-    const formattedMessage = sprintf(message || '', ...rest)
+    // sprintf() calls .replace on the format string. Callers pass Error, number,
+    // and object messages (log.error('X', err)); coerce them the way the previous
+    // concatenation did, and keep 0 instead of dropping it with `message || ''`.
+    const formattedMessage = sprintf(formatMessage(message), ...rest)
     const text = this.timestamp() + levelTitle + ' ' + prefix + (formattedMessage ? ' ' + formattedMessage : '')
     this.textPrinter(levelTitle, text)
   }
@@ -284,9 +287,20 @@ class Brolog implements Logger {
 
 }
 
-function sprintf (format: string, ...formatArgs: any[]): string {
+function formatMessage (message: unknown): string {
+  if (typeof message === 'string') {
+    return message
+  }
+  // No message argument: log.error('prefix') passes undefined. Do not print "undefined".
+  if (message == null) {
+    return ''
+  }
+  return String(message)
+}
+
+function sprintf (format: string, ...formatArgs: unknown[]): string {
   let i = 0
-  return (format || '').replace(/%((%)|s|d)/g, (match, _p1, p2) => {
+  return format.replace(/%((%)|s|d)/g, (match, _p1, p2) => {
     if (p2) {
       return p2
     }

@@ -262,3 +262,32 @@ test('version()', () => {
   const log = new Brolog()
   assert.ok(log.version(), 'should get version')
 })
+
+test('non-string messages are logged instead of throwing', () => {
+  const lines: string[] = []
+  const logger = new Brolog()
+  logger.level('silly')
+  logger.prefix(/.*/)
+  logger.timestamp(false)
+  logger.textPrinter = (_title, text) => {
+    lines.push(text)
+  }
+
+  logger.error('Example', new Error('failure'))
+  logger.info('Example', 42)
+  logger.info('Example', 0)
+  logger.warn('Example', { code: 7 })
+  logger.verbose('Example', 'count %d', 3)
+  logger.silly('Example', 'failed: %s', new Error('boom'))
+  logger.error('Example')
+
+  assert.deepEqual(lines, [
+    'ERR Example Error: failure',
+    'INFO Example 42',
+    'INFO Example 0',
+    'WARN Example [object Object]',
+    'VERB Example count 3',
+    'SILL Example failed: Error: boom',
+    'ERR Example',
+  ])
+})
