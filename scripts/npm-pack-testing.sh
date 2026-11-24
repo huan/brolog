@@ -1,55 +1,40 @@
 #!/usr/bin/env bash
-set -e
+#
+# Packs brolog and checks that the tarball works as an ESM consumer sees it:
+# installs it in a temporary ESM project, type-checks against published types,
+# and runs the smoke test with Node.js.
+#
+set -euo pipefail
 
-npm run dist
-npm pack
-
+PACKAGE_DIR=$(pwd)
 TMPDIR="/tmp/npm-pack-testing.$$"
 mkdir "$TMPDIR"
-mv *-*.*.*.tgz "$TMPDIR"
+
+# generate-version.sh rewrites src/version.ts; put back exactly what was there
+cp src/version.ts "$TMPDIR/version.ts.orig"
+trap 'cp "$TMPDIR/version.ts.orig" "$PACKAGE_DIR/src/version.ts"; rm -rf "$TMPDIR"' EXIT
+
+./scripts/generate-version.sh
+npm run dist
+npm pack --pack-destination "$TMPDIR"
 cp tests/fixtures/smoke-testing.ts "$TMPDIR"
 
-cd $TMPDIR
-
-npm init -y
-npm install *-*.*.*.tgz \
+cd "$TMPDIR"
+npm init -y > /dev/null
+npm pkg set type=module
+npm install ./brolog-*.tgz \
   @types/node \
-  typescript \
+  @typescript/native@npm:typescript@^7.0.2
 
-#
-# CommonJS
-#
-./node_modules/.bin/tsc \
-  --esModuleInterop \
-  --lib esnext \
+npx tsc \
+  --target esnext \
+  --module nodenext \
+  --moduleResolution nodenext \
+  --verbatimModuleSyntax \
+  --lib esnext,dom \
   --noEmitOnError \
   --noImplicitAny \
   --skipLibCheck \
-  --target es5 \
-  --module CommonJS \
-  --moduleResolution node \
-  smoke-testing.ts
-
-echo
-echo "CommonJS: pack testing..."
-node smoke-testing.js
-
-#
-# ES Modules
-#
-
-# https://stackoverflow.com/a/59203952/1123955
-echo "`jq '.type="module"' package.json`" > package.json
-
-./node_modules/.bin/tsc \
-  --esModuleInterop \
-  --lib esnext \
-  --noEmitOnError \
-  --noImplicitAny \
-  --skipLibCheck \
-  --target es2020 \
-  --module es2020 \
-  --moduleResolution node \
   smoke-testing.ts
 
 echo

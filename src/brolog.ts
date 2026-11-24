@@ -1,23 +1,16 @@
-/* eslint-disable no-console */
-/*!
- * Brolog JavaScript Library v1.1.0
- * https://github.com/huan/brolog
- *
- * Copyright Huan LI <zixia@zixia.net>
- * Released under the ISC license
- * https://github.com/huan/brolog/blob/master/LICENSE
- *
- * Date: 2016-07
+/**
+ * Brolog logger implementation: leveled, filtered, and timestamped console logging
+ * with zero external runtime dependencies for browser, Node.js, and Deno environments.
  */
 import {
   VERSION,
   BROLOG_LEVEL,
   BROLOG_PREFIX,
-}                 from './config.js'
+}                 from './config.ts'
 
 import type {
   Logger,
-}                 from './logger.js'
+}                 from './logger.ts'
 
 type LogLevelTitle =
   | 'ERR'
@@ -28,16 +21,26 @@ type LogLevelTitle =
 
 type TextPrinterFunction = (title: string, text?: string) => void
 
-enum LogLevel {
-  silent  = 0,
-  error   = 1,
-  warn    = 2,
-  info    = 3,
-  verbose = 4,
-  silly   = 5,
-}
+const LogLevel = {
+  silent  : 0,
+  error   : 1,
+  warn    : 2,
+  info    : 3,
+  verbose : 4,
+  silly   : 5,
+} as const
 
+type LogLevel = typeof LogLevel[keyof typeof LogLevel]
 type LogLevelName = keyof typeof LogLevel
+
+const LogLevelNames: Record<number, LogLevelName> = {
+  0: 'silent',
+  1: 'error',
+  2: 'warn',
+  3: 'info',
+  4: 'verbose',
+  5: 'silly',
+}
 
 class Brolog implements Logger {
 
@@ -99,47 +102,12 @@ class Brolog implements Logger {
   public enableLogging (printerFunc: boolean | TextPrinterFunction): Brolog {
     this.verbose('Brolog', 'enableLogging(%s)', printerFunc)
 
-    // const loggerMethodList = [
-    //   'error',
-    //   'warn',
-    //   'info',
-    //   'verbose',
-    //   'silly',
-    // ]
-
     if (printerFunc === false) {
       this.silly('Brolog', 'enableLogging() disabled')
-      // loggerMethodList.forEach(m => {
-      //   this[m] =  nullLogger[m]
-      // })
       this.textPrinter = function () { /* null logger */ }
-
     } else if (printerFunc === true) {
       this.silly('Brolog', 'enableLogging() enabled: restore Brolog instance')
-      // const restore = new Brolog()
-      // loggerMethodList.forEach(m => {
-      //   this[m] = restore[m]
-      // })
       this.textPrinter = this.defaultTextPrinter
-
-      // } else if (typeof log.verbose === 'function') {
-      //   this.silly('Brolog', 'enableLogging() enabled: using provided logger')
-      //   for (const method of loggerMethodList) {
-      //     this[method] = () => {
-      //       // In order to compatible with winston,
-      //       // we need to change the args from
-      //       // brolog.info('Main', 'Hello %s', 'world')
-      //       // to
-      //       // log.info('Main Hello %s', 'world')
-      //       const argList: string[] = Array.from(arguments)
-      //       if (argList.length > 1) {
-      //         const module = argList.shift()
-      //         argList[0] = `${module} ` + argList[0]
-      //       }
-      //       return Reflect.apply(log[method], log, argList)
-      //     }
-      //   }
-
     } else if (typeof printerFunc === 'function') {
       this.silly('Brolog', 'enableLogging() enabled: using provided log function')
       this.textPrinter = function (levelTitle: LogLevelTitle, text: string): void {
@@ -154,7 +122,6 @@ class Brolog implements Logger {
 
   public static prefix (): RegExp
   public static prefix (filter: string | RegExp): void
-
   public static prefix (filter?: string | RegExp): void | RegExp {
     if (filter) {
       this.globalPrefix = filter
@@ -187,141 +154,109 @@ class Brolog implements Logger {
     return this.instance().level(levelName)
   }
 
-  public level (levelName?: LogLevelName) {
+  public level (levelName?: LogLevelName): LogLevelName {
     if (levelName) {
-      // console.log('levelName: ' + levelName)
-      // http://stackoverflow.com/a/21294925/1123955
-      // XXX: fix the any here?
-      let logLevel = LogLevel[levelName.toLowerCase() as any] as any as (undefined | LogLevel)
-      if (logLevel === undefined) { // be aware of number 0 here
+      const key = levelName.toLowerCase() as LogLevelName
+      let logLevel: LogLevel | undefined = LogLevel[key]
+      if (logLevel === undefined) {
         log.error('Brolog', 'level(%s) not exist, set to silly.', levelName)
         logLevel = LogLevel.silly
       }
       this.logLevel = logLevel
     }
-    return LogLevel[this.logLevel] as LogLevelName
+    return (LogLevelNames[this.logLevel] ?? 'info') as LogLevelName
   }
 
-  private log (levelTitle: LogLevelTitle, prefix: string, message: string) {
+  private log (levelTitle: LogLevelTitle, prefix: string, message: string, ...rest: any[]) {
     if (this.prefixFilter && !this.prefixFilter.test(prefix)) {
-      return  // skip message not match prefix filter
+      return
     }
 
-    const args = Array.prototype.slice.call(arguments, 3)
-    args.unshift(this.timestamp() + levelTitle + ' ' + prefix + ' ' + (message || ''))
-    // const args = Array.from(arguments) || []
-    // args[0] = this.timestamp() + args[0]
-
-    const text = Reflect.apply(sprintf, null, args)
+    const formattedMessage = sprintf(message || '', ...rest)
+    const text = this.timestamp() + levelTitle + ' ' + prefix + (formattedMessage ? ' ' + formattedMessage : '')
     this.textPrinter(levelTitle, text)
   }
 
   public defaultTextPrinter (levelTitle: LogLevelTitle, text: string): void {
-    // Use Reflect at:
-    // https://www.keithcirkel.co.uk/metaprogramming-in-es6-part-2-reflect/
     switch (levelTitle) {
       case 'ERR':
-        // console.error.apply(console, args)
-        // Reflect.apply(console.error, console, args)
         console.error(text)
         break
       case 'WARN':
-        // console.warn.apply(console, args)
-        // Reflect.apply(console.warn, console, args)
         console.warn(text)
         break
       case 'INFO':
-        // console.info.apply(console, args)
-        // Reflect.apply(console.info, console, args)
         console.info(text)
         break
-
-      // eslint-disable-next-line default-case-last
       default:
       case 'VERB':
       case 'SILL':
-        // console.log.apply(console, args)
-        // Reflect.apply(console.log, console, args)
         console.log(text)
     }
-
   }
 
   public static error (prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    // return instance.error.apply(instance, arguments)
-    return Reflect.apply(instance.error, instance, ([] as any).concat(prefix, args))
+    instance.error(prefix, ...args)
   }
 
   public error (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.error) {
       return
     }
-    const argList = Array.from([prefix, ...args])
-    argList.unshift('ERR')
-    return Reflect.apply(this.log, this, argList)
+    this.log('ERR', prefix, args[0], ...args.slice(1))
   }
 
   public static warn (prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    return Reflect.apply(instance.warn, instance, ([] as any).concat(prefix, args))
+    instance.warn(prefix, ...args)
   }
 
   public warn (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.warn) {
       return
     }
-    const argList = Array.from([prefix, ...args])
-    argList.unshift('WARN')
-    return Reflect.apply(this.log, this, argList)
+    this.log('WARN', prefix, args[0], ...args.slice(1))
   }
 
   public static info (prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    return Reflect.apply(instance.info, instance, ([] as any).concat(prefix, args))
+    instance.info(prefix, ...args)
   }
 
   public info (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.info) {
       return
     }
-    const argList = Array.from([prefix, ...args])
-    argList.unshift('INFO')
-    return Reflect.apply(this.log, this, argList)
+    this.log('INFO', prefix, args[0], ...args.slice(1))
   }
 
   public static verbose (prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    return Reflect.apply(instance.verbose, instance, ([] as any).concat(prefix, args))
+    instance.verbose(prefix, ...args)
   }
 
   public verbose (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.verbose) {
       return
     }
-
-    const argList = Array.from([prefix, ...args])
-    argList.unshift('VERB')
-    return Reflect.apply(this.log, this, argList)
+    this.log('VERB', prefix, args[0], ...args.slice(1))
   }
 
   public static silly (prefix: string, ...args: any[]): void {
     const instance = Brolog.instance()
-    return Reflect.apply(instance.silly, instance, ([] as any).concat(prefix, args))
+    instance.silly(prefix, ...args)
   }
 
   public silly (prefix: string, ...args: any[]): void {
     if (this.logLevel < LogLevel.silly) {
       return
     }
-    const argList = Array.from([prefix, ...args])
-    argList.unshift('SILL')
-    return Reflect.apply(this.log, this, argList)
+    this.log('SILL', prefix, args[0], ...args.slice(1))
   }
 
   public timestamp (enable: boolean): void
   public timestamp (): string
-
   public timestamp (enable?: boolean): string | void {
     if (typeof enable === 'boolean') {
       this.enableTimestamp = enable
@@ -333,12 +268,11 @@ class Brolog implements Logger {
     }
 
     const date  = new Date()
-    const hour    = date.getHours()
-    const min     = date.getMinutes()
-    const sec     = date.getSeconds()
+    const hour  = date.getHours()
+    const min   = date.getMinutes()
+    const sec   = date.getSeconds()
 
     let stampStr = ''
-
     stampStr += (hour < 10) ? ('0' + hour)  : hour
     stampStr += ':'
     stampStr += (min < 10)  ? ('0' + min)   : min
@@ -350,36 +284,18 @@ class Brolog implements Logger {
 
 }
 
-// Credit: https://stackoverflow.com/a/4795914/1123955
-function sprintf () {
-  const args = arguments
-  const text = args[0] as string
-  let i = 1
-  return text.replace(/%((%)|s|d)/g, function (m) {
-    // m is the matched format, e.g. %s, %d
-    let val = null as any
-    if (m[2]) {
-      val = m[2]
-    } else {
-      val = args[i]
-      // A switch statement so that the formatter can be extended. Default is %s
-      switch (m) {
-        case '%d':
-          val = Number(val)
-          /**
-           * Huan(202111): use Number() to replace parseFloat,
-           *  and keep the `NaN` as a result for easy debugging
-           *  when we use `%d` mistakenly when `%s` should be expected.
-           */
-          // val = parseFloat(val)
-          // if (isNaN(val)) {
-          //   val = 0
-          // }
-          break
-      }
-      i++
+function sprintf (format: string, ...formatArgs: any[]): string {
+  let i = 0
+  return (format || '').replace(/%((%)|s|d)/g, (match, _p1, p2) => {
+    if (p2) {
+      return p2
     }
-    return val
+    let val = formatArgs[i]
+    if (match === '%d') {
+      val = Number(val)
+    }
+    i++
+    return String(val)
   })
 }
 
@@ -390,11 +306,6 @@ export {
 const log = Brolog.instance()
 
 if (BROLOG_LEVEL) {
-  /**
-   * set logLevel from:
-   * 1. process.env['BROLOG_LEVEL'], or
-   * 2. in URL: `?BROLOG_LEVEL=verbose&...`
-   */
   if (BROLOG_LEVEL === '*') {
     log.level('silly')
   } else {
