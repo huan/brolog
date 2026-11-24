@@ -1,4 +1,4 @@
-import { nop } from '@pipeletteio/nop'
+const nop = (..._args: any[]): void => {}
 
 interface Logger {
   error   (moduleName: string, message: string, ...args: any[]): void
